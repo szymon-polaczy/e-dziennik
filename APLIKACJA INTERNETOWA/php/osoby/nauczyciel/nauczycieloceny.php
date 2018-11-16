@@ -6,7 +6,7 @@
     exit();
   }
 
-  require_once "polacz.php";
+  require_once "../../polacz.php";
   mysqli_report(MYSQLI_REPORT_STRICT);
 
   if (isset($_POST['wyb_przydzial']))
@@ -242,10 +242,10 @@
   <meta name="author" content="Redzik">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" type="text/javascript"></script>
-  <script src="js/script.js"></script>
+  <script src="../../../js/script.js"></script>
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body>
   <header>
@@ -392,6 +392,6 @@
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 
-  <a href="index.php"><button class="cofnij-btn">Wyjdź</button></a>
+  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Wyjdź</button></a>
 </body>
 </html>

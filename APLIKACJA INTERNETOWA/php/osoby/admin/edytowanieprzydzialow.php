@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require_once "polacz.php";
+  require_once "../../polacz.php";
   mysqli_report(MYSQLI_REPORT_STRICT);
 
   //WYCIĄGAM OSOBY
@@ -257,7 +257,7 @@
   <meta name="author" content="Redzik">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body class="index-body">
   <header>
@@ -315,7 +315,7 @@
     </form>
   </main>
 
-  <a href="index.php"><button class="cofnij-btn">Wyjdź</button></a>
+  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Wyjdź</button></a>
 
   <footer>
     <h6>Autor: Szymon Polaczy</h6>

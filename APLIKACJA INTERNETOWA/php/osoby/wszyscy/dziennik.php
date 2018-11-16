@@ -19,7 +19,7 @@
   <meta name="author" content="Redzik">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body>
   <header>
@@ -60,23 +60,23 @@
   <?php
     if ( $_SESSION['uprawnienia'] == "a") {
       echo '<h3>Rzeczy dostępne dla administratora</h3></br>';
-      echo '<a href="adminklasy.php">KLASY</a></br>';
-      echo '<a href="adminsale.php">SALE</a></br>';
-      echo '<a href="adminprzedmioty.php">PRZEDMIOTY</a></br>';
-      echo '<a href="adminosoby.php">OSOBY</a></br>';
-      echo '<a href="adminprzydzialy.php">PRZYDZIAŁY</a>';
+      echo '<a href="../admin/adminklasy.php">KLASY</a></br>';
+      echo '<a href="../admin/adminsale.php">SALE</a></br>';
+      echo '<a href="../admin/adminprzedmioty.php">PRZEDMIOTY</a></br>';
+      echo '<a href="../admin/adminosoby.php">OSOBY</a></br>';
+      echo '<a href="../admin/adminprzydzialy.php">PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     } else if ( $_SESSION['uprawnienia'] == "n") {
       echo '<h3>Rzeczy dostępne dla nauczyciela</h3></br>';
-      echo '<a href="wybierzprzydzial.php">OCENY</a></br>';
-      echo '<a href="nauczycielprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
+      echo '<a href="../nauczyciel/wybierzprzydzial.php">OCENY</a></br>';
+      echo '<a href="../nauczyciel/nauczycielprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     } else if ( $_SESSION['uprawnienia'] == "u") {
       echo '<h3>Rzeczy dostępne dla ucznia</h3></br>';
-      echo '<a href="uczenoceny.php">ZOBACZ OCENY</a></br>';
-      echo '<a href="uczenprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
+      echo '<a href="../uczen/uczenoceny.php">ZOBACZ OCENY</a></br>';
+      echo '<a href="../uczen/uczenprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     }
@@ -85,7 +85,7 @@
   <h3>Rzeczy dostępne dla wszystkich</h3></br>
   <a href="zmiendane.php">ZMIEŃ DANE</a>
   </br>
-  <a href="wyloguj.php">WYLOGUJ</a>
+  <a href="zadania/wyloguj.php">WYLOGUJ</a>
 
   </br></br></br></br></br></br>
 

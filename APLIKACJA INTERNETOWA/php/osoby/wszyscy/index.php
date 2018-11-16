@@ -19,7 +19,7 @@
   <meta name="author" content="Redzik">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body class="index-body">
   <header>
@@ -27,7 +27,7 @@
   </header>
 
   <main>
-    <form action="logowanie.php" method="post">
+    <form action="zadania/logowanie.php" method="post">
       <h3>Zaloguj Się</h3>
       <input type="email" placeholder="Email" name="email"/>
       <input type="password" placeholder="Hasło" name="haslo"/>

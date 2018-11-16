@@ -2,7 +2,7 @@
 
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
-  require_once "../../polacz.php";
+  require_once "../../../polacz.php";
 
   if(isset($_POST['opis']) && isset($_POST['nazwa'])) {
 
@@ -49,12 +49,12 @@
 
           if($polaczenie->query($sql)) {
             $_SESSION['dodawanie_klas'] = "Dodano nową klasę";
-            header("Location: ../../../adminklasy.php");
+            header("Location: ../adminklasy.php");
           } else {
             throw new Exception();
           }
         } else {
-          header("Location: ../../../adminklasy.php");
+          header("Location:../adminklasy.php");
         }
 
         $polaczenie->close();

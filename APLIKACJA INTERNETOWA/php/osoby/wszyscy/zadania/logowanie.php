@@ -2,11 +2,11 @@
   session_start();
 
   if(!isset($_POST['email']) || !isset($_POST['haslo'])) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
   }
 
-  require_once "polacz.php";
+  require_once "../../../polacz.php";
 
   mysqli_report(MYSQLI_REPORT_STRICT);
 
@@ -39,14 +39,14 @@
 
             $rezultat->free_result();
 
-            header('Location: dziennik.php');
+            header('Location: ../dziennik.php');
           } else {
             $_SESSION['login_blad'] = "Nie udało się zalogować, niepoprawny login lub hasło";
-            header('Location: index.php');
+            header('Location: ../index.php');
           }
         } else {
           $_SESSION['login_blad'] = "Nie udało się zalogować, niepoprawny login lub hasło";
-          header('Location: index.php');
+          header('Location: ../index.php');
         }
       } else {
         throw new Exception();
