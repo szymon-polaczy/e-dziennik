@@ -1,0 +1,223 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  background-color: #a2def4;
+  letter-spacing: 1px;
+  text-align: center;
+  font-size: 20px;
+  min-height: 100vh;
+}
+
+footer {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  color: #444;
+  padding: 10px;
+  background-color: #baebfc;
+}
+
+header {
+  font-size: 4.2em;
+  padding: 35px;
+  letter-spacing: 4px;
+  background-color: #baebfc;
+  color: #444;
+  line-height: 150%;
+}
+
+form {
+  padding: 150px 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+form h3 {
+  padding: 20px;
+  font-size: 2.1em;
+  color: #5f7060;
+  letter-spacing: 3px;
+}
+
+form input, form button {
+  transition: .1s all ease-in-out;
+  border: 3px solid #bbfcc9;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 10px;
+  width: 90%;
+}
+
+form input:hover {
+  transform: scale(1.01);
+}
+
+form input {
+  margin-top: 5px;
+}
+
+form button {
+  margin: 15px;
+  background-color: #bbfcc9;
+}
+
+form button:hover {
+  transform: scale(1.03);
+}
+
+.info {
+  color: #f33;
+}
+
+.cofnij-btn {
+	border: 2px solid #444;
+	background-color: #bccfd4;
+	padding: 10px;
+	border-radius: 5px;
+	color: #222;
+	margin: 50px 0;
+}
+
+a {
+	color: #f33;
+	text-decoration: none;
+	transition: all .1s ease-in-out;
+}
+
+a:hover {
+	color: #f00;
+	font-size: 1.1em;
+	transition: all .1s ease-in-out;
+}
+
+h3 {
+	font-size: 1.4em;
+	letter-spacing: 2px;
+}
+
+h2 {
+  padding: 20px;
+  font-size: 2.1em;
+  color: #5f7060;
+  letter-spacing: 3px;
+}
+
+section {
+	margin: 50px 0;
+}
+
+select {
+	transition: .1s all ease-in-out;
+  border: 3px solid #bbfcc9;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 10px;
+  width: 90%;
+	background: #fff;
+	margin-top: 5px;
+}
+
+select:hover {
+  transform: scale(1.01);
+}
+
+.wiersz-klasa, .wiersz-sala, .wiersz-przedmiot, .wiersz-osoba, .wiersz-przydzial, .wiersz-ocena {
+	width: 80%;
+	min-width: 450px;
+	margin: 0 auto;
+	min-height: 35px;
+	border: 3px solid #bbfcc9;
+	border-bottom: none;
+	box-sizing: border-box;
+	padding: 3px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-flow: row;
+}
+
+.wiersz-sala, .wiersz-przedmiot {
+	min-width: 300px;
+}
+
+.wiersz-osoba, .wiersz-przydzial, .wiersz-ocena  {
+	min-width: 750px;
+}
+
+.wiersz-klasa:last-child, .wiersz-sala:last-child, .wiersz-przedmiot:last-child, .wiersz-osoba:last-child, .wiersz-przydzial:last-child, .wiersz-ocena:last-child {
+	border-bottom: 3px solid #bbfcc9;
+}
+
+.niewidoczne {
+	display: none;
+}
+
+.wiersz-osoba h3 {
+	padding: 10px;
+  font-size: 1.1em;
+  color: #df7087;
+  letter-spacing: 3px;
+}
+
+.profil {
+	margin: 50px 0;
+}
+
+.profil .wartosc {
+	color: #fff;
+}
