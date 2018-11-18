@@ -101,7 +101,7 @@
 
   function wezKlasy() {
     try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
+      $polaczenie = new mysqli("localhost", "root", "<kizdeR<", "bdg_dziennik");
       $polaczenie->query("SET NAMES utf8");
 
       if ($polaczenie->connect_errno == 0) {
@@ -271,7 +271,7 @@
   <title>BDG DZIENNIK - Zobacz, Dodaj, Usuń, Edytuj Sale</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <meta name="author" content="Redzik">
+  <meta name="author" content="Szymon Polaczy">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/style.css">
@@ -284,23 +284,29 @@
   <main>
     <section>
       <h2>ZOBACZ KLASY</h2>
-      <div class="wiersz-klasa">
-        <div class="kolumna-numer">NUMER</div>
-        <div class="kolumna-id">ID</div>
-        <div class="kolumna-nazwa">NAZWA</div>
-        <div class="kolumna-opis">OPIS</div>
-      </div>
       <?php
-        for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-          echo '<div class="wiersz-klasa">';
-            echo '<div class="kolumna kolumna-numer">'.$i.'</div>';
-            echo '<div class="kolumna kolumna-id">'.$_SESSION['klasa'.$i]['id'].'</div>';
-            echo '<div class="kolumna kolumna-nazwa">'.$_SESSION['klasa'.$i]['nazwa'].'</div>';
-            echo '<div class="kolumna kolumna-opis">'.$_SESSION['klasa'.$i]['opis'].'</div>';
-          echo '</div>';
-        }
         if ($_SESSION['ilosc_klas'] == 0) {
           echo '<div class="wiersz-klasa">ŻADNA KLASA NIE ISTNIEJE W BAZIE</div>';
+        } else {
+          echo '<table>';
+
+          echo '<tr>';
+            echo '<th>NUMER</div>';
+            echo '<th>ID</th>';
+            echo '<th>NAZWA</th>';
+            echo '<th>OPIS</th>';
+          echo '</tr>';
+
+          for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
+            echo '<tr>';
+              echo '<th>'.$i.'</div>';
+              echo '<th>'.$_SESSION['klasa'.$i]['id'].'</th>';
+              echo '<th>'.$_SESSION['klasa'.$i]['nazwa'].'</th>';
+              echo '<th>'.$_SESSION['klasa'.$i]['opis'].'</th>';
+            echo '</tr>';
+          }
+
+          echo '</table>';
         }
       ?>
     </section>
@@ -364,7 +370,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 

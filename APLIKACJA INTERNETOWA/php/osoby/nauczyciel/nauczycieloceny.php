@@ -239,7 +239,7 @@
   <title>BDG DZIENNIK - Zobacz, Dodaj, Usuń, Edytuj Oceny</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <meta name="author" content="Redzik">
+  <meta name="author" content="Szymon Polaczy">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" type="text/javascript"></script>
   <script src="../../../js/script.js"></script>
@@ -388,7 +388,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 

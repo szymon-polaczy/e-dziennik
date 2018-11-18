@@ -16,7 +16,7 @@
   <title>BDG DZIENNIK - Dziennik</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <meta name="author" content="Redzik">
+  <meta name="author" content="Szymon Polaczy">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/style.css">
@@ -89,7 +89,7 @@
 
   </br></br></br></br></br></br>
 
-  <footer>
+  <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 </body>

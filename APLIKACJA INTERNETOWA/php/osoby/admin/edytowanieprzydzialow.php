@@ -126,11 +126,12 @@
               $_SESSION['przydzial'.$i]['klasa-nazwa'] = $_SESSION['klasa'.$j]['nazwa'];
 
         $rezultat->free_result();
-      } else
-          throw new Exception();
+      } else {
+        throw new Exception();
+      }
 
       $polaczenie->close();
-    } else
+    } else {
       throw new Exception(mysqli_connect_errno());
     }
   } catch (Exception $blad) {
@@ -254,7 +255,7 @@
   <title>BDG DZIENNIK - Edytuj Przydział</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <meta name="author" content="Redzik">
+  <meta name="author" content="Szymon Polaczy">
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/style.css">
@@ -317,7 +318,7 @@
 
   <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Powrót do strony głównej</button></a>
 
-  <footer>
+  <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 </body>
