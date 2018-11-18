@@ -451,7 +451,7 @@
     </section>
   </main>
 
-  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Wyjdź</button></a>
+  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Powrót do strony głównej</button></a>
 
   <footer>
     <h6>Autor: Szymon Polaczy</h6>

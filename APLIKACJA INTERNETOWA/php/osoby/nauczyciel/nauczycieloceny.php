@@ -392,6 +392,6 @@
     <h6>Autor: Szymon Polaczy</h6>
   </footer>
 
-  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Wyjdź</button></a>
+  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Powrót do strony głównej</button></a>
 </body>
 </html>
