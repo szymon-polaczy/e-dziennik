@@ -19,8 +19,11 @@ SET time_zone = "+00:00";
 --
 -- Database: `bdg_dziennik`
 --
-CREATE DATABASE IF NOT EXISTS `bdg_dziennik` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
+DROP DATABASE IF EXISTS `bdg_dziennik`;
+CREATE DATABASE `bdg_dziennik` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
 USE `bdg_dziennik`;
+
+
 
 -- --------------------------------------------------------
 

@@ -101,7 +101,7 @@
 
   function wezKlasy() {
     try {
-      $polaczenie = new mysqli("localhost", "root", "<kizdeR<", "bdg_dziennik");
+      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
       $polaczenie->query("SET NAMES utf8");
 
       if ($polaczenie->connect_errno == 0) {
