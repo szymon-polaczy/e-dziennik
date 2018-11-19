@@ -262,29 +262,32 @@
         if ($_SESSION['ilosc_ocen'] == 0) {
           echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
         } else {
-          echo '<table>';
-          echo '<caption>OCENY</caption>';
+          echo '<table class="table">';
+          echo '<thead class="thead-dark">';
+            echo '<tr>';
+              echo '<th>ID</th>';
+              echo '<th>NAZWISKO NAUCZYCIELA</th>';
+              echo '<th>IMIE UCZNIA</th>';
+              echo '<th>NAZWISKO UCZNIA</th>';
+              echo '<th>DATA I GODZINA</th>';
+              echo '<th>WARTOŚĆ</th>';
+            echo '</tr>';
+          echo '</thead>';
 
-          echo '<tr>';
-            echo '<th>ID</th>';
-            echo '<th>NAZWISKO NAUCZYCIELA</th>';
-            echo '<th>IMIE UCZNIA</th>';
-            echo '<th>NAZWISKO UCZNIA</th>';
-            echo '<th>DATA I GODZINA</th>';
-            echo '<th>WARTOŚĆ</th>';
-          echo '</tr>';
+          echo '<tbody>';
 
           for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
             echo '<tr>';
-              echo '<th>'.$_SESSION['ocena'.$i]['id'].'</th>';
-              echo '<th>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</th>';
-              echo '<th>'.$_SESSION['ocena'.$i]['uczen-imie'].'</th>';
-              echo '<th>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</th>';
-              echo '<th>'.$_SESSION['ocena'.$i]['data'].'</th>';
-              echo '<th>'.$_SESSION['ocena'.$i]['wartosc'].'</th>';
+              echo '<td>'.$_SESSION['ocena'.$i]['id'].'</td>';
+              echo '<td>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</td>';
+              echo '<td>'.$_SESSION['ocena'.$i]['uczen-imie'].'</td>';
+              echo '<td>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</td>';
+              echo '<td>'.$_SESSION['ocena'.$i]['data'].'</td>';
+              echo '<td>'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
             echo '</tr>';
           }
 
+          echo '</tbody>';
           echo '</table>';
         }
 

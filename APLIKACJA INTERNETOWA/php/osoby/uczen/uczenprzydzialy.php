@@ -108,28 +108,33 @@
           if ($_SESSION['ilosc_przydzialow'] <= 0) {
             echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
           } else {
-            echo '<table>';
-            echo '<caption>PRZYDZIAŁY</caption>';
+            echo '<table class="table">';
 
-            echo '<tr>';
-              echo '<th>ID</th>';
-              echo '<th>NAZWA PRZEDMIOTU</th>';
-              echo '<th>NAZWA SALI</th>';
-              echo '<th>NAZWA KLASY</th>';
-              echo '<th>IMIE NAUCZYCIELA</th>';
-              echo '<th>NAZWISKO NAUCZYCIELA</th>';
-            echo '</tr>';
+            echo '<thead class="thead-dark">';
+              echo '<tr>';
+                echo '<th scope="col">ID</th>';
+                echo '<th scope="col">NAZWA PRZEDMIOTU</th>';
+                echo '<th scope="col">NAZWA SALI</th>';
+                echo '<th scope="col">NAZWA KLASY</th>';
+                echo '<th scope="col">IMIE NAUCZYCIELA</th>';
+                echo '<th scope="col">NAZWISKO NAUCZYCIELA</th>';
+              echo '</tr>';
+            echo '</thead>';
+
+            echo '<tbody>';
 
             for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
               echo '<tr>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['id'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['nazwa'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['imie'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['nazwisko'].'</th>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['id'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['imie'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
               echo '</tr>';
             }
+
+            echo '</tbody>';
 
             echo '</table>';
           }

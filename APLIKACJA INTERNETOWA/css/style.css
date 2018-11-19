@@ -11,19 +11,7 @@
 	margin: 10px 0;
 }
 
-
-/*---------------------------TYMCZASOWO---------------------------*/
-table {
-	width: 85%;
-	margin: 0 auto;
+.table {
+	text-align: center;
 	font-size: .7em;
-}
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 3px;
-    text-align: left;
 }

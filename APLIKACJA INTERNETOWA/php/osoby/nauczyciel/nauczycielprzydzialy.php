@@ -88,23 +88,26 @@
           if ($_SESSION['ilosc_przydzialow'] <= 0) {
             echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
           } else {
-            echo '<table>';
-            echo '<caption>PRZYDZIAŁY</caption>';
+            echo '<table class="table">';
+            echo '<thead class="thead-dark">';
+              echo '<tr>';
+                echo '<th>ID</th>';
+                echo '<th>NAZWA PRZEDMIOTU</th>';
+                echo '<th>NAZWA KLASY</th>';
+              echo '</tr>';
+            echo '</thead>';
 
-            echo '<tr>';
-              echo '<th>ID</th>';
-              echo '<th>NAZWA PRZEDMIOTU</th>';
-              echo '<th>NAZWA KLASY</th>';
-            echo '</tr>';
+            echo '<tbody>';
 
             for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
               echo '<tr>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['id'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</th>';
-                echo '<th>'.$_SESSION['przydzial'.$i]['nazwa'].'</th>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['id'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</td>';
+                echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
               echo '</tr>';
             }
 
+            echo '</tbody>';
             echo '</table>';
           }
         ?>

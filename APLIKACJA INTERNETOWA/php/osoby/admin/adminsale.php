@@ -185,23 +185,26 @@
         if ($_SESSION['ilosc_sal'] == 0) {
           echo '<p>ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
         } else {
-          echo '<table>';
-          echo '<caption>SALA</caption>';
+          echo '<table class="table">';
+          echo '<thead class="thead-dark">';
+            echo '<tr>';
+              echo '<th>NUMER</th>';
+              echo '<th>ID</th>';
+              echo '<th>NAZWA</th>';
+            echo '</tr>';
+          echo '</thead>';
 
-          echo '<tr>';
-            echo '<th>NUMER</th>';
-            echo '<th>ID</th>';
-            echo '<th>NAZWA</th>';
-          echo '</tr>';
+          echo '<tbody>';
 
           for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
             echo '<tr>';
-              echo '<th>'.$i.'</th>';
-              echo '<th>'.$_SESSION['sala'.$i]['id'].'</th>';
-              echo '<th>'.$_SESSION['sala'.$i]['nazwa'].'</th>';
+              echo '<td>'.$i.'</td>';
+              echo '<td>'.$_SESSION['sala'.$i]['id'].'</td>';
+              echo '<td>'.$_SESSION['sala'.$i]['nazwa'].'</td>';
             echo '</tr>';
           }
 
+          echo '</tbody>';
           echo '</table>';
         }
 

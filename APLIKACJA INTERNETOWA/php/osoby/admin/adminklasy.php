@@ -289,24 +289,28 @@
         if ($_SESSION['ilosc_klas'] == 0) {
           echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
         } else {
-          echo '<table>';
+          echo '<table class="table">';
+          echo '<thead class="thead-dark">';
+            echo '<tr>';
+              echo '<th>NUMER</div>';
+              echo '<th>ID</th>';
+              echo '<th>NAZWA</th>';
+              echo '<th>OPIS</th>';
+            echo '</tr>';
+          echo '</thead>';
 
-          echo '<tr>';
-            echo '<th>NUMER</div>';
-            echo '<th>ID</th>';
-            echo '<th>NAZWA</th>';
-            echo '<th>OPIS</th>';
-          echo '</tr>';
+          echo '<tbody>';
 
           for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
             echo '<tr>';
-              echo '<th>'.$i.'</div>';
-              echo '<th>'.$_SESSION['klasa'.$i]['id'].'</th>';
-              echo '<th>'.$_SESSION['klasa'.$i]['nazwa'].'</th>';
-              echo '<th>'.$_SESSION['klasa'.$i]['opis'].'</th>';
+              echo '<td>'.$i.'</td>';
+              echo '<td>'.$_SESSION['klasa'.$i]['id'].'</td>';
+              echo '<td>'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
+              echo '<td>'.$_SESSION['klasa'.$i]['opis'].'</td>';
             echo '</tr>';
           }
 
+          echo '</tbody>';
           echo '</table>';
         }
       ?>
