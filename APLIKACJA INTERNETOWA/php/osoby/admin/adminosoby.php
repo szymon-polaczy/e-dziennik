@@ -846,9 +846,9 @@
         </div>
       </form>
     </section>
-  </main>
 
-  <a href="../wszyscy/dziennik.php"><button class="cofnij-btn">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+  </main>
 
   <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
