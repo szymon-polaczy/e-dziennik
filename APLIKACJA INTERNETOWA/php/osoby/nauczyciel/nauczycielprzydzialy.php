@@ -85,16 +85,26 @@
         <h2>ZOBACZ PRZYDZIAŁY</h2>
         <?php
           if ($_SESSION['ilosc_przydzialow'] <= 0) {
-            echo '<div class="wiersz-przydzial" style="color: #f33">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</div>';
+            echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
           } else {
-            echo '<div class="wiersz-przydzial"> ID | NAZWA PRZEDMIOTU | NAZWA KLASY </div>';
+            echo '<table>';
+            echo '<caption>PRZYDZIAŁY</caption>';
+
+            echo '<tr>';
+              echo '<th>ID</th>';
+              echo '<th>NAZWA PRZEDMIOTU</th>';
+              echo '<th>NAZWA KLASY</th>';
+            echo '</tr>';
+
             for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
-              echo '<div class="wiersz-przydzial">';
-                echo '<div>'.$_SESSION['przydzial'.$i]['id'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['nazwa'].'</div>';
-              echo '</div>';
+              echo '<tr>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['id'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['nazwa'].'</th>';
+              echo '</tr>';
             }
+
+            echo '</table>';
           }
         ?>
       </form>

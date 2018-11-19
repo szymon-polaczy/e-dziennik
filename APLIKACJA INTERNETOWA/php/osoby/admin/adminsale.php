@@ -180,22 +180,30 @@
   <main>
     <section>
       <h2>ZOBACZ SALE</h2>
-      <div class="wiersz-sala">
-        <div class="kolumna-numer">NUMER</div>
-        <div class="kolumna-id">ID</div>
-        <div class="kolumna-nazwa">NAZWA</div>
-      </div>
       <?php
-        for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-          echo '<div class="wiersz-sala">';
-            echo '<div class="kolumna kolumna-numer">'.$i.'</div>';
-            echo '<div class="kolumna kolumna-id">'.$_SESSION['sala'.$i]['id'].'</div>';
-            echo '<div class="kolumna kolumna-nazwa">'.$_SESSION['sala'.$i]['nazwa'].'</div>';
-          echo '</div>';
-        }
         if ($_SESSION['ilosc_sal'] == 0) {
-          echo '<div class="wiersz-sala">ŻADNA SALA NIE ISTNIEJE W BAZIE</div>';
+          echo '<p>ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
+        } else {
+          echo '<table>';
+          echo '<caption>SALA</caption>';
+
+          echo '<tr>';
+            echo '<th>NUMER</th>';
+            echo '<th>ID</th>';
+            echo '<th>NAZWA</th>';
+          echo '</tr>';
+
+          for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
+            echo '<tr>';
+              echo '<th>'.$i.'</th>';
+              echo '<th>'.$_SESSION['sala'.$i]['id'].'</th>';
+              echo '<th>'.$_SESSION['sala'.$i]['nazwa'].'</th>';
+            echo '</tr>';
+          }
+
+          echo '</table>';
         }
+
       ?>
     </section>
     <section>

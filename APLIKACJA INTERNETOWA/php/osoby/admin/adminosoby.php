@@ -617,67 +617,108 @@
       <?php
         //HEHE to się nigdy nie wydarzy
         if ($_SESSION['ilosc_osob'] == 0) {
-          echo '<div class="wiersz-osoba">Nie ma żadnych osób w bazie</div>';
+          echo '<p>Nie ma żadnych osób w bazie</p>';
         }
 
         //WYŚWIETLAM ADMINISTATORÓW
-        for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
-          if ($i == 0)
-            echo '<div class="wiersz-osoba"><h3>ADMINISTRATORZY</h3></div>';
+        echo '<table>';
+        echo '<caption>ADMINISTRATORZY</caption>';
 
+        echo '<tr>';
+        echo '<th>ID</th>';
+        echo '<th>IMIE</th>';
+        echo '<th>NAZWISKO</th>';
+        echo '<th>EMAIL</th>';
+        echo '<th>HASŁO</th>';
+        echo '<th>UPRAWNIENIA</th>';
+        echo '</tr>';
+
+        for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "a") {
-            echo '<div class="wiersz-osoba">';
-            echo '<div>'.$_SESSION['osoba'.$i]['id'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['imie'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['nazwisko'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['email'].'</div>';
-            echo '<div>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['uprawnienia'].'</div>';
-            echo '</div>';
+            echo '<tr>';
+            echo '<th>'.$_SESSION['osoba'.$i]['id'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['imie'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['nazwisko'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['email'].'</th>';
+            echo '<th>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['uprawnienia'].'</th>';
+            echo '</tr>';
           }
         }
+
+        echo '</table>';
+
+
 
         //WYŚWIETLAM NAUCZYCIELi
-        for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
-          if ($i == 0)
-            echo '<div class="wiersz-osoba"><h3>NAUCZYCIELE</h3></div>';
+        echo '<table>';
+        echo '<caption>NAUCZYCIELE</caption>';
 
+        echo '<tr>';
+        echo '<th>ID</th>';
+        echo '<th>IMIE</th>';
+        echo '<th>NAZWISKO</th>';
+        echo '<th>EMAIL</th>';
+        echo '<th>HASŁO</th>';
+        echo '<th>UPRAWNIENIA</th>';
+        echo '<th>ID SALI</th>';
+        echo '<th>NAZWA SALI</th>';
+        echo '</tr>';
+
+        for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "n") {
-            echo '<div class="wiersz-osoba">';
-            echo '<div>'.$_SESSION['osoba'.$i]['id'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['imie'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['nazwisko'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['email'].'</div>';
-            echo '<div>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['uprawnienia'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['id_sala'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['sala_nazwa'].'</div>';
-            echo '</div>';
+            echo '<tr>';
+            echo '<th>'.$_SESSION['osoba'.$i]['id'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['imie'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['nazwisko'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['email'].'</th>';
+            echo '<th>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['uprawnienia'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['id_sala'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['sala_nazwa'].'</th>';
+            echo '</tr>';
           }
         }
+
+        echo '</table>';
+
+
 
         //UCZNIOWIE
+        echo '<table>';
+        echo '<caption>UCZNIOWIE</caption>';
+
+        echo '<tr>';
+        echo '<th>ID</th>';
+        echo '<th>IMIE</th>';
+        echo '<th>NAZWISKO</th>';
+        echo '<th>EMAIL</th>';
+        echo '<th>HASŁO</th>';
+        echo '<th>UPRAWNIENIA</th>';
+        echo '<th>DATA URODZENIA</th>';
+        echo '<th>ID KLASY</th>';
+        echo '<th>NAZWA KLASY</th>';
+        echo '<th>OPIS KLASY</th>';
+        echo '</tr>';
+
         for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
-          $ktory = 0;
-
-          if ($i == 0)
-            echo '<div class="wiersz-osoba"><h3>UCZNIOWIE</h3></div>';
-
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "u") {
-            echo '<div class="wiersz-osoba">';
-            echo '<div>'.$_SESSION['osoba'.$i]['id'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['imie'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['nazwisko'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['email'].'</div>';
-            echo '<div>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['uprawnienia'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['data_urodzenia'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['id_klasa'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['klasa_nazwa'].'</div>';
-            echo '<div>'.$_SESSION['osoba'.$i]['klasa_opis'].'</div>';
-            echo '</div>';
+            echo '<tr>';
+            echo '<th>'.$_SESSION['osoba'.$i]['id'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['imie'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['nazwisko'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['email'].'</th>';
+            echo '<th>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['uprawnienia'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['data_urodzenia'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['id_klasa'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['klasa_nazwa'].'</th>';
+            echo '<th>'.$_SESSION['osoba'.$i]['klasa_opis'].'</th>';
+            echo '</tr>';
           }
         }
+
+        echo '</table>';
       ?>
     </section>
     <section>

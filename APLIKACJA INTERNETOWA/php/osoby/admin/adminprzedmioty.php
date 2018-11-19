@@ -210,21 +210,28 @@
   <main>
     <section>
       <h2>ZOBACZ PRZEDMIOT</h2>
-      <div class="wiersz-przedmiot">
-        <div class="kolumna-numer">NUMER</div>
-        <div class="kolumna-id">ID</div>
-        <div class="kolumna-nazwa">NAZWA</div>
-      </div>
       <?php
-        for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++) {
-          echo '<div class="wiersz-przedmiot">';
-            echo '<div class="kolumna kolumna-numer">'.$i.'</div>';
-            echo '<div class="kolumna kolumna-id">'.$_SESSION['przedmiot'.$i]['id'].'</div>';
-            echo '<div class="kolumna kolumna-nazwa">'.$_SESSION['przedmiot'.$i]['nazwa'].'</div>';
-          echo '</div>';
-        }
         if ($_SESSION['ilosc_przedmiotow'] == 0) {
-          echo '<div class="wiersz-przedmiot">ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</div>';
+          echo '<p>ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
+        } else {
+          echo '<table>';
+          echo '<caption>PRZEDMIOT</caption>';
+
+          echo '<tr>';
+            echo '<th>NUMER</th>';
+            echo '<th>ID</th>';
+            echo '<th>NAZWA</th>';
+          echo '</tr>';
+
+          for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++) {
+            echo '<tr>';
+              echo '<th>'.$i.'</th>';
+              echo '<th>'.$_SESSION['przedmiot'.$i]['id'].'</th>';
+              echo '<th>'.$_SESSION['przedmiot'.$i]['nazwa'].'</th>';
+            echo '</tr>';
+          }
+
+          echo '</table>';
         }
       ?>
     </section>

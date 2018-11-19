@@ -105,19 +105,32 @@
         <h2>ZOBACZ PRZYDZIAŁY</h2>
         <?php
           if ($_SESSION['ilosc_przydzialow'] <= 0) {
-            echo '<div class="wiersz-przydzial" style="color: #f33">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</div>';
+            echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
           } else {
-            echo '<div class="wiersz-przydzial"> ID | PRZEDMIOT | SALA | KLASA | IMIE NAUCZYCIELA | NAZWISKO NAUCZYCIELA </div>';
+            echo '<table>';
+            echo '<caption>PRZYDZIAŁY</caption>';
+
+            echo '<tr>';
+              echo '<th>ID</th>';
+              echo '<th>NAZWA PRZEDMIOTU</th>';
+              echo '<th>NAZWA SALI</th>';
+              echo '<th>NAZWA KLASY</th>';
+              echo '<th>IMIE NAUCZYCIELA</th>';
+              echo '<th>NAZWISKO NAUCZYCIELA</th>';
+            echo '</tr>';
+
             for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
-              echo '<div class="wiersz-przydzial">';
-                echo '<div>'.$_SESSION['przydzial'.$i]['id'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['nazwa'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['imie'].'</div>';
-                echo '<div>'.$_SESSION['przydzial'.$i]['nazwisko'].'</div>';
-              echo '</div>';
+              echo '<tr>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['id'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['nazwa'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['imie'].'</th>';
+                echo '<th>'.$_SESSION['przydzial'.$i]['nazwisko'].'</th>';
+              echo '</tr>';
             }
+
+            echo '</table>';
           }
         ?>
       </form>

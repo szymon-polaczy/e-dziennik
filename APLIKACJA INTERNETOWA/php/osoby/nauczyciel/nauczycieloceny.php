@@ -259,27 +259,32 @@
         <?php
 
         if ($_SESSION['ilosc_ocen'] == 0) {
-          echo 'Nie ma żadnych ocen do wyświetlania';
+          echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
         } else {
-          echo '<div class="wiersz-ocena">';
-            echo '<div>ID</div>';
-            echo '<div>NAZWISKO NAUCZYCIELA</div>';
-            echo '<div>IMIE UCZNIA</div>';
-            echo '<div>NAZWISKO UCZNIA</div>';
-            echo '<div>DATA I GODZINA</div>';
-            echo '<div>WARTOŚĆ</div>';
-          echo '</div>';
+          echo '<table>';
+          echo '<caption>OCENY</caption>';
+
+          echo '<tr>';
+            echo '<th>ID</th>';
+            echo '<th>NAZWISKO NAUCZYCIELA</th>';
+            echo '<th>IMIE UCZNIA</th>';
+            echo '<th>NAZWISKO UCZNIA</th>';
+            echo '<th>DATA I GODZINA</th>';
+            echo '<th>WARTOŚĆ</th>';
+          echo '</tr>';
 
           for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
-            echo '<div class="wiersz-ocena">';
-              echo '<div>'.$_SESSION['ocena'.$i]['id'].'</div>';
-              echo '<div>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</div>';
-              echo '<div>'.$_SESSION['ocena'.$i]['uczen-imie'].'</div>';
-              echo '<div>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</div>';
-              echo '<div>'.$_SESSION['ocena'.$i]['data'].'</div>';
-              echo '<div>'.$_SESSION['ocena'.$i]['wartosc'].'</div>';
-            echo '</div>';
+            echo '<tr>';
+              echo '<th>'.$_SESSION['ocena'.$i]['id'].'</th>';
+              echo '<th>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</th>';
+              echo '<th>'.$_SESSION['ocena'.$i]['uczen-imie'].'</th>';
+              echo '<th>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</th>';
+              echo '<th>'.$_SESSION['ocena'.$i]['data'].'</th>';
+              echo '<th>'.$_SESSION['ocena'.$i]['wartosc'].'</th>';
+            echo '</tr>';
           }
+
+          echo '</table>';
         }
 
         ?>

@@ -286,7 +286,7 @@
       <h2>ZOBACZ KLASY</h2>
       <?php
         if ($_SESSION['ilosc_klas'] == 0) {
-          echo '<div class="wiersz-klasa">ŻADNA KLASA NIE ISTNIEJE W BAZIE</div>';
+          echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table>';
 
