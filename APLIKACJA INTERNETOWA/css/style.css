@@ -13,6 +13,7 @@
 
 main {
 	padding: 100px 0;
+	text-align: center;
 }
 
 .table {
@@ -21,17 +22,32 @@ main {
 }
 
 form {
+	text-align: left;
 	padding: 0 30px;
-}
-
-.uzytk-blad {
-	color: #f00;
 }
 
 form h2 {
 	text-align: center;
 	font-size: 2.5em;
 	padding: 10px 0;
+	color: #343a40;
+}
+
+.uzytk-blad {
+	color: #f00;
+}
+
+.form-group {
+	width: 100%;
+}
+
+.form-control:focus {
+	border: none;
+	outline: none;
+}
+
+.form-control:focus {
+	box-shadow: 0 0 0 .2rem rgba(52,58,64,.5);
 }
 
 .form-inf {
