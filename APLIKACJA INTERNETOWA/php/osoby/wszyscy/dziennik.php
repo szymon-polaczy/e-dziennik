@@ -61,23 +61,23 @@
   <?php
     if ( $_SESSION['uprawnienia'] == "a") {
       echo '<h3>Rzeczy dostępne dla administratora</h3></br>';
-      echo '<a href="../admin/adminklasy.php">KLASY</a></br>';
-      echo '<a href="../admin/adminsale.php">SALE</a></br>';
-      echo '<a href="../admin/adminprzedmioty.php">PRZEDMIOTY</a></br>';
-      echo '<a href="../admin/adminosoby.php">OSOBY</a></br>';
-      echo '<a href="../admin/adminprzydzialy.php">PRZYDZIAŁY</a>';
+      echo '<a href="../admin/admin_klasy.php">KLASY</a></br>';
+      echo '<a href="../admin/admin_sale.php">SALE</a></br>';
+      echo '<a href="../admin/admin_przedmioty.php">PRZEDMIOTY</a></br>';
+      echo '<a href="../admin/admin_osoby.php">OSOBY</a></br>';
+      echo '<a href="../admin/admin_przydzialy.php">PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     } else if ( $_SESSION['uprawnienia'] == "n") {
       echo '<h3>Rzeczy dostępne dla nauczyciela</h3></br>';
-      echo '<a href="../nauczyciel/wybierzprzydzial.php">OCENY</a></br>';
-      echo '<a href="../nauczyciel/nauczycielprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
+      echo '<a href="../nauczyciel/wybierz_przydzial.php">OCENY</a></br>';
+      echo '<a href="../nauczyciel/nauczyciel_przydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     } else if ( $_SESSION['uprawnienia'] == "u") {
       echo '<h3>Rzeczy dostępne dla ucznia</h3></br>';
-      echo '<a href="../uczen/uczenoceny.php">ZOBACZ OCENY</a></br>';
-      echo '<a href="../uczen/uczenprzydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
+      echo '<a href="../uczen/uczen_oceny.php">ZOBACZ OCENY</a></br>';
+      echo '<a href="../uczen/uczen_przydzialy.php">ZOBACZ PRZYDZIAŁY</a>';
 
       echo '</br></br></br></br></br></br>';
     }
