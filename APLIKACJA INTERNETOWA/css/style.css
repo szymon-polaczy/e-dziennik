@@ -19,3 +19,25 @@ main {
 	text-align: center;
 	font-size: .7em;
 }
+
+form {
+	padding: 0 30px;
+}
+
+.uzytk-blad {
+	color: #f00;
+}
+
+form h2 {
+	text-align: center;
+	font-size: 2.5em;
+	padding: 10px 0;
+}
+
+.form-inf {
+	text-align: center;
+}
+
+.form-inf button {
+	margin-top: 10px;
+}

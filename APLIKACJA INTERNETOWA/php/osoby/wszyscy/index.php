@@ -32,20 +32,33 @@
   </header>
 
   <main>
-    <form action="zadania/logowanie.php" method="post">
-      <h3>Zaloguj Się</h3>
-      <input type="email" placeholder="Email" name="email"/>
-      <input type="password" placeholder="Hasło" name="haslo"/>
-      <button type="submit">Zaloguj</button>
-      <div class="info">
-        <?php
-          if (isset($_SESSION['login_blad'])) {
-            echo '<p>'.$_SESSION['login_blad'].'</p>';
-            unset($_SESSION['login_blad']);
-          }
-        ?>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="zadania/logowanie.php" method="post">
+            <h2>Zaloguj Się</h2>
+            <div class="form-group">
+              <label for="logowanieEmail">Wpisz Email</label>
+              <input id="logowanieEmail" class="form-control" type="email" placeholder="Email" name="email">
+            </div>
+            <div class="form-group">
+              <label for="logowanieHaslo">Wpisz Hasło</label>
+              <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo">
+            </div>
+            <div class="form-group form-inf">
+              <small id="logowaniePomoc" class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
+              <?php
+                if (isset($_SESSION['login_blad'])) {
+                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['login_blad'].'</small>';
+                  unset($_SESSION['login_blad']);
+                }
+              ?>
+              <button class="btn btn-dark" type="submit">Zaloguj Się</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
+    </div>
   </main>
 
   <footer class="fixed-bottom bg-dark glowna-stopka">
