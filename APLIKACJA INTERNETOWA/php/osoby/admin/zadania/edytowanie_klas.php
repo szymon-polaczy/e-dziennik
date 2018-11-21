@@ -1,95 +1,62 @@
 <?php
   session_start();
-  mysqli_report(MYSQLI_REPORT_STRICT);
 
   require_once "../../../polacz.php";
   require_once "../../../wg_pdo_mysql.php";
 
-  if (isset($_POST['nazwa']) && isset($_POST['opis']) && isset($_POST['wyb_klasa'])) {
+  if (isset($_POST['nazwa']) && isset($_POST['opis'])) {
     $opis = $_POST['opis'];
     $nazwa = $_POST['nazwa'];
     $wyb_klasa = $_POST['wyb_klasa'];
+
+    $wszystko_ok = true;
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    if (strlen($nazwa) > 0 && strlen($opis) > 0) {
-      //------------------------------------DLA OBU
-      $wszystko_ok = true;
+    //Sprawdzam czy cokolwiek się zmieniło
+    if ($opis != $orginalne['opis'] || $nazwa != $orginalne['nazwa']) {
+      $wszystko_ok = false;
+      $_SESSION['edytowanie_klas'] = "Nie nastąpiła żadna zmiana, klasa nie została zedytowana!";
+    }
 
-      if(strlen($nazwa) < 2 || strlen($nazwa) > 20) {
+    //Wyciągam oryginalne wartości z bazy danych
+    $sql = "SELECT nazwa, opis FROM klasa WHERE id='$wyb_klasa'";
+    $orginalne = $pdo->sql_record($sql);
+
+    if ($nazwa != $orginalne['nazwa']) {
+      //Sprawdzam długośc nazwy
+      if (strlen($nazwa) < 2 || strlen($nazwa) > 20) {
         $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Nazwa musi mieć pomiędzy 2 a 20 znaków!";
+        $_SESSION['edytowanie_klas'] = "Nazwa klasy musi mieć pomiędzy 2 a 20 znaków!";
       }
 
-      if(strlen($opis) < 3 || strlen($opis) > 100) {
+      //Sprawdzanie czy istnieje klasa o takiej nazwie w bazie danych
+      $sql = "SELECT id FROM klasa WHERE nazwa='$nazwa'";
+
+      $rezultat = $pdo->sql_field($sql);
+
+      if (count($rezultat) > 0) {
         $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Opis musi mieć pomiędzy 3 a 100 znaków!";
+        $_SESSION['edytowanie_klas'] = "Klasa o takiej nazwie istnieje już w bazie, wybierz inną nazwę!";
       }
+    }
 
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($nazwa == $_SESSION['klasa'.$i]['nazwa']) {
-          $wszystko_ok = false;
-          $_SESSION['edytowanie_klas'] = "Klasa o takiej nazwie już istnieje!";
-          break;
-        }
-      }
-
-      //Jeśli wszystlo poszło ok to zmieniam zmieniam opis
-      if ($wszystko_ok) {
-        $sql = "UPDATE klasa SET nazwa='$nazwa', opis='$opis' WHERE nazwa='$wyb_klasa'";
-
-        if ($rezultat = $pdo->sql_query($sql) > 0)
-          $_SESSION['edytowanie_klas'] = "Klasa została edytowana!";
-        else
-          $_SESSION['edytowanie_klas'] = "Klasa nie została edytowana!";
-      }
-    } else if (strlen($nazwa) > 0) {
-      //-----------------------------------DLA NAZWY
-      $wszystko_ok = true;
-
-      if(strlen($nazwa) < 2 || strlen($nazwa) > 20) {
+    if ($opis != $orginalne['opis']) {
+      //Sprawdzam długość opisu
+      if (strlen($opis) < 3 || strlen($opis) > 100) {
         $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Nazwa musi mieć pomiędzy 2 a 20 znaków!";
+        $_SESSION['edytowanie_klas'] = "Opis klasy musi mieć pomiędzy 2 a 20 znaków!";
       }
+    }
 
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($nazwa == $_SESSION['klasa'.$i]['nazwa']) {
-          $wszystko_ok = false;
-          $_SESSION['edytowanie_klas'] = "Klasa o takiej nazwie już istnieje!";
-          break;
-        }
-      }
+    //Jeśli wszystlo poszło ok to dodaję klasę
+    if ($wszystko_ok) {
+      $sql = "UPDATE klasa SET nazwa='$nazwa', opis='$opis' WHERE id='$wyb_klasa'";
 
-      //Jeśli wszystlo poszło ok to zmieniam zmieniam nazwe
-      if ($wszystko_ok) {
-        $sql = "UPDATE klasa SET nazwa='$nazwa' WHERE nazwa='$wyb_klasa'";
-
-        if ($rezultat = $pdo->sql_query($sql) > 0)
-          $_SESSION['edytowanie_klas'] = "Nazwa została zmieniona!";
-        else
-          $_SESSION['edytowanie_klas'] = "Nazwa nie została zmieniona!";
-      }
-    } else if (strlen($opis) > 0) {
-      //----------------------------------DLA OPISU
-      $wszystko_ok = true;
-
-      if(strlen($opis) < 3 || strlen($opis) > 100) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Opis musi mieć pomiędzy 3 a 100 znaków!";
-      }
-
-      //Jeśli wszystlo poszło ok to zmieniam zmieniam opis
-      if ($wszystko_ok) {
-        $sql = "UPDATE klasa SET opis='$opis' WHERE nazwa='$wyb_klasa'";
-
-        if ($rezultat = $pdo->sql_query($sql) > 0)
-          $_SESSION['edytowanie_klas'] = "Opis został zmieniony!";
-        else
-          $_SESSION['edytowanie_klas'] = "Opis nie został zmieniony!";
-      }
-    } else {
-      $_SESSION['edytowanie_klas'] = "Wypełnij pola edycji!";
+      if ($rezultat = $pdo->sql_query($sql) > 0)
+        $_SESSION['edytowanie_klas'] = "Klasa została edytowana!";
+      else
+        $_SESSION['edytowanie_klas'] = "Klasa nie została edytowana!";
     }
   }
 
   header('Location: ../admin_klasy.php');
-?>

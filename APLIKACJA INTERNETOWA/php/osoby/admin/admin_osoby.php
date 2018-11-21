@@ -834,7 +834,7 @@
       </form>
     </section>
     <section>
-      <form method="post" action="edytowanieosob.php">
+      <form method="post" action="edytowanie_osob.php">
         <h2>Edytowanie osób</h2>
         <?php
           //Jeśli nikogo nie ma, ahem nigdy się nie wydarzy

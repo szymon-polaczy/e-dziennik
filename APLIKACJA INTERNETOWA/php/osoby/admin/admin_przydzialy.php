@@ -459,7 +459,7 @@
       </form>
     </section>
     <section>
-      <form method="post" action="edytowanieprzydzialow.php">
+      <form method="post" action="edytowanie_przydzialow.php">
         <h2>EDYTUJ PRZYDZIAŁY</h2>
         <?php
           if ($_SESSION['ilosc_przydzialow'] <= 0) {

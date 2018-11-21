@@ -73,6 +73,10 @@
     </nav>
   </header>
 
+  <main>
+    <h2>You made it boi</h2>
+  </main>
+
   <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
   </footer>

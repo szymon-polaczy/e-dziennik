@@ -1,35 +1,24 @@
 <?php
   session_start();
-  mysqli_report(MYSQLI_REPORT_STRICT);
-
-  if(!isset($_SESSION['zalogowany'])) {
-    header('Location: ../wszyscy/index.php');
-    exit();
-  }
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
-  //------------------------------------------------WYCIĄGANIE KLAS DO OBEJRZENIA-----------------------------------------------//
+  //Wyciąganie wybranej klasy
+  $wyb_klasa = $_GET['wyb_klasa'];
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  $sql = "SELECT * FROM klasa";
+  $sql = "SELECT * FROM klasa WHERE id='$wyb_klasa'";
 
-  $rezultat = $pdo->sql_table($sql);
-
-  $_SESSION['ilosc_klas'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-    $_SESSION['klasa'.$i] = $rezultat[$i];
+  $rezultat = $pdo->sql_record($sql);
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-  <title>BDG DZIENNIK - Zobacz, Dodaj, Usuń, Edytuj Sale</title>
+  <title>BDG DZIENNIK - Edytuj Klasę</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="Szymon Polaczy">
@@ -38,7 +27,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/style.css">
 </head>
-<body>
+<body class="index-body">
   <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <a href="../wszyscy/dziennik.php" class="navbar-brand">BDG DZIENNIK</a>
@@ -90,78 +79,34 @@
   </header>
 
   <main>
-    <section>
-      <div class="container p-0">
-        <div class="row">
-          <div class="col-12">
-            <form method="post" action="zadania/dodawanie_klas.php">
-              <h2>DODAJ KLASĘ</h2>
-              <div class="form-group">
-                <label for="dodanieNazwa">Wpisz Nazwę</label>
-                <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa"/>
-              </div>
-              <div class="form-group">
-                <label for="dodanieOpis">Wpisz Opis</label>
-                <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis"/>
-              </div>
-              <div class="form-group form-inf">
+    <div class="container p-0">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="zadania/edytowanie_klas.php" method="post">
+            <h2>EDYTUJ KLASĘ</h2>
+            <div class="form-group">
+              <label for="zmianaNazwy">Edytuj Nazwę</label>
+              <?php echo '<input id="zmianaNazwy" class="form-control" type="text" value="'.$rezultat['nazwa'].'" name="nazwa"/>'; ?>
+            </div>
+            <div class="form-group">
+              <label for="zmianaOpisu">Edytuj Opis</label>
+              <?php echo '<input id="zmianaOpisu" class="form-control" type="text" value="'.$rezultat['opis'].'" name="opis"/>'; ?>
+            </div>
+            <div class="form-group form-inf">
               <?php
-                if (isset($_SESSION['dodawanie_klas'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
-                  unset($_SESSION['dodawanie_klas']);
+                if (isset($_SESSION['edytowanie_klas'])) {
+                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
+                  unset($_SESSION['edytowanie_klas']);
                 }
-                ?>
+              ?>
+              <input type="hidden" value="'.$wyb_klasa.'" name="wyb_klasa"/>
 
-              <button class="btn btn-dark" type="submit">Dodaj</button>
-            </form>
-          </div>
+              <button class="btn btn-dark" type="submit">Edytuj</button>
+            </div>
+          </form>
         </div>
       </div>
-    </section>
-    <section>
-      <h2>ZOBACZ KLASY</h2>
-      <?php
-        if (isset($_SESSION['usuwanie_klas'])) {
-          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['usuwanie_klas'].'</small>';
-          unset($_SESSION['usuwanie_klas']);
-        }
-
-        if (isset($_SESSION['edytowanie_klas'])) {
-          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
-          unset($_SESSION['edytowanie_klas']);
-        }
-
-        if ($_SESSION['ilosc_klas'] == 0) {
-          echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th>#</div>';
-              echo '<th>NAZWA</th>';
-              echo '<th>OPIS</th>';
-              echo '<th>EDYTOWANIE</th>';
-              echo '<th>USUWANIE</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-            echo '<tr>';
-              echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['klasa'.$i]['opis'].'</td>';
-              echo '<td><a href="edytowanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td><a href="zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Usuń</a></td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
-      ?>
-    </section>
+    </div>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
   </main>
