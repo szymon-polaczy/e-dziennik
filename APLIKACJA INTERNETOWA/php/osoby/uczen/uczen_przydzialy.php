@@ -149,7 +149,7 @@
 
             echo '<thead class="thead-dark">';
               echo '<tr>';
-                echo '<th scope="col">ID</th>';
+                echo '<th scope="col">#</th>';
                 echo '<th scope="col">NAZWA PRZEDMIOTU</th>';
                 echo '<th scope="col">NAZWA SALI</th>';
                 echo '<th scope="col">NAZWA KLASY</th>';
@@ -162,7 +162,7 @@
 
             for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
               echo '<tr>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['id'].'</td>';
+                echo '<td>'.$i.'</td>';
                 echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
                 echo '<td>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
                 echo '<td>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';

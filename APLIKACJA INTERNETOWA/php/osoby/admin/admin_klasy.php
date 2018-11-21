@@ -95,8 +95,7 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th>NUMER</div>';
-              echo '<th>ID</th>';
+              echo '<th>#</div>';
               echo '<th>NAZWA</th>';
               echo '<th>OPIS</th>';
               echo '<th>USUWANIE</th>';
@@ -108,7 +107,6 @@
           for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
             echo '<tr>';
               echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['klasa'.$i]['id'].'</td>';
               echo '<td>'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
               echo '<td>'.$_SESSION['klasa'.$i]['opis'].'</td>';
               echo '<td><a href="zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Usuń</a></td>';

@@ -662,7 +662,7 @@
         echo '<table class="table">';
         echo '<thead class="thead-dark">';
           echo '<tr>';
-            echo '<th>ID</th>';
+            echo '<th>#</th>';
             echo '<th>IMIE</th>';
             echo '<th>NAZWISKO</th>';
             echo '<th>EMAIL</th>';
@@ -676,7 +676,7 @@
         for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "a") {
             echo '<tr>';
-            echo '<td>'.$_SESSION['osoba'.$i]['id'].'</td>';
+            echo '<td>'.$i.'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['email'].'</td>';
@@ -695,13 +695,12 @@
         echo '<table class="table">';
         echo '<thead class="thead-dark">';
           echo '<tr>';
-            echo '<th>ID</th>';
+            echo '<th>#</th>';
             echo '<th>IMIE</th>';
             echo '<th>NAZWISKO</th>';
             echo '<th>EMAIL</th>';
             echo '<th>HASŁO</th>';
             echo '<th>UPRAWNIENIA</th>';
-            echo '<th>ID SALI</th>';
             echo '<th>NAZWA SALI</th>';
           echo '</tr>';
         echo '</thead>';
@@ -711,13 +710,12 @@
         for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "n") {
             echo '<tr>';
-            echo '<td>'.$_SESSION['osoba'.$i]['id'].'</td>';
+            echo '<td>'.$i.'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['email'].'</td>';
             echo '<td>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
-            echo '<td>'.$_SESSION['osoba'.$i]['id_sala'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['sala_nazwa'].'</td>';
             echo '</tr>';
           }
@@ -732,14 +730,13 @@
         echo '<table class="table">';
         echo '<thead class="thead-dark">';
           echo '<tr>';
-            echo '<th>ID</th>';
+            echo '<th>#</th>';
             echo '<th>IMIE</th>';
             echo '<th>NAZWISKO</th>';
             echo '<th>EMAIL</th>';
             echo '<th>HASŁO</th>';
             echo '<th>UPRAWNIENIA</th>';
             echo '<th>DATA URODZENIA</th>';
-            echo '<th>ID KLASY</th>';
             echo '<th>NAZWA KLASY</th>';
             echo '<th>OPIS KLASY</th>';
           echo '</tr>';
@@ -750,14 +747,13 @@
         for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
           if ($_SESSION['osoba'.$i]['uprawnienia'] == "u") {
             echo '<tr>';
-            echo '<td>'.$_SESSION['osoba'.$i]['id'].'</td>';
+            echo '<td>'.$i.'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['email'].'</td>';
             echo '<td>'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['data_urodzenia'].'</td>';
-            echo '<td>'.$_SESSION['osoba'.$i]['id_klasa'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['klasa_nazwa'].'</td>';
             echo '<td>'.$_SESSION['osoba'.$i]['klasa_opis'].'</td>';
             echo '</tr>';

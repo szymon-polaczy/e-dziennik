@@ -386,7 +386,7 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th>ID</th>';
+              echo '<th>#</th>';
               echo '<th>IMIE NAUCZYCIELA</th>';
               echo '<th>NAZWISKO NAUCZYCIELA</th>';
               echo '<th>NAZWA PRZEDMIOTU</th>';
@@ -398,7 +398,7 @@
 
           for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
             echo '<tr>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['id'].'</td>';
+              echo '<td>'.$i.'</td>';
               echo '<td>'.$_SESSION['przydzial'.$i]['nauczyciel-imie'].'</td>';
               echo '<td>'.$_SESSION['przydzial'.$i]['nauczyciel-nazwisko'].'</td>';
               echo '<td>'.$_SESSION['przydzial'.$i]['przedmiot-nazwa'].'</td>';

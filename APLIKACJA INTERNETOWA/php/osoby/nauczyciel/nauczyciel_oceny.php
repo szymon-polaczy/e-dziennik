@@ -301,7 +301,7 @@
         echo '<table class="table">';
         echo '<thead class="thead-dark">';
           echo '<tr>';
-            echo '<th>ID</th>';
+            echo '<th>#</th>';
             echo '<th>NAZWISKO NAUCZYCIELA</th>';
             echo '<th>IMIE UCZNIA</th>';
             echo '<th>NAZWISKO UCZNIA</th>';
@@ -314,7 +314,7 @@
 
         for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
           echo '<tr>';
-            echo '<td>'.$_SESSION['ocena'.$i]['id'].'</td>';
+            echo '<td>'.$i.'</td>';
             echo '<td>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</td>';
             echo '<td>'.$_SESSION['ocena'.$i]['uczen-imie'].'</td>';
             echo '<td>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</td>';
