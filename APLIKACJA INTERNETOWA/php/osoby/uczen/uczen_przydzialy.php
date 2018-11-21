@@ -126,9 +126,18 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="../wszyscy/zmien_dane.php">ZMIEŃ DANE</a>
+                <a class="dropdown-item disabled" href="#">Imie: <span class="wartosc"><?php echo $_SESSION['imie']; ?></span></a>
+                <a class="dropdown-item disabled" href="#">Nazwisko: <span class="wartosc"><?php echo $_SESSION['nazwisko']; ?></span></a>
+                <a class="dropdown-item disabled" href="#">Email: <span class="wartosc"><?php echo $_SESSION['email']; ?></span></a>
+                <?php
+                  if ($_SESSION['uprawnienia'] == "n")
+                    echo '<a class="dropdown-item disabled" href="#">Sala: <span class="wartosc">'.$_SESSION['sala_nazwa'].'</span></a>';
+                  else if ($_SESSION['uprawnienia'] == "u")
+                    echo '<a class="dropdown-item disabled" href="#">Klasa: <span class="wartosc">'.$_SESSION['klasa_nazwa'].'</span></a>';
+                ?>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGÓJ</a>
+                <a class="dropdown-item" href="zmien_dane.php">ZMIEŃ DANE</a>
+                <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
               </div>
             </div>
           </li>
@@ -139,44 +148,41 @@
 
   <main>
     <section>
-      <form method="post">
-        <h2>ZOBACZ PRZYDZIAŁY</h2>
-        <?php
-          if ($_SESSION['ilosc_przydzialow'] <= 0) {
-            echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
-          } else {
-            echo '<table class="table">';
+      <h2>ZOBACZ PRZYDZIAŁY</h2>
+      <?php
+        if ($_SESSION['ilosc_przydzialow'] <= 0) {
+          echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
+        } else {
+          echo '<table class="table">';
 
-            echo '<thead class="thead-dark">';
-              echo '<tr>';
-                echo '<th scope="col">#</th>';
-                echo '<th scope="col">NAZWA PRZEDMIOTU</th>';
-                echo '<th scope="col">NAZWA SALI</th>';
-                echo '<th scope="col">NAZWA KLASY</th>';
-                echo '<th scope="col">IMIE NAUCZYCIELA</th>';
-                echo '<th scope="col">NAZWISKO NAUCZYCIELA</th>';
-              echo '</tr>';
-            echo '</thead>';
+          echo '<thead class="thead-dark">';
+            echo '<tr>';
+              echo '<th scope="col">#</th>';
+              echo '<th scope="col">NAZWA PRZEDMIOTU</th>';
+              echo '<th scope="col">NAZWA SALI</th>';
+              echo '<th scope="col">NAZWA KLASY</th>';
+              echo '<th scope="col">IMIE NAUCZYCIELA</th>';
+              echo '<th scope="col">NAZWISKO NAUCZYCIELA</th>';
+            echo '</tr>';
+          echo '</thead>';
 
-            echo '<tbody>';
+          echo '<tbody>';
 
-            for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
-              echo '<tr>';
-                echo '<td>'.$i.'</td>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['imie'].'</td>';
-                echo '<td>'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
-              echo '</tr>';
-            }
-
-            echo '</tbody>';
-
-            echo '</table>';
+          for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
+            echo '<tr>';
+              echo '<td>'.$i.'</td>';
+              echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
+              echo '<td>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
+              echo '<td>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';
+              echo '<td>'.$_SESSION['przydzial'.$i]['imie'].'</td>';
+              echo '<td>'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
+            echo '</tr>';
           }
-        ?>
-      </form>
+
+          echo '</tbody>';
+          echo '</table>';
+        }
+      ?>
     </section>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>

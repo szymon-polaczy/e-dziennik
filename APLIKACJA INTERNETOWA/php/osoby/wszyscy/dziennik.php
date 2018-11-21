@@ -53,9 +53,18 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="zmien_dane.php">ZMIEŃ DANE</a>
+                <a class="dropdown-item disabled" href="#">Imie: <span class="wartosc"><?php echo $_SESSION['imie']; ?></span></a>
+                <a class="dropdown-item disabled" href="#">Nazwisko: <span class="wartosc"><?php echo $_SESSION['nazwisko']; ?></span></a>
+                <a class="dropdown-item disabled" href="#">Email: <span class="wartosc"><?php echo $_SESSION['email']; ?></span></a>
+                <?php
+                  if ($_SESSION['uprawnienia'] == "n")
+                    echo '<a class="dropdown-item disabled" href="#">Sala: <span class="wartosc">'.$_SESSION['sala_nazwa'].'</span></a>';
+                  else if ($_SESSION['uprawnienia'] == "u")
+                    echo '<a class="dropdown-item disabled" href="#">Klasa: <span class="wartosc">'.$_SESSION['klasa_nazwa'].'</span></a>';
+                ?>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="zadania/wyloguj.php">WYLOGÓJ</a>
+                <a class="dropdown-item" href="zmien_dane.php">ZMIEŃ DANE</a>
+                <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
               </div>
             </div>
           </li>
@@ -63,37 +72,6 @@
       </div>
     </nav>
   </header>
-
-  <main>
-    <div class="profil">
-      <h2 >PROFIL</h3>
-      <p>Imie: <span class="wartosc"><?php echo $_SESSION['imie']; ?></span></p>
-      <p>Nazwisko: <span class="wartosc"><?php echo $_SESSION['nazwisko']; ?></span></p>
-      <p>Email: <span class="wartosc"><?php echo $_SESSION['email']; ?></span></p>
-      <p>Haslo: <span class="wartosc"><?php echo substr($_SESSION['haslo'], 0, 4).'...'; ?></span></p>
-      <p>Uprawnienia:
-        <span class="wartosc">
-          <?php
-            if ($_SESSION['uprawnienia'] == "a") echo "Administrator";
-            else if ($_SESSION['uprawnienia'] == "n") echo "Nauczyciel";
-            else if ($_SESSION['uprawnienia'] == "u") echo "Uczeń";
-          ?>
-        </span>
-      </p>
-      <?php
-
-      if ($_SESSION['uprawnienia'] == "n") {
-        echo '<p>Nazwa Sali: <span class="wartosc">'.$_SESSION['sala_nazwa'].'</span></p>';
-
-      } else if ($_SESSION['uprawnienia'] == "u") {
-        echo '<p>Data urodzenia: <span class="wartosc">'.$_SESSION['data_urodzenia'].'</span></p>';
-        echo '<p>Nazwa klasy: <span class="wartosc">'.$_SESSION['klasa_nazwa'].'</span></p>';
-        echo '<p>Opis klasy: <span class="wartosc">'.$_SESSION['klasa_opis'].'</span></p>';
-      }
-
-      ?>
-    <div>
-  </main>
 
   <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>
