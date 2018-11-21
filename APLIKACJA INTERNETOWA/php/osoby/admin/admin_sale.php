@@ -131,6 +131,9 @@
   }
 
   //---------------------------------------------------USUWANIE SAL--------------------------------------------------------//
+  //SALA JEST Z CZYMŚ POŁĄCZONA I NIE POWINIENEM MÓC JEJ USUNĄĆ
+
+
   if (isset($_POST['wyb_sala']) && !isset($_POST['nazwa'])) {
     $wyb_sala = $_POST['wyb_sala'];
 
@@ -141,6 +144,8 @@
       if($polaczenie->connect_errno == 0) {
         $sql = sprintf("DELETE FROM sala WHERE nazwa='%s'",
                         mysqli_real_escape_string($polaczenie, $wyb_sala));
+
+        echo $sql;
 
         if($polaczenie->query($sql)) {
           $_SESSION['usuwanie_sal'] = "Sala została usunięta!";

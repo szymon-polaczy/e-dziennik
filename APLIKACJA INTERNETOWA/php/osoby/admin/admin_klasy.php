@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if(!isset($_SESSION['zalogowany'])) {
     header('Location: ../wszyscy/index.php');
@@ -7,259 +8,19 @@
   }
 
   require_once "../../polacz.php";
-
-  mysqli_report(MYSQLI_REPORT_STRICT);
-
-  //---------------------------------------------------USUWANIE KLASY--------------------------------------------------------//
-  if (isset($_POST['wyb_klasa']) && !isset($_POST['nazwa'])) {
-    $wyb_klasa = $_POST['wyb_klasa'];
-
-    $wszystko_ok = true;
-
-    //Sprawdzanie czy dana klasa jest w jakimś przydziale
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
-
-      if($polaczenie->connect_errno == 0) {
-        $sql = sprintf("SELECT * FROM przydzial WHERE id_klasa='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-        if($rezultat = $polaczenie->query($sql)) {
-          if ($rezultat->num_rows > 0) {
-            $_SESSION['usuwanie_klas'] = "Nie można usunąć danej klasy, ponieważ jest połączona z przydziałem";
-            $wszystko_ok = false;
-          }
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-          throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-
-    //Sprawdzenie czy klasa jest przypisana do ucznia
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
-
-      if($polaczenie->connect_errno == 0) {
-        $sql = sprintf("SELECT * FROM uczen WHERE id_klasa='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-        if($rezultat = $polaczenie->query($sql)) {
-          if ($rezultat->num_rows > 0) {
-            $_SESSION['usuwanie_klas'] = "Nie można usunąć danej klasy, ponieważ jest połączona z uczniem";
-            $wszystko_ok = false;
-          }
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-          throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-
-
-
-    if ($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
-
-        if($polaczenie->connect_errno == 0) {
-          $sql = sprintf("DELETE FROM klasa WHERE id='%s'",
-                          mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-          if($polaczenie->query($sql))
-            $_SESSION['usuwanie_klas'] = "Klasa została usunięta";
-          else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-            throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
-    }
-  }
-
-
+  require_once "../../wg_pdo_mysql.php";
 
   //------------------------------------------------WYCIĄGANIE KLAS DO OBEJRZENIA-----------------------------------------------//
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  function wezKlasy() {
-    try {
-      $polaczenie = new mysqli("localhost", "root", "<kizdeR<", "bdg_dziennik");
-      $polaczenie->query("SET NAMES utf8");
+  $sql = "SELECT * FROM klasa";
 
-      if ($polaczenie->connect_errno == 0) {
-        $sql = "SELECT * FROM klasa";
+  $rezultat = $pdo->sql_table($sql);
 
-        if ($rezultat = $polaczenie->query($sql)) {
-          $_SESSION['ilosc_klas'] = $rezultat->num_rows;
+  $_SESSION['ilosc_klas'] = count($rezultat);
 
-          for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-            $_SESSION['klasa'.$i] = $rezultat->fetch_assoc();
-
-          $rezultat->free_result();
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-  }
-
-  wezKlasy();
-
-  //-----------------------------------------------------DODAWANIE KLAS------------------------------------------------------//
-  if (isset($_POST['nazwa']) && isset($_POST['opis']) && isset($_POST['wyb_klasa'])) {
-    $wyb_klasa = $_POST['wyb_klasa'];
-    $nazwa = $_POST['nazwa'];
-    $opis = $_POST['opis'];
-
-    if (strlen($nazwa) > 0 && strlen($opis) > 0) {
-      //------------------------------------DLA OBU
-      $wszystko_ok = true;
-
-      if(strlen($nazwa) < 2 || strlen($nazwa) > 20) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Nazwa musi mieć pomiędzy 2 a 20 znaków!";
-      }
-
-      if(strlen($opis) < 3 || strlen($opis) > 100) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Opis musi mieć pomiędzy 3 a 100 znaków!";
-      }
-
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($nazwa == $_SESSION['klasa'.$i]['nazwa']) {
-          $wszystko_ok = false;
-          $_SESSION['edytowanie_klas'] = "Klasa o takiej nazwie już istnieje!";
-          break;
-        }
-      }
-
-      if ($wszystko_ok) {
-        try {
-          $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-          $polaczenie->query("SET NAMES utf8");
-
-          if($polaczenie->connect_errno == 0) {
-            $sql = sprintf("UPDATE klasa SET nazwa='%s', opis='%s' WHERE nazwa='%s'",
-                            mysqli_real_escape_string($polaczenie, $nazwa),
-                            mysqli_real_escape_string($polaczenie, $opis),
-                            mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-            if($polaczenie->query($sql))
-              $_SESSION['edytowanie_klas'] = "Klasa została edytowana";
-            else
-              throw new Exception();
-
-            $polaczenie->close();
-          } else {
-              throw new Exception(mysqli_connect_errno());
-          }
-        } catch (Exception $blad) {
-          echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-          echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-        }
-      }
-    } else if (strlen($nazwa) > 0) {
-      //-----------------------------------DLA NAZWY
-      $wszystko_ok = true;
-
-      if(strlen($nazwa) < 2 || strlen($nazwa) > 20) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Nazwa musi mieć pomiędzy 2 a 20 znaków!";
-      }
-
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($nazwa == $_SESSION['klasa'.$i]['nazwa']) {
-          $wszystko_ok = false;
-          $_SESSION['edytowanie_klas'] = "Klasa o takiej nazwie już istnieje!";
-          break;
-        }
-      }
-
-      if ($wszystko_ok) {
-        try {
-          $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-          $polaczenie->query("SET NAMES utf8");
-
-          if($polaczenie->connect_errno == 0) {
-            $sql = sprintf("UPDATE klasa SET nazwa='%s' WHERE nazwa='%s'",
-                            mysqli_real_escape_string($polaczenie, $nazwa),
-                            mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-            if($polaczenie->query($sql))
-              $_SESSION['edytowanie_klas'] = "Klasa została edytowana";
-            else
-              throw new Exception();
-
-            $polaczenie->close();
-          } else {
-              throw new Exception(mysqli_connect_errno());
-          }
-        } catch (Exception $blad) {
-          echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-          echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-        }
-      }
-    } else if (strlen($opis) > 0) {
-      //----------------------------------DLA OPISU
-      $wszystko_ok = true;
-
-      if(strlen($opis) < 3 || strlen($opis) > 100) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_klas'] = "Opis musi mieć pomiędzy 3 a 100 znaków!";
-      }
-
-      if ($wszystko_ok) {
-        try {
-          $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-          $polaczenie->query("SET NAMES utf8");
-
-          if($polaczenie->connect_errno == 0) {
-            $sql = sprintf("UPDATE klasa SET opis='%s' WHERE nazwa='%s'",
-                            mysqli_real_escape_string($polaczenie, $opis),
-                            mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-            if($polaczenie->query($sql))
-              $_SESSION['edytowanie_klas'] = "Opis klasy został zedytowany";
-            else
-              throw new Exception();
-
-            $polaczenie->close();
-          } else {
-              throw new Exception(mysqli_connect_errno());
-          }
-        } catch (Exception $blad) {
-          echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-          echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-        }
-      }
-    } else {
-      $_SESSION['edytowanie_klas'] = "Wypełnij pola edycji!";
-    }
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+    $_SESSION['klasa'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
@@ -323,6 +84,11 @@
     <section>
       <h2>ZOBACZ KLASY</h2>
       <?php
+        if (isset($_SESSION['usuwanie_klas'])) {
+          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['usuwanie_klas'].'</small>';
+          unset($_SESSION['usuwanie_klas']);
+        }
+
         if ($_SESSION['ilosc_klas'] == 0) {
           echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
         } else {
@@ -333,6 +99,7 @@
               echo '<th>ID</th>';
               echo '<th>NAZWA</th>';
               echo '<th>OPIS</th>';
+              echo '<th>USUWANIE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -344,6 +111,7 @@
               echo '<td>'.$_SESSION['klasa'.$i]['id'].'</td>';
               echo '<td>'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
               echo '<td>'.$_SESSION['klasa'.$i]['opis'].'</td>';
+              echo '<td><a href="zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
 
@@ -369,7 +137,7 @@
       </form>
     </section>
     <section>
-      <form method="post">
+      <form method="post" action="zadania/edytowanie_klas.php">
         <h3>EDYTUJ KLASĘ</h3>
         <select name="wyb_klasa">
           <?php
@@ -385,26 +153,6 @@
             if (isset($_SESSION['edytowanie_klas'])) {
               echo '<p>'.$_SESSION['edytowanie_klas'].'</p>';
               unset($_SESSION['edytowanie_klas']);
-            }
-          ?>
-        </div>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h3>USUŃ KLASĘ</h3>
-        <select name="wyb_klasa">
-          <?php
-            for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-              echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';
-          ?>
-        </select>
-        <button type="submit">Usuń</button>
-        <div class="info">
-          <?php
-            if (isset($_SESSION['usuwanie_klas'])) {
-              echo '<p>'.$_SESSION['usuwanie_klas'].'</p>';
-              unset($_SESSION['usuwanie_klas']);
             }
           ?>
         </div>

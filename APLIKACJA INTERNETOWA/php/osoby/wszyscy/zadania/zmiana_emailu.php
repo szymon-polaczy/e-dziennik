@@ -7,10 +7,8 @@
 
   if (isset($_POST['semail']) && isset($_POST['nemail'])) {
     $wszystko_ok = true;
-
     $semail = $_POST['semail'];
     $nemail = $_POST['nemail'];
-
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
     //Sprawdzanie czy stary email zgadza się z prawdą
