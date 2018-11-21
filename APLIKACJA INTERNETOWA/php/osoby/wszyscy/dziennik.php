@@ -45,9 +45,20 @@
               echo '<li class="nav-item"><a href="../uczen/uczen_oceny.php" class="nav-link">OCENY</a></li>';
               echo '<li class="nav-item"><a href="../uczen/uczen_przydzialy.php" class="nav-link">PRZYDZIAŁY</a></li>';
             }
-            echo '<div class="dropdown-divider"></div>';
-            echo '<li class="nav-item"><a href="profil.php" class="nav-link">PROFIL</a></li>';
           ?>
+          <li class="nav-item">
+            <div class="dropdown">
+              <a href="#" class="nav-item btn btn-dark dropdown-toggle" role="button" id="dropdownProfil"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                PROFIL
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="zmien_dane.php">ZMIEŃ DANE</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="zadania/wyloguj.php">WYLOGÓJ</a>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>
@@ -83,13 +94,6 @@
       ?>
     <div>
   </main>
-
-  <h3>Rzeczy dostępne dla wszystkich</h3></br>
-  <a href="zmien_dane.php">ZMIEŃ DANE</a>
-  </br>
-  <a href="zadania/wyloguj.php">WYLOGUJ</a>
-
-  </br></br></br></br></br></br>
 
   <footer class="fixed-bottom bg-dark glowna-stopka">
     <h6>Autor: Szymon Polaczy</h6>

@@ -1,14 +1,18 @@
 <?php
-
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
+
   require_once "../../../polacz.php";
+  require_once "../../../wg_pdo_mysql.php";
+
 
   if(isset($_POST['opis']) && isset($_POST['nazwa'])) {
+    $wszystko_ok = true;
 
     $opis = htmlentities($_POST['opis'], ENT_QUOTES, "utf-8");
     $nazwa = htmlentities($_POST['nazwa'], ENT_QUOTES, "utf-8");
-    $wszystko_ok = true;
+
+    $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
     //Sprawdzam długośc nazwy
     if (strlen($nazwa) < 2 || strlen($nazwa) > 20) {
@@ -22,47 +26,25 @@
       $_SESSION['dodawanie_klas'] = "Opis klasy musi mieć pomiędzy 2 a 20 znaków!";
     }
 
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
+    //Sprawdzanie czy istnieje klasa o takiej nazwie w bazie danych
+    $sql = "SELECT id FROM klasa WHERE nazwa='$nazwa'";
 
-      if($polaczenie->connect_errno == 0) {
+    $rezultat = $pdo->sql_field($sql);
 
-        //Sprawdzenie czy istnieje klasa o takiej nazwie w bazie
-        $sql = sprintf("SELECT id FROM klasa WHERE nazwa='%s'",
-                        mysqli_real_escape_string($polaczenie, $nazwa));
+    if (count($rezultat) > 0) {
+      $wszystko_ok = false;
+      $_SESSION['dodawanie_klas'] = "Klasa o takiej nazwie istnieje już w bazie, wybierz inną nazwę!";
+    }
 
-        if($rezultat = $polaczenie->query($sql)) {
-          if ($rezultat->num_rows > 0) {
-            $wszystko_ok = false;
-            $_SESSION['dodawanie_klas'] = "Klasa o takiej nazwie już istnieje.";
-          }
-        } else {
-          throw new Exception();
-        }
+    //Jeśli wszystlo poszło ok to dodaję klasę
+    if ($wszystko_ok) {
+      $sql = "INSERT INTO klasa VALUES(NULL, '$nazwa', '$opis')";
 
-        //Jeśli wszystko przebiegło odpowiednio to dodaję klasę do bazy
-        if ($wszystko_ok) {
-          $sql = sprintf("INSERT INTO klasa VALUES(NULL, '%s', '%s')",
-                          mysqli_real_escape_string($polaczenie, $nazwa),
-                          mysqli_real_escape_string($polaczenie, $opis));
-
-          if($polaczenie->query($sql)) {
-            $_SESSION['dodawanie_klas'] = "Dodano nową klasę";
-            header("Location: ../adminklasy.php");
-          } else {
-            throw new Exception();
-          }
-        } else {
-          header("Location:../adminklasy.php");
-        }
-
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+      if ($rezultat = $pdo->sql_query($sql) > 0)
+        $_SESSION['dodawanie_klas'] = "Klasa została dodana!";
+      else
+        $_SESSION['dodawanie_klas'] = "Klasa nie została dodana!";
     }
   }
+
+  header("Location:../admin_klasy.php");

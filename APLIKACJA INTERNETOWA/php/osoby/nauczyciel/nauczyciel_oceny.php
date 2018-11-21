@@ -250,49 +250,84 @@
 </head>
 <body>
   <header>
-    <h1>ZOBACZ, DODAJ, USUŃ, EDYTUJ OCENY</h1>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a href="../wszyscy/dziennik.php" class="navbar-brand">BDG DZIENNIK</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#glowneMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="glowneMenu" class="collapse navbar-collapse">
+        <ul class="navbar-nav  ml-auto">
+          <?php
+            if ( $_SESSION['uprawnienia'] == "a") {
+              echo '<li class="nav-item"><a href="../admin/admin_klasy.php" class="nav-link">KLASY</a></li>';
+              echo '<li class="nav-item"><a href="../admin/admin_sale.php" class="nav-link">SALE</a></li>';
+              echo '<li class="nav-item"><a href="../admin/admin_przedmioty.php" class="nav-link">PRZEDMIOTY</a></li>';
+              echo '<li class="nav-item"><a href="../admin/admin_osoby.php" class="nav-link">OSOBY</a></li>';
+              echo '<li class="nav-item"><a href="../admin/admin_przydzialy.php" class="nav-link">PRZYDZIAŁY</a></li>';
+            } else if ( $_SESSION['uprawnienia'] == "n") {
+              echo '<li class="nav-item"><a href="wybierz_przydzial.php" class="nav-link">OCENY</a></li>';
+              echo '<li class="nav-item"><a href="nauczyciel_przydzialy.php" class="nav-link">PRZYDZIAŁY</a></li>';
+            } else if ( $_SESSION['uprawnienia'] == "u") {
+              echo '<li class="nav-item"><a href="../uczen/uczen_oceny.php" class="nav-link">OCENY</a></li>';
+              echo '<li class="nav-item"><a href="../uczen/uczen_przydzialy.php" class="nav-link">PRZYDZIAŁY</a></li>';
+            }
+          ?>
+          <li class="nav-item">
+            <div class="dropdown">
+              <a href="#" class="nav-item btn btn-dark dropdown-toggle" role="button" id="dropdownProfil"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                PROFIL
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="../wszyscy/zmien_dane.php">ZMIEŃ DANE</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGÓJ</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
   <main>
     <section>
-      <form method="post">
-        <h2>ZOBACZ OCENY</h2>
-        <?php
+      <h2>ZOBACZ OCENY</h2>
+      <?php
 
-        if ($_SESSION['ilosc_ocen'] == 0) {
-          echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th>ID</th>';
-              echo '<th>NAZWISKO NAUCZYCIELA</th>';
-              echo '<th>IMIE UCZNIA</th>';
-              echo '<th>NAZWISKO UCZNIA</th>';
-              echo '<th>DATA I GODZINA</th>';
-              echo '<th>WARTOŚĆ</th>';
-            echo '</tr>';
-          echo '</thead>';
+      if ($_SESSION['ilosc_ocen'] == 0) {
+        echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
+      } else {
+        echo '<table class="table">';
+        echo '<thead class="thead-dark">';
+          echo '<tr>';
+            echo '<th>ID</th>';
+            echo '<th>NAZWISKO NAUCZYCIELA</th>';
+            echo '<th>IMIE UCZNIA</th>';
+            echo '<th>NAZWISKO UCZNIA</th>';
+            echo '<th>DATA I GODZINA</th>';
+            echo '<th>WARTOŚĆ</th>';
+          echo '</tr>';
+        echo '</thead>';
 
-          echo '<tbody>';
+        echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
-            echo '<tr>';
-              echo '<td>'.$_SESSION['ocena'.$i]['id'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['uczen-imie'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['data'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
+        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
+          echo '<tr>';
+            echo '<td>'.$_SESSION['ocena'.$i]['id'].'</td>';
+            echo '<td>'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</td>';
+            echo '<td>'.$_SESSION['ocena'.$i]['uczen-imie'].'</td>';
+            echo '<td>'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</td>';
+            echo '<td>'.$_SESSION['ocena'.$i]['data'].'</td>';
+            echo '<td>'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
+          echo '</tr>';
         }
 
-        ?>
-      </form>
+        echo '</tbody>';
+        echo '</table>';
+      }
+
+      ?>
     </section>
     <section>
       <form method="post">
