@@ -264,8 +264,8 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th>#</th>';
-              echo '<th>NAZWA</th>';
+              echo '<th class="tabela-liczby">#</th>';
+              echo '<th class="tabela-tekst">NAZWA</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -273,8 +273,8 @@
 
           for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++) {
             echo '<tr>';
-              echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-liczby">'.$i.'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
             echo '</tr>';
           }
 

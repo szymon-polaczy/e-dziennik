@@ -136,9 +136,9 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th>#</th>';
-              echo '<th>NAZWA PRZEDMIOTU</th>';
-              echo '<th>NAZWA KLASY</th>';
+              echo '<th class="tabela-liczby">#</th>';
+              echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
+              echo '<th class="tabela-tekst">NAZWA KLASY</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -146,9 +146,9 @@
 
           for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
             echo '<tr>';
-              echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-liczby">'.$i.'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
             echo '</tr>';
           }
 

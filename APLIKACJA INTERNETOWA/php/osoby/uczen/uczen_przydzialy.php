@@ -157,12 +157,12 @@
 
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th scope="col">#</th>';
-              echo '<th scope="col">NAZWA PRZEDMIOTU</th>';
-              echo '<th scope="col">NAZWA SALI</th>';
-              echo '<th scope="col">NAZWA KLASY</th>';
-              echo '<th scope="col">IMIE NAUCZYCIELA</th>';
-              echo '<th scope="col">NAZWISKO NAUCZYCIELA</th>';
+              echo '<th class="tabela-liczby">#</th>';
+              echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
+              echo '<th class="tabela-tekst">NAZWA SALI</th>';
+              echo '<th class="tabela-tekst">NAZWA KLASY</th>';
+              echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
+              echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -170,12 +170,12 @@
 
           for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
             echo '<tr>';
-              echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['imie'].'</td>';
-              echo '<td>'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
+              echo '<td class="tabela-liczby">'.$i.'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['sala']['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa']['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
             echo '</tr>';
           }
 

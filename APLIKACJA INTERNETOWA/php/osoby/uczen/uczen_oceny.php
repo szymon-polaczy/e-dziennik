@@ -121,12 +121,12 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th>#</th>';
-              echo '<th>IMIE NAUCZYCIELA</th>';
-              echo '<th>NAZWISKO NAUCZYCIELA</th>';
-              echo '<th>NAZWA PRZEDMIOTU</th>';
-              echo '<th>DATA</th>';
-              echo '<th>WARTOŚĆ</th>';
+              echo '<th class="tabela-liczby">#</th>';
+              echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
+              echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
+              echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
+              echo '<th class="tabela-tekst">DATA</th>';
+              echo '<th class="tabela-tekst">WARTOŚĆ</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -134,12 +134,12 @@
 
           for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++) {
             echo '<tr>';
-              echo '<td>'.$i.'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['imie'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['nazwa'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['data'].'</td>';
-              echo '<td>'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
+              echo '<td class="tabela-liczby">'.$i.'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['data'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
             echo '</tr>';
           }
 

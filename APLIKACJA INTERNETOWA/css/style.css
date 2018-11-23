@@ -21,6 +21,26 @@ main {
 	font-size: .7em;
 }
 
+.table td {
+	padding: .3rem;
+}
+
+.table th {
+	padding: 12px .3rem;
+}
+
+.tabela-liczby {
+	text-align: right;
+}
+
+.tabela-tekst {
+	text-align: left; 
+}
+
+.tabela-zadania {
+	width: 100px;
+}
+
 form {
 	text-align: left;
 	padding: 20px 30px;
