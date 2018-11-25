@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if (!isset($_SESSION['zalogowany'])) {
     header('Location: ../wszyscy/index.php');
@@ -7,7 +8,9 @@
   }
 
   require_once "../../polacz.php";
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  require_once "../../wg_pdo_mysql.php";
+
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
 ///---------------------------------------------______-----------------------------------_________________________________--------------//
 
@@ -45,117 +48,63 @@
 
     //testy czy usuwasz nauczyciela przypisanego do przydziału
     if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "n") {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      $sql = "SELECT * FROM przydzial WHERE id_nauczyciel='$wyb_osoba'";
 
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("SELECT * FROM przydzial WHERE id_nauczyciel='%s'",
-                          mysqli_real_escape_string($polaczenie, $wyb_osoba));
+      $rezultat = $pdo->sql_record($sql);
 
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows > 0) {
-              $_SESSION['usuwanie_osob'] = "Ten nauczyciel jest przypisany do przydziałów, nie można go usunąć!";
-              $wszystko_ok = false;
-            }
-            $rezultat->free_result();
-          } else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+      if (count($rezultat) > 0) {
+        $_SESSION['usuwanie_osob'] = "Ten nauczyciel jest przypisany do przydziałów, nie można go usunąć!";
+        $wszystko_ok = false;
       }
     }
 
-
     //Sprawdzam czy jeśli jesteś uczniem to masz jakieś oceny
     if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "u") {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      $sql = "SELECT * FROM ocena WHERE ocena='$wyb_osoba'";
 
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("SELECT * FROM ocena WHERE id_uczen='%s'",
-                          mysqli_real_escape_string($polaczenie, $wyb_osoba));
+      $rezultat = $pdo->sql_record($sql);
 
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows > 0) {
-              $_SESSION['usuwanie_osob'] = "Uczeń posiada oceny, nie można go usunąć!";
-              $wszystko_ok = false;
-            }
-            $rezultat->freoe_result();
-          } else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+      if (count($rezultat) > 0) {
+        $_SESSION['usuwanie_osob'] = "Uczeń posiada oceny, nie można go usunąć!";
+        $wszystko_ok = false;
       }
     }
 
 
     //Usuwanie po prostu osoby
     if ($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      $numer_osoby = null;
 
-        //Biorę i ogarniam numer osoby, nie id
-        if($polaczenie->connect_errno == 0) {
-          $numer_osoby = null;
-          for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++){
-            if ($wyb_osoba == $_SESSION['osoba'.$i]['id'])
-              $numer_osoby = $i;
-          }
-
-
-
-          //Usuwanie odpowiedniego zadania danej osoby
-          $zadanie = "";
-
-          switch ($_SESSION['osoba'.$numer_osoby]['uprawnienia']) {
-            case 'a': $zadanie = "administrator"; break;
-            case 'n': $zadanie = "nauczyciel"; break;
-            case 'u': $zadanie = "uczen"; break;
-          }
-
-          $sql = sprintf("DELETE FROM `%s` WHERE id_osoba='%s'",
-                          mysqli_real_escape_string($polaczenie, $zadanie),
-                          mysqli_real_escape_string($polaczenie, $wyb_osoba));
-
-          if ($polaczenie->query($sql))
-            $_SESSION['usuwanie_osob'] = "Zadanie osoby zostało usunięte!";
-          else
-            throw new Exception();
-
-
-
-          //Osoba
-          $sql = sprintf("DELETE FROM osoba WHERE id='%s'",
-                          mysqli_real_escape_string($polaczenie, $wyb_osoba));
-
-          if($polaczenie->query($sql))
-            $_SESSION['usuwanie_osob'] = "Osoba została usunięta";
-          else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-            throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+      //Biorę i ogarniam numer osoby, nie id
+      for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++){
+        if ($wyb_osoba == $_SESSION['osoba'.$i]['id'])
+          $numer_osoby = $i;
       }
+
+      //Usuwanie odpowiedniego zadania danej osoby
+      $zadanie = "";
+
+      switch ($_SESSION['osoba'.$numer_osoby]['uprawnienia']) {
+        case 'a': $zadanie = "administrator"; break;
+        case 'n': $zadanie = "nauczyciel"; break;
+        case 'u': $zadanie = "uczen"; break;
+      }
+
+      $sql = "DELETE FROM `$zadanie` WHERE id_osoba='$wyb_osoba'";
+
+      if ($rezultat = $pdo->sql_query($sql))
+        $_SESSION['usuwanie_osob'] = "Zadanie osoby zostało usunięte!";
+      else
+        $_SESSION['usuwanie_osob'] = "Zadanie osoby nie zostało usunięte!";
+
+
+      //Osoba
+      $sql = "DELETE FROM osoba WHERE id='$wyb_osoba'";
+
+      if ($rezultat = $pdo->sql_query($sql))
+        $_SESSION['usuwanie_osob'] = "Osoba została usunięta";
+      else
+        $_SESSION['usuwanie_osob'] = "Osoba nie została usunięta";
     }
   }
 
@@ -168,201 +117,62 @@
 
 
   //------------------------------------------------WYŚWIETLNIE OSOB-----------------------------------------------//
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $sql = "SELECT * FROM osoba";
 
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM osoba";
+  $rezultat = $pdo->sql_table($sql);
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_osob'] = $rezultat->num_rows;
+  $_SESSION['ilosc_osob'] = count($rezultat);
 
-        for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
-          $_SESSION['osoba'.$i] = $rezultat->fetch_assoc();
-        }
-
-        $rezultat->free_result();
-      } else {
-        throw new Exception();
-      }
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
+    $_SESSION['osoba'.$i] = $rezultat[$i];
 
   //WYCIĄGANIE DODATKOWYCH INFORMACJI
   for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++) {
-
-    //ADMINISTATOR
-    if ($_SESSION['osoba'.$i]['uprawnienia'] == "a") {
-      //NIC
-    }
-
     //NAUCZYCIEL
     if ($_SESSION['osoba'.$i]['uprawnienia'] == "n") {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      $id_osoba = $_SESSION['osoba'.$i]['id'];
+      $sql = "SELECT nazwa FROM osoba, nauczyciel, sala WHERE osoba.id='$id_osoba' AND nauczyciel.id_osoba=osoba.id AND nauczyciel.id_sala=sala.id";
 
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("SELECT * FROM nauczyciel WHERE id_osoba='%s'",
-                  mysqli_real_escape_string($polaczenie, $_SESSION['osoba'.$i]['id']));
+      $rezultat = $pdo->sql_value($sql);
 
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows == 1) {
-              $wiersz = $rezultat->fetch_assoc();
-              $_SESSION['osoba'.$i]['id_sala'] = $wiersz['id_sala'];
-            }
-            $rezultat->free_result();
-          } else {
-              throw new Exception();
-          }
-
-          //Wyciągam informaje o sali
-          $sql = sprintf("SELECT * FROM sala WHERE id='%s'",
-                  mysqli_real_escape_string($polaczenie, $_SESSION['osoba'.$i]['id_sala']));
-
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows == 1) {
-              $wiersz = $rezultat->fetch_assoc();
-              $_SESSION['osoba'.$i]['sala_nazwa'] = $wiersz['nazwa'];
-            }
-            $rezultat->free_result();
-          } else {
-              throw new Exception();
-          }
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
+      $_SESSION['osoba'.$i]['sala_nazwa'] = $rezultat;
     }
 
     //UCZEN
     if ($_SESSION['osoba'.$i]['uprawnienia'] == "u") {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      $id_osoba = $_SESSION['osoba'.$i]['id'];
+      $sql = "SELECT data_urodzenia, nazwa, opis FROM osoba, uczen, klasa WHERE osoba.id='$id_osoba' AND uczen.id_osoba=osoba.id AND klasa.id=uczen.id_klasa";
 
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("SELECT * FROM uczen WHERE id_osoba='%s'",
-                  mysqli_real_escape_string($polaczenie, $_SESSION['osoba'.$i]['id']));
+      $rezultat = $pdo->sql_record($sql);
 
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows == 1) {
-              $wiersz = $rezultat->fetch_assoc();
-              $_SESSION['osoba'.$i]['id_klasa'] = $wiersz['id_klasa'];
-              $_SESSION['osoba'.$i]['data_urodzenia'] = $wiersz['data_urodzenia'];
-            }
-            $rezultat->free_result();
-          } else {
-            throw new Exception();
-          }
-
-          //Wyciągam informaje o klase
-          $sql = sprintf("SELECT * FROM klasa WHERE id='%s'",
-                  mysqli_real_escape_string($polaczenie, $_SESSION['osoba'.$i]['id_klasa']));
-
-          if ($rezultat = $polaczenie->query($sql)) {
-            if ($rezultat->num_rows == 1) {
-              $wiersz = $rezultat->fetch_assoc();
-              $_SESSION['osoba'.$i]['klasa_nazwa'] = $wiersz['nazwa'];
-              $_SESSION['osoba'.$i]['klasa_opis'] = $wiersz['opis'];
-            }
-            $rezultat->free_result();
-          } else {
-              throw new Exception();
-          }
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
+      $_SESSION['osoba'.$i]['data_urodzenia'] = $rezultat['data_urodzenia'];
+      $_SESSION['osoba'.$i]['klasa_nazwa'] = $rezultat['nazwa'];
+      $_SESSION['osoba'.$i]['klasa_opis'] = $rezultat['opis'];
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///---------------------------------------------______-----------------------------------_________________________________--------------//
 
 
   //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
+  $sql = "SELECT * FROM klasa";
 
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $rezultat = $pdo->sql_table($sql);
 
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM klasa";
+  $_SESSION['ilosc_klas'] = count($rezultat);
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_klas'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-          $_SESSION['klasa'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+    $_SESSION['klasa'.$i] = $rezultat[$i];
 
   //------------------------------------------------WYCIĄGANIE SAL-----------------------------------------------//
+  $sql = "SELECT * FROM sala";
 
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $rezultat = $pdo->sql_table($sql);
 
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM sala";
+  $_SESSION['ilosc_sal'] = count($rezultat);
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_sal'] = $rezultat->num_rows;
-        for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-          $_SESSION['sala'.$i] = $rezultat->fetch_assoc();
-        }
-        $rezultat->free_result();
-      } else {
-        throw new Exception();
-      }
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+    $_SESSION['sala'.$i] = $rezultat[$i];
 
   //------------------------------------------------DODAWANIE OSÓB-----------------------------------------------//
   if (isset($_POST['imie']) || isset($_POST['nazwisko'])) {
@@ -858,15 +668,9 @@
       <form method="post">
         <h2>Usuwanie osób</h2>
         <?php
-          //Jeśli nikogo nie ma, ahem nigdy się nie wydarzy
-          if ($_SESSION['ilosc_osob'] == 0) {
-            echo '<p><span>Nie ma żadnych osób do usunięcia</span></p>';
-          } else if ($_SESSION['ilosc_osob'] == 0 && $_SESSION['osoba0']['uprawnienia'] == "a") { //Jeśli jest tylko administrator
+          if ($_SESSION['ilosc_osob'] == 0 && $_SESSION['osoba0']['uprawnienia'] == "a") {
             echo '<p><span>Nie ma żadnych osób do usunięcia, ponieważ jest tylko administrator</span></p>';
           } else {
-            //Jak sprawić aby nie można było usunąć administratora
-            //Zrobię to w trakcie usuwania - jeśli osoba która usuwasz to administrator i nie ma żadnego innego to nie dajesz usuwać
-
             echo '<select name="wyb_osoba">';
 
             for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
