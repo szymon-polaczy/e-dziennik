@@ -101,7 +101,7 @@
       //Osoba
       $sql = "DELETE FROM osoba WHERE id='$wyb_osoba'";
 
-      if ($rezultat = $pdo->sql_query($sql))
+      if ($rezultat = $pdo->sql_query($sql) > 0)
         $_SESSION['usuwanie_osob'] = "Osoba została usunięta";
       else
         $_SESSION['usuwanie_osob'] = "Osoba nie została usunięta";
@@ -172,7 +172,7 @@
   $_SESSION['ilosc_sal'] = count($rezultat);
 
   for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-    $_SESSION['sala'.$i] = $rezultat[$i];
+    $_SESSION['sala'.$i] = $rezultat[$i];    
 
   //------------------------------------------------DODAWANIE OSÓB-----------------------------------------------//
   if (isset($_POST['imie']) || isset($_POST['nazwisko'])) {
@@ -188,66 +188,49 @@
     $wyb_klasa = $_POST['wyb_klasa'];
 
     //TESTY
-    $wszystkoOk = true;
+    $wszystko_ok = true;
 
     if(strlen($imie) <= 0 || strlen($imie) > 20) {
       $_SESSION['dodawanie_osob'] = "Imie osoby nie może być puste oraz musi być krótsze od 20 znaków!";
-      $wszystkoOk = false;
+      $wszystko_ok = false;
     }
 
     if(strlen($nazwisko) <= 0 || strlen($nazwisko) > 30) {
       $_SESSION['dodawanie_osob'] = "Nazwisko osoby nie może być puste oraz musi być krótsze od 30 znaków!";
-      $wszystkoOk = false;
+      $wszystko_ok = false;
     }
 
     if(strlen($email) <= 0 || strlen($email) > 255) {
       $_SESSION['dodawanie_osob'] = "Email osoby nie może być pusty oraz musi być krótszy od 255 znaków!";
-      $wszystkoOk = false;
+      $wszystko_ok = false;
     }
 
     //Sprawdzanie poprawności adresu email
     $emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
     if((filter_var($emailB, FILTER_VALIDATE_EMAIL) == false) || ($emailB != $email)) {
-      $wszystkoOk = false;
+      $wszystko_ok = false;
       $_SESSION['dodawanie_osob'] = "Podaj poprawny nowy adres email!";
     }
 
     //Sprawdzanie czy nowy email nie jest już w bazie danych
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
+    $sql = "SELECT id FROM osoba WHERE email='$emailB'";
 
-      if ($polaczenie->connect_errno == 0) {
-        $sql = sprintf("SELECT email FROM osoba WHERE email='%s'",
-                        mysqli_real_escape_string($polaczenie, $emailB));
+    $rezultat = $pdo->sql_table($sql);
 
-        if ($rezultat = $polaczenie->query($sql))
-        {
-          $ile_emaili = $rezultat->num_rows;
-          if ($ile_emaili > 0) {
-            $wszystkoOk = false;
-            $_SESSION['dodawanie_osob'] = "Taki adres email istnieje już w bazie!";
-          }
-          $rezultat->free_result();
-        }
-        $polaczenie->close();
-      } else {
-          throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o próbę w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+    if (count($rezultat) > 0) {
+      $wszystko_ok = false;
+      $_SESSION['dodawanie_osob'] = "Taki adres email istnieje już w bazie!";
     }
 
     if(strlen($haslo) < 8 || strlen($haslo) > 32) {
       $_SESSION['dodawanie_osob'] = "Hasło osoby musi posiadać pomiędzy 8 a 32 znakami!";
-      $wszystkoOk = false;
+      $wszystko_ok = false;
     }
 
     //Prosty test tak o
     if ($uprawnienia != "a" && $uprawnienia != "n" && $uprawnienia != "u") {
       $_SESSION['dodawanie_osob'] = "Uprawnenia zostały błędnie podane. Wybierz odpowienie uprawnienia!";
-      $wszystkoOk = false;
+      $wszystko_ok = false;
     }
 
     //TESTY DLA UCZNIA I NAUCZYCIELA DODATKOWO
@@ -255,7 +238,7 @@
       //--CZY wyb_sala JEST W BAZIE
       $wyb_salaBaz = false;
       for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-        if ($wyb_sala == $_SESSION['sala'.$i]['nazwa']) {
+        if ($wyb_sala == $_SESSION['sala'.$i]['id']) {
           $wyb_salaBaz = true;
           break;
         }
@@ -263,13 +246,13 @@
 
       if ($wyb_salaBaz == false) {
         $_SESSION['dodawanie_osob'] = "Wybrana sala nie istenieje w bazie. Wybierz odpowiednią klasę!";
-        $wszystkoOk = false;
+        $wszystko_ok = false;
       }
     } else if ($uprawnienia == "u") {
       //--CZY wyb_klasa JEST W BAZIE
       $wyb_klasaBaz = false;
       for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($wyb_klasa == $_SESSION['klasa'.$i]['nazwa']) {
+        if ($wyb_klasa == $_SESSION['klasa'.$i]['id']) {
           $wyb_klasaBaz = true;
           break;
         }
@@ -277,7 +260,7 @@
 
       if ($wyb_klasaBaz == false) {
         $_SESSION['dodawanie_osob'] = "Wybrana klasa nie istenieje w bazie. Wybierz odpowiednią salę!";
-        $wszystkoOk = false;
+        $wszystko_ok = false;
       }
     }
 
@@ -285,114 +268,51 @@
 
 
     //WKŁADANIE DO BAZY
-    if ($wszystkoOk) {
+    if ($wszystko_ok) {
       $haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
-      $wyb_klasaId = NULL;
-      $wyb_salaId = NULL;
 
-      //FAKTYCZNIE POBIERANIE ID WYBRANEJ KLASY ORAZ SALI
-      //**
-      //KLASA
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($wyb_klasa == $_SESSION['klasa'.$i]['nazwa']) {
-          $wyb_klasaId = $_SESSION['klasa'.$i]['id'];
-          break;
-        }
-      }
-      //**
-      //Sala
-      for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-        if ($wyb_sala == $_SESSION['sala'.$i]['nazwa']) {
-          $wyb_salaId = $_SESSION['sala'.$i]['id'];
-          break;
-        }
-      }
+      //DODAWANIE OSOBY
+      $sql = "INSERT INTO osoba VALUES (NULL, '$imie', '$nazwisko', '$email', '$haslo_hash', '$uprawnienia')";
+
+      if ($rezultat = $pdo->sql_query($sql) > 0)
+        $_SESSION['dodawanie_osob'] = "Nowa osoba została dodana!";
+      else
+        $_SESSION['dodawanie_osob'] = "Nowa osoba nie została dodana!";
 
 
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
+      //WYCIĄGANIE ID NOWEJ OSOBY
+      $sql = "SELECT id, haslo FROM osoba WHERE email='$email'";
 
-        if ($polaczenie->connect_errno == 0) {
-			       //uprawenienia to cale slowa!!!!!
+      $rezultat = $pdo->sql_table($sql);
 
-          $sql = sprintf("INSERT INTO osoba VALUES (NULL, '%s', '%s', '%s', '%s', '%s')",
-                  mysqli_real_escape_string($polaczenie, $imie),
-                  mysqli_real_escape_string($polaczenie, $nazwisko),
-                  mysqli_real_escape_string($polaczenie, $email),
-                  mysqli_real_escape_string($polaczenie, $haslo_hash),
-                  mysqli_real_escape_string($polaczenie, $uprawnienia));
+      if (count($rezultat) == 1 && password_verify($haslo, $rezultat[0]['haslo']))
+        $nosoba_id = $rezultat[0]['id']; //sprawdz
 
-          if ($rezultat = $polaczenie->query($sql)) {
-            $_SESSION['dodawanie_osob'] = "Nowa osoba została dodana!";
-          } else {
-            throw new Exception();
-          }
 
-          //--------TUTAJ ZNOWUSZ MUSIAŁEM UŻYĆ SPRINTF PONIEWAŻ $_SESSION['nId']------------//
+      if ($uprawnienia == "a") {
+        //DOŁOŻENIE ADMINISTRATORA
+        $sql = "INSERT INTO administrator VALUES ('$nosoba_id')";
 
-          //Wyciągam ID nowododanej osoby
-          $sql = sprintf("SELECT id, haslo FROM osoba WHERE email='%s'",
-                          mysqli_real_escape_string($polaczenie, $email));
+        if ($rezultat = $pdo->sql_query($sql) > 0)
+          $_SESSION['dodawanie_osob'] = "Nowy administrator został dodany!";
+        else
+          $_SESSION['dodawanie_osob'] = "Nowy administrator nie został dodany!";
+      } else if ($uprawnienia == "n") {
+        //DOŁOŻENIE NAUCZYCIELA
+        $sql = "INSERT INTO nauczyciel VALUES ('$nosoba_id', '$wyb_sala')";
 
-          if ($rezultat = $polaczenie->query($sql))
-          {
-            $ilu_userow = $rezultat->num_rows;
-            if($ilu_userow == 1) {
-              $wiersz = $rezultat->fetch_assoc();
+        if ($rezultat = $pdo->sql_query($sql) > 0)
+          $_SESSION['dodawanie_osob'] = "Nowy nauczyciel został dodany!";
+        else
+          $_SESSION['dodawanie_osob'] = "Nowy nauczyciel nie został dodany!";
+      } else if ($uprawnienia == "u") {
+        //DOŁOŻENIE UCZNIA
+        $sql = "INSERT INTO uczen VALUES ('$nosoba_id', '$wyb_klasa', '$dataUrodzenia')";
 
-              //Wyciagam id nowododanej osoby
-              if (password_verify($haslo, $wiersz['haslo'])) {
-                $_SESSION['nId'] = $wiersz['id'];
-                $rezultat->free_result();
-              } else
-                throw new Exception();
-            }
-          }
-
-          //Wkładam ADMINISTRATORA
-          if ($uprawnienia == "a") {
-            $sql = sprintf("INSERT INTO administrator VALUES ('%s')",
-                            mysqli_real_escape_string($polaczenie, $_SESSION['nId']));
-
-            if($rezultat = $polaczenie->query($sql))
-              $_SESSION['dodawanie_osob'] = "Nowy administrator został dodany!";
-            else
-              throw new Exception();
-          }
-
-          //Wkładam NAUCZYCIELA
-          if ($uprawnienia == "n") {
-            $sql = sprintf("INSERT INTO nauczyciel VALUES ('%s', '%s')",
-                            mysqli_real_escape_string($polaczenie, $_SESSION['nId']),
-                            mysqli_real_escape_string($polaczenie, $wyb_salaId));
-
-            if($rezultat = $polaczenie->query($sql))
-              $_SESSION['dodawanie_osob'] = "Nowy nauczyciel został dodany!";
-            else
-              throw new Exception();
-          }
-
-          //Wkładam UCZNIA
-          if ($uprawnienia == "u") {
-            $sql = sprintf("INSERT INTO uczen VALUES ('%s', '%s', '%s')",
-                            mysqli_real_escape_string($polaczenie, $_SESSION['nId']),
-                            mysqli_real_escape_string($polaczenie, $wyb_klasaId),
-                            mysqli_real_escape_string($polaczenie, $dataUrodzenia));
-
-            if($rezultat = $polaczenie->query($sql))
-              $_SESSION['dodawanie_osob'] = "Nowy uczeń został dodany!";
-            else
-              throw new Exception();
-          }
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o próbę w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
+        if ($rezultat = $pdo->sql_query($sql) > 0)
+          $_SESSION['dodawanie_osob'] = "Nowy uczeń został dodany!";
+        else
+          $_SESSION['dodawanie_osob'] = "Nowy uczeń nie został dodany!";
       }
     }
   }
@@ -607,7 +527,7 @@
               echo '<select name="wyb_sala">';
 
               for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
-                echo '<option value="'.$_SESSION['sala'.$i]['nazwa'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
+                echo '<option value="'.$_SESSION['sala'.$i]['id'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
 
               echo '</select>';
             }
@@ -624,7 +544,7 @@
               echo '<select name="wyb_klasa">';
 
               for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-                echo '<option value="'.$_SESSION['klasa'.$i]['nazwa'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';
+                echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';
 
               echo '</select>';
             }
@@ -647,20 +567,15 @@
       <form method="post" action="edytowanie_osob.php">
         <h2>Edytowanie osób</h2>
         <?php
-          //Jeśli nikogo nie ma, ahem nigdy się nie wydarzy
-          if ($_SESSION['ilosc_osob'] == 0) {
-            echo '<p><span>Nie ma żadnych osób do edytowania</span></p>';
-          } else {
-            echo '<select name="wyb_osoba">';
+          echo '<select name="wyb_osoba">';
 
-            for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-              echo '<option value="'.$_SESSION['osoba'.$i]['id'].'">'.$_SESSION['osoba'.$i]['imie'].' | '.$_SESSION['osoba'.$i]['nazwisko'].
+          for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
+            echo '<option value="'.$_SESSION['osoba'.$i]['id'].'">'.$_SESSION['osoba'.$i]['imie'].' | '.$_SESSION['osoba'.$i]['nazwisko'].
                       ' | '.$_SESSION['osoba'.$i]['email'].' | '.$_SESSION['osoba'.$i]['uprawnienia'].'</option>';
 
-            echo '</select>';
+          echo '</select>';
 
-            echo '<button type="submit">Edytuj</button>';
-          }
+          echo '<button type="submit">Edytuj</button>';
         ?>
       </form>
     </section>
