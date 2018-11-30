@@ -12,110 +12,6 @@
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-///---------------------------------------------______-----------------------------------_________________________________--------------//
-
-  //USUWANIE OSÓB
-
-  if (isset($_POST['wyb_osoba'])) {
-    $wyb_osoba = $_POST['wyb_osoba'];
-    $wszystko_ok = true;
-
-    for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-      if ($_SESSION['osoba'.$i]['id'] == $wyb_osoba) {
-        $numer_osoby = $i;
-        break;
-      }
-
-    //Test czy usuwasz samego siebie
-    if ($_SESSION['id'] == $wyb_osoba) {
-      $wszystko_ok = false;
-      $_SESSION['usuwanie_osob'] = "Usuwasz sam siebie, wybierz kogoś innego!";
-    }
-
-    //Sprawdzam czy usuwasz jedynego administratora
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "a") {
-      $ilosc_admin = 0;
-      for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-        if ($_SESSION['osoba'.$i]['uprawnienia'] == "a")
-          if ($ilosc_admin++ > 2)
-            break;
-
-      if ($ilosc_admin < 2) {
-        $wszystko_ok = false;
-        $_SESSION['usuwanie_osob'] = "Usuwasz jedynego administratora, wybierz kogoś innego!";
-      }
-    }
-
-    //testy czy usuwasz nauczyciela przypisanego do przydziału
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "n") {
-      $sql = "SELECT * FROM przydzial WHERE id_nauczyciel='$wyb_osoba'";
-
-      $rezultat = $pdo->sql_record($sql);
-
-      if (count($rezultat) > 0) {
-        $_SESSION['usuwanie_osob'] = "Ten nauczyciel jest przypisany do przydziałów, nie można go usunąć!";
-        $wszystko_ok = false;
-      }
-    }
-
-    //Sprawdzam czy jeśli jesteś uczniem to masz jakieś oceny
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "u") {
-      $sql = "SELECT * FROM ocena WHERE ocena='$wyb_osoba'";
-
-      $rezultat = $pdo->sql_record($sql);
-
-      if (count($rezultat) > 0) {
-        $_SESSION['usuwanie_osob'] = "Uczeń posiada oceny, nie można go usunąć!";
-        $wszystko_ok = false;
-      }
-    }
-
-
-    //Usuwanie po prostu osoby
-    if ($wszystko_ok) {
-      $numer_osoby = null;
-
-      //Biorę i ogarniam numer osoby, nie id
-      for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++){
-        if ($wyb_osoba == $_SESSION['osoba'.$i]['id'])
-          $numer_osoby = $i;
-      }
-
-      //Usuwanie odpowiedniego zadania danej osoby
-      $zadanie = "";
-
-      switch ($_SESSION['osoba'.$numer_osoby]['uprawnienia']) {
-        case 'a': $zadanie = "administrator"; break;
-        case 'n': $zadanie = "nauczyciel"; break;
-        case 'u': $zadanie = "uczen"; break;
-      }
-
-      $sql = "DELETE FROM `$zadanie` WHERE id_osoba='$wyb_osoba'";
-
-      if ($rezultat = $pdo->sql_query($sql))
-        $_SESSION['usuwanie_osob'] = "Zadanie osoby zostało usunięte!";
-      else
-        $_SESSION['usuwanie_osob'] = "Zadanie osoby nie zostało usunięte!";
-
-
-      //Osoba
-      $sql = "DELETE FROM osoba WHERE id='$wyb_osoba'";
-
-      if ($rezultat = $pdo->sql_query($sql) > 0)
-        $_SESSION['usuwanie_osob'] = "Osoba została usunięta";
-      else
-        $_SESSION['usuwanie_osob'] = "Osoba nie została usunięta";
-    }
-  }
-
-
-
-
-  ///---------------------------------------------______-----------------------------------_________________________________--------------//
-
-
-
-
   //------------------------------------------------WYŚWIETLNIE OSOB-----------------------------------------------//
   $sql = "SELECT * FROM osoba";
 
@@ -172,7 +68,7 @@
   $_SESSION['ilosc_sal'] = count($rezultat);
 
   for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-    $_SESSION['sala'.$i] = $rezultat[$i];    
+    $_SESSION['sala'.$i] = $rezultat[$i];
 
   //------------------------------------------------DODAWANIE OSÓB-----------------------------------------------//
   if (isset($_POST['imie']) || isset($_POST['nazwisko'])) {
@@ -390,11 +286,21 @@
   <main>
     <section>
       <h2>ZOBACZ OSOBY</h2>
-
       <?php
         //HEHE to się nigdy nie wydarzy
         if ($_SESSION['ilosc_osob'] == 0) {
           echo '<p>Nie ma żadnych osób w bazie</p>';
+        }
+
+        //ZADANIA PHP
+        if (isset($_SESSION['usuwanie_osob'])) {
+          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['usuwanie_osob'].'</small>';
+          unset($_SESSION['usuwaniusuwanie_osobe_klas']);
+        }
+
+        if (isset($_SESSION['edytowanie_osob'])) {
+          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['edytowanie_osob'].'</small>';
+          unset($_SESSION['edytowanie_osob']);
         }
 
         //WYŚWIETLAM ADMINISTATORÓW
@@ -407,6 +313,8 @@
             echo '<th class="tabela-tekst">EMAIL</th>';
             echo '<th class="tabela-tekst">HASŁO</th>';
             echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
+            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
+            echo '<th class="tabela-zadania">USUWANIE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -421,6 +329,8 @@
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['email'].'</td>';
             echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
+            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
+            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
         }
@@ -441,6 +351,8 @@
             echo '<th class="tabela-tekst">HASŁO</th>';
             echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
             echo '<th class="tabela-tekst">NAZWA SALI</th>';
+            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
+            echo '<th class="tabela-zadania">USUWANIE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -456,6 +368,8 @@
             echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['sala_nazwa'].'</td>';
+            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
+            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
         }
@@ -478,6 +392,8 @@
             echo '<th class="tabela-liczby">DATA URODZENIA</th>';
             echo '<th class="tabela-tekst">NAZWA KLASY</th>';
             echo '<th class="tabela-tekst">OPIS KLASY</th>';
+            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
+            echo '<th class="tabela-zadania">USUWANIE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -495,6 +411,8 @@
             echo '<td class="tabela-liczby">'.$_SESSION['osoba'.$i]['data_urodzenia'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['klasa_nazwa'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['klasa_opis'].'</td>';
+            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
+            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
         }
@@ -577,34 +495,6 @@
 
           echo '<button type="submit">Edytuj</button>';
         ?>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h2>Usuwanie osób</h2>
-        <?php
-          if ($_SESSION['ilosc_osob'] == 0 && $_SESSION['osoba0']['uprawnienia'] == "a") {
-            echo '<p><span>Nie ma żadnych osób do usunięcia, ponieważ jest tylko administrator</span></p>';
-          } else {
-            echo '<select name="wyb_osoba">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-              echo '<option value="'.$_SESSION['osoba'.$i]['id'].'">'.$_SESSION['osoba'.$i]['imie'].' | '.$_SESSION['osoba'.$i]['nazwisko'].
-                      ' | '.$_SESSION['osoba'.$i]['email'].' | '.$_SESSION['osoba'.$i]['uprawnienia'].'</option>';
-
-            echo '</select>';
-
-            echo '<button type="submit">Usuń</button>';
-          }
-        ?>
-        <div class="info">
-          <?php
-            if (isset($_SESSION['usuwanie_osob'])) {
-              echo '<p>'.$_SESSION['usuwanie_osob'].'</p>';
-              unset($_SESSION['usuwanie_osob']);
-            }
-          ?>
-        </div>
       </form>
     </section>
 
