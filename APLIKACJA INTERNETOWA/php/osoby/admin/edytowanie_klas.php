@@ -95,7 +95,7 @@
             <div class="form-group form-inf">
               <?php
                 if (isset($_SESSION['edytowanie_klas'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
+                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
                   unset($_SESSION['edytowanie_klas']);
                 }
               ?>

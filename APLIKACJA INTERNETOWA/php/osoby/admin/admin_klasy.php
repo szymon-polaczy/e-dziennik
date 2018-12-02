@@ -107,7 +107,7 @@
               <div class="form-group form-inf">
               <?php
                 if (isset($_SESSION['dodawanie_klas'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
+                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
                   unset($_SESSION['dodawanie_klas']);
                 }
                 ?>
@@ -122,12 +122,12 @@
       <h2>KLASY</h2>
       <?php
         if (isset($_SESSION['usuwanie_klas'])) {
-          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['usuwanie_klas'].'</small>';
+          echo '<small  class="form-text uzytk-blad">'.$_SESSION['usuwanie_klas'].'</small>';
           unset($_SESSION['usuwanie_klas']);
         }
 
         if (isset($_SESSION['edytowanie_klas'])) {
-          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
+          echo '<small  class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
           unset($_SESSION['edytowanie_klas']);
         }
 

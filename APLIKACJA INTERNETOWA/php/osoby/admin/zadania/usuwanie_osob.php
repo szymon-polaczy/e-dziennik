@@ -8,13 +8,8 @@
   if (isset($_GET['wyb_osoba'])) {
     $wszystko_ok = true;
     $wyb_osoba = $_GET['wyb_osoba'];
+    $numer_osoby = $_GET['numer_osoby'];
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-
-    for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-      if ($_SESSION['osoba'.$i]['id'] == $wyb_osoba) {
-        $numer_osoby = $i;
-        break;
-      }
 
     //Test czy usuwasz samego siebie
     if ($_SESSION['id'] == $wyb_osoba) {
@@ -50,7 +45,7 @@
 
     //Sprawdzam czy jeśli jesteś uczniem to masz jakieś oceny
     if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "u") {
-      $sql = "SELECT * FROM ocena WHERE ocena='$wyb_osoba'";
+      $sql = "SELECT * FROM ocena WHERE id_uczen='$wyb_osoba'";
 
       $rezultat = $pdo->sql_record($sql);
 
@@ -80,13 +75,13 @@
         case 'u': $zadanie = "uczen"; break;
       }
 
+
       $sql = "DELETE FROM `$zadanie` WHERE id_osoba='$wyb_osoba'";
 
       if ($rezultat = $pdo->sql_query($sql))
         $_SESSION['usuwanie_osob'] = "Zadanie osoby zostało usunięte!";
       else
         $_SESSION['usuwanie_osob'] = "Zadanie osoby nie zostało usunięte!";
-
 
       //Osoba
       $sql = "DELETE FROM osoba WHERE id='$wyb_osoba'";

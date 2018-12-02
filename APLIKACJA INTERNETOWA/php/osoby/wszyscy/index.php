@@ -46,10 +46,10 @@
               <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo">
             </div>
             <div class="form-group form-inf">
-              <small id="logowaniePomoc" class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
+              <small  class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
               <?php
                 if (isset($_SESSION['login_blad'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['login_blad'].'</small>';
+                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['login_blad'].'</small>';
                   unset($_SESSION['login_blad']);
                 }
               ?>

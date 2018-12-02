@@ -34,7 +34,7 @@ main {
 }
 
 .tabela-tekst {
-	text-align: left; 
+	text-align: left;
 }
 
 .tabela-zadania {
@@ -76,4 +76,8 @@ h2 {
 
 .form-inf button {
 	margin-top: 10px;
+}
+
+.niewidoczne {
+	display: none;
 }
