@@ -1,5 +1,5 @@
 function pokazUzupelnienie() {
-  $('#dodawanie-osob-select').on("change", function() {
+  $('#nadajUprawnienia').on("change", function() {
 
     //Pobieram wartość selecta uprawnień osoby
     var tekst = this.children[this.selectedIndex].text.trim();

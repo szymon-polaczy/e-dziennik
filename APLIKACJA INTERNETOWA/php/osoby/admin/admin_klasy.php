@@ -105,14 +105,15 @@
                 <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis"/>
               </div>
               <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['dodawanie_klas'])) {
-                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
-                  unset($_SESSION['dodawanie_klas']);
-                }
-                ?>
+                <?php
+                  if (isset($_SESSION['dodawanie_klas'])) {
+                    echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
+                    unset($_SESSION['dodawanie_klas']);
+                  }
+                  ?>
 
-              <button class="btn btn-dark" type="submit">Dodaj</button>
+                <button class="btn btn-dark" type="submit">Dodaj</button>
+              </div>
             </form>
           </div>
         </div>

@@ -89,17 +89,34 @@
   </header>
 
   <main>
-    <form method="post" action="zadania/edytowanie_osob.php">
-      <h3>Edytuj Osoby</h3>
-      <?php
-        echo '<input type="text" value="'.$_SESSION['edytowana']['imie'].'" name="imie"/>';
-        echo '<input type="text" value="'.$_SESSION['edytowana']['nazwisko'].'" name="nazwisko"/>';
-        echo '<input type="email" value="'.$_SESSION['edytowana']['email'].'" name="email"/>';
-        echo '<input type="password" value="'.$_SESSION['edytowana']['haslo'].'" name="haslo"/>';
-      ?>
-      <button type="submit">Edytuj</button>
-    </form>
-
+    <div class="container p-0">
+      <div class="row">
+        <div class="col-md-12">
+          <form action="zadania/edytowanie_osob.php" method="post">
+            <h2>EDYTUJ OSOBĘ</h2>
+            <div class="form-group">
+              <label for="zmianaImienia">Edytuj Imię</label>
+              <?php echo '<input id="zmianaImienia" class="form-control" type="text" value="'.$_SESSION['edytowana']['imie'].'" name="imie"/>'; ?>
+            </div>
+            <div class="form-group">
+              <label for="zmianaNazwiska">Edytuj Nazwisko</label>
+              <?php echo '<input id="zmianaNazwiska" class="form-control" type="text" value="'.$_SESSION['edytowana']['nazwisko'].'" name="nazwisko"/>'; ?>
+            </div>
+            <div class="form-group">
+              <label for="zmianaEmailu">Edytuj Email</label>
+              <?php echo '<input id="zmianaEmailu" class="form-control" type="email" value="'.$_SESSION['edytowana']['email'].'" name="email"/>'; ?>
+            </div>
+            <div class="form-group">
+              <label for="zmianHasla">Edytuj Haslo</label>
+              <?php echo '<input id="zmianHasla" class="form-control" type="password" value="'.$_SESSION['edytowana']['haslo'].'" name="haslo"/>'; ?>
+            </div>
+            <div class="form-group form-inf">
+              <button class="btn btn-dark" type="submit">Edytuj</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
   </main>
 

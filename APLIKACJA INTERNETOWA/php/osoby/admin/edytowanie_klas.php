@@ -93,14 +93,7 @@
               <?php echo '<input id="zmianaOpisu" class="form-control" type="text" value="'.$rezultat['opis'].'" name="opis"/>'; ?>
             </div>
             <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['edytowanie_klas'])) {
-                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
-                  unset($_SESSION['edytowanie_klas']);
-                }
-              ?>
               <input type="hidden" value="'.$wyb_klasa.'" name="wyb_klasa"/>
-
               <button class="btn btn-dark" type="submit">Edytuj</button>
             </div>
           </form>
