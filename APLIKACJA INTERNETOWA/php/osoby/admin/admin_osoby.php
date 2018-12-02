@@ -481,22 +481,6 @@
         </div>
       </form>
     </section>
-    <section>
-      <form method="post" action="edytowanie_osob.php">
-        <h2>Edytowanie osób</h2>
-        <?php
-          echo '<select name="wyb_osoba">';
-
-          for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-            echo '<option value="'.$_SESSION['osoba'.$i]['id'].'">'.$_SESSION['osoba'.$i]['imie'].' | '.$_SESSION['osoba'.$i]['nazwisko'].
-                      ' | '.$_SESSION['osoba'.$i]['email'].' | '.$_SESSION['osoba'.$i]['uprawnienia'].'</option>';
-
-          echo '</select>';
-
-          echo '<button type="submit">Edytuj</button>';
-        ?>
-      </form>
-    </section>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
   </main>
