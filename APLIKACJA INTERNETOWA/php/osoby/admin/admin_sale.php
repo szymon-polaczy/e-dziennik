@@ -129,38 +129,6 @@
       }
     }
   }
-
-  //---------------------------------------------------USUWANIE SAL--------------------------------------------------------//
-  //SALA JEST Z CZYMŚ POŁĄCZONA I NIE POWINIENEM MÓC JEJ USUNĄĆ
-
-
-  if (isset($_POST['wyb_sala']) && !isset($_POST['nazwa'])) {
-    $wyb_sala = $_POST['wyb_sala'];
-
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
-
-      if($polaczenie->connect_errno == 0) {
-        $sql = sprintf("DELETE FROM sala WHERE nazwa='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_sala));
-
-        echo $sql;
-
-        if($polaczenie->query($sql)) {
-          $_SESSION['usuwanie_sal'] = "Sala została usunięta!";
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-          throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-  }
 ?>
 
 <!doctype html>
@@ -231,8 +199,42 @@
 
   <main>
     <section>
+      <div class="container p-0">
+        <div class="row">
+          <div class="col-12">
+            <form method="post">
+              <h2>DODAJ SALE</h2>
+              <div class="form-group">
+                <label for="nazwa_sali">Wpisz nazwę sali</label>
+                <input class="form-control" id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa"/>
+              </div>
+              <div class="form-group form-inf">
+                <?php
+                  if (isset($_SESSION['dodawanie_sal'])) {
+                    echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
+                    unset($_SESSION['dodawanie_sal']);
+                  }
+                ?>
+
+                <button class="btn btn-dark" type="submit">Dodaj</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
       <h2>ZOBACZ SALE</h2>
       <?php
+        if (isset($_SESSION['usuwanie_sal'])) {
+          echo '<p>'.$_SESSION['usuwanie_sal'].'</p>';
+          unset($_SESSION['usuwanie_sal']);
+        }
+        if (isset($_SESSION['edytowanie_sal'])) {
+          echo '<p>'.$_SESSION['edytowanie_sal'].'</p>';
+          unset($_SESSION['edytowanie_sal']);
+        }
+
         if ($_SESSION['ilosc_sal'] == 0) {
           echo '<p>ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
         } else {
@@ -241,6 +243,8 @@
             echo '<tr>';
               echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA</th>';
+              echo '<th class="tabela-zadania">EDYTOWANIE</th>';
+              echo '<th class="tabela-zadania">USUWANIE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -250,6 +254,8 @@
             echo '<tr>';
               echo '<td class="tabela-liczby">'.$i.'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['sala'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-zadania"><a href="edytowanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'">Edytuj</a></td>';
+              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
 
@@ -258,62 +264,6 @@
         }
 
       ?>
-    </section>
-    <section>
-      <form method="post">
-        <h3>DODAJ SALE</h3>
-        <input type="text" placeholder="Nazwa" name="nazwa"/>
-        <button type="submit">Dodaj</button>
-        <div class="info">
-          <?php
-            if (isset($_SESSION['dodawanie_sal'])) {
-              echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
-              unset($_SESSION['dodawanie_sal']);
-            }
-          ?>
-        </div>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h3>EDYTUJ SALE</h3>
-        <select name="wyb_sala">
-          <?php
-            for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
-              echo '<option value="'.$_SESSION['sala'.$i]['nazwa'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
-          ?>
-        </select>
-        <input type="text" placeholder="Nazwa" name="nazwa"/>
-        <button type="submit">Edytuj</button>
-        <div class="info">
-          <?php
-            if (isset($_SESSION['edytowanie_sal'])) {
-              echo '<p>'.$_SESSION['edytowanie_sal'].'</p>';
-              unset($_SESSION['edytowanie_sal']);
-            }
-          ?>
-        </div>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h3>USUŃ SALE</h3>
-        <select name="wyb_sala">
-          <?php
-            for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
-              echo '<option value="'.$_SESSION['sala'.$i]['nazwa'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
-          ?>
-        </select>
-        <button type="submit">Usuń</button>
-        <div class="info">
-          <?php
-            if (isset($_SESSION['usuwanie_sal'])) {
-              echo '<p>'.$_SESSION['usuwanie_sal'].'</p>';
-              unset($_SESSION['usuwanie_sal']);
-            }
-          ?>
-        </div>
-      </form>
     </section>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
