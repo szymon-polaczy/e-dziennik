@@ -38,97 +38,6 @@
     echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
     echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
   }
-
-  //-----------------------------------------------------DODAWANIE SAL------------------------------------------------------//
-  if(isset($_POST['nazwa']) && !isset($_POST['wyb_sala'])) {
-    $nazwa = $_POST['nazwa'];
-    $wszystko_ok = true;
-
-    //Sprawdzanie długości nazwy
-    if (strlen($nazwa) < 2 || strlen($nazwa) > 20) {
-      $wszystko_ok = false;
-      $_SESSION['dodawanie_sal'] = "Nazwa sali musi mieć pomiędzy 2 a 20 znaków!";
-    }
-
-    //Sprawdzanie czy istnieje taka nazwa w bazie
-    for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-      if ($nazwa == $_SESSION['sala'.$i]['nazwa']) {
-        $wszystko_ok = false;
-        $_SESSION['dodawanie_sal'] = "Sala o takiej nazwie już istnieje!";
-        break;
-      }
-    }
-
-    //Po pozytywnym przejściu testów dodaję salę
-    if($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
-
-        if($polaczenie->connect_errno == 0) {
-          $sql = sprintf("INSERT INTO sala VALUES (NULL, '%s')",
-                          mysqli_real_escape_string($polaczenie, $nazwa));
-
-          if($polaczenie->query($sql)) {
-            $_SESSION['dodawanie_sal'] = "Nowa sala została dodana!";
-          } else {
-            throw new Exception();
-          }
-          $polaczenie->close();
-        } else {
-            throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
-    }
-  }
-
-  //-----------------------------------------------------EDYTOWANIE SAL------------------------------------------------------//
-  if (isset($_POST['nazwa']) && isset($_POST['wyb_sala'])) {
-    $wyb_sala = $_POST['wyb_sala'];
-    $nazwa = $_POST['nazwa'];
-    $wszystko_ok = true;
-
-    if(strlen($nazwa) < 2 || strlen($nazwa) > 20) {
-      $wszystko_ok = false;
-      $_SESSION['edytowanie_sal'] = "Nazwa musi mieć pomiędzy 2 a 20 znaków!";
-    }
-
-    for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-      if ($nazwa == $_SESSION['sala'.$i]['nazwa']) {
-        $wszystko_ok = false;
-        $_SESSION['edytowanie_sal'] = "Sala o takiej nazwie już istnieje!";
-        break;
-      }
-    }
-
-    if ($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
-
-        if($polaczenie->connect_errno == 0) {
-          $sql = sprintf("UPDATE sala SET nazwa='%s' WHERE nazwa='%s'",
-                          mysqli_real_escape_string($polaczenie, $nazwa),
-                          mysqli_real_escape_string($polaczenie, $wyb_sala));
-
-          if($polaczenie->query($sql)) {
-            $_SESSION['edytowanie_sal'] = "Nazwa sali została zedytowana";
-          } else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-            throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
-    }
-  }
 ?>
 
 <!doctype html>
@@ -202,7 +111,7 @@
       <div class="container p-0">
         <div class="row">
           <div class="col-12">
-            <form method="post">
+            <form method="post" action="zadania/dodawanie_sal.php">
               <h2>DODAJ SALE</h2>
               <div class="form-group">
                 <label for="nazwa_sali">Wpisz nazwę sali</label>
