@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 16, 2018 at 09:09 AM
--- Server version: 5.7.24-0ubuntu0.18.04.1
--- PHP Version: 7.2.10-0ubuntu0.18.04.1
+-- Czas generowania: 25 Gru 2018, 20:33
+-- Wersja serwera: 5.7.24-0ubuntu0.18.04.1
+-- Wersja PHP: 7.2.10-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,18 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bdg_dziennik`
+-- Baza danych: `bdg_dziennik`
 --
 DROP DATABASE IF EXISTS `bdg_dziennik`;
 CREATE DATABASE `bdg_dziennik` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
 USE `bdg_dziennik`;
 
-
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `administrator`
+-- Struktura tabeli dla tabeli `administrator`
 --
 
 CREATE TABLE `administrator` (
@@ -36,7 +34,7 @@ CREATE TABLE `administrator` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `administrator`
+-- Zrzut danych tabeli `administrator`
 --
 
 INSERT INTO `administrator` (`id_osoba`) VALUES
@@ -45,7 +43,7 @@ INSERT INTO `administrator` (`id_osoba`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `klasa`
+-- Struktura tabeli dla tabeli `klasa`
 --
 
 CREATE TABLE `klasa` (
@@ -55,7 +53,7 @@ CREATE TABLE `klasa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `klasa`
+-- Zrzut danych tabeli `klasa`
 --
 
 INSERT INTO `klasa` (`id`, `nazwa`, `opis`) VALUES
@@ -104,7 +102,7 @@ INSERT INTO `klasa` (`id`, `nazwa`, `opis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nauczyciel`
+-- Struktura tabeli dla tabeli `nauczyciel`
 --
 
 CREATE TABLE `nauczyciel` (
@@ -113,7 +111,7 @@ CREATE TABLE `nauczyciel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `nauczyciel`
+-- Zrzut danych tabeli `nauczyciel`
 --
 
 INSERT INTO `nauczyciel` (`id_osoba`, `id_sala`) VALUES
@@ -123,7 +121,7 @@ INSERT INTO `nauczyciel` (`id_osoba`, `id_sala`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ocena`
+-- Struktura tabeli dla tabeli `ocena`
 --
 
 CREATE TABLE `ocena` (
@@ -135,7 +133,7 @@ CREATE TABLE `ocena` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `ocena`
+-- Zrzut danych tabeli `ocena`
 --
 
 INSERT INTO `ocena` (`id`, `id_przydzial`, `id_uczen`, `data`, `wartosc`) VALUES
@@ -149,7 +147,7 @@ INSERT INTO `ocena` (`id`, `id_przydzial`, `id_uczen`, `data`, `wartosc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `osoba`
+-- Struktura tabeli dla tabeli `osoba`
 --
 
 CREATE TABLE `osoba` (
@@ -162,7 +160,7 @@ CREATE TABLE `osoba` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `osoba`
+-- Zrzut danych tabeli `osoba`
 --
 
 INSERT INTO `osoba` (`id`, `imie`, `nazwisko`, `email`, `haslo`, `uprawnienia`) VALUES
@@ -175,7 +173,7 @@ INSERT INTO `osoba` (`id`, `imie`, `nazwisko`, `email`, `haslo`, `uprawnienia`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `przedmiot`
+-- Struktura tabeli dla tabeli `przedmiot`
 --
 
 CREATE TABLE `przedmiot` (
@@ -184,7 +182,7 @@ CREATE TABLE `przedmiot` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `przedmiot`
+-- Zrzut danych tabeli `przedmiot`
 --
 
 INSERT INTO `przedmiot` (`id`, `nazwa`) VALUES
@@ -193,7 +191,7 @@ INSERT INTO `przedmiot` (`id`, `nazwa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `przydzial`
+-- Struktura tabeli dla tabeli `przydzial`
 --
 
 CREATE TABLE `przydzial` (
@@ -204,7 +202,7 @@ CREATE TABLE `przydzial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `przydzial`
+-- Zrzut danych tabeli `przydzial`
 --
 
 INSERT INTO `przydzial` (`id`, `id_nauczyciel`, `id_przedmiot`, `id_klasa`) VALUES
@@ -220,7 +218,7 @@ INSERT INTO `przydzial` (`id`, `id_nauczyciel`, `id_przedmiot`, `id_klasa`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sala`
+-- Struktura tabeli dla tabeli `sala`
 --
 
 CREATE TABLE `sala` (
@@ -229,16 +227,16 @@ CREATE TABLE `sala` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `sala`
+-- Zrzut danych tabeli `sala`
 --
 
 INSERT INTO `sala` (`id`, `nazwa`) VALUES
-(1, 'Sala 112');
+(1, 'Sala 1122');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uczen`
+-- Struktura tabeli dla tabeli `uczen`
 --
 
 CREATE TABLE `uczen` (
@@ -248,7 +246,7 @@ CREATE TABLE `uczen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `uczen`
+-- Zrzut danych tabeli `uczen`
 --
 
 INSERT INTO `uczen` (`id_osoba`, `id_klasa`, `data_urodzenia`) VALUES
@@ -256,7 +254,7 @@ INSERT INTO `uczen` (`id_osoba`, `id_klasa`, `data_urodzenia`) VALUES
 (11, 24, '6797-08-08');
 
 --
--- Indexes for dumped tables
+-- Indeksy dla zrzutów tabel
 --
 
 --
@@ -329,61 +327,61 @@ ALTER TABLE `uczen`
 --
 
 --
--- AUTO_INCREMENT for table `klasa`
+-- AUTO_INCREMENT dla tabeli `klasa`
 --
 ALTER TABLE `klasa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
--- AUTO_INCREMENT for table `ocena`
+-- AUTO_INCREMENT dla tabeli `ocena`
 --
 ALTER TABLE `ocena`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT for table `osoba`
+-- AUTO_INCREMENT dla tabeli `osoba`
 --
 ALTER TABLE `osoba`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `przedmiot`
+-- AUTO_INCREMENT dla tabeli `przedmiot`
 --
 ALTER TABLE `przedmiot`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `przydzial`
+-- AUTO_INCREMENT dla tabeli `przydzial`
 --
 ALTER TABLE `przydzial`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `sala`
+-- AUTO_INCREMENT dla tabeli `sala`
 --
 ALTER TABLE `sala`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `administrator`
+-- Ograniczenia dla tabeli `administrator`
 --
 ALTER TABLE `administrator`
   ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id`);
 
 --
--- Constraints for table `nauczyciel`
+-- Ograniczenia dla tabeli `nauczyciel`
 --
 ALTER TABLE `nauczyciel`
   ADD CONSTRAINT `nauczyciel_ibfk_2` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id`),
   ADD CONSTRAINT `nauczyciel_ibfk_3` FOREIGN KEY (`id_osoba`) REFERENCES `osoba` (`id`);
 
 --
--- Constraints for table `ocena`
+-- Ograniczenia dla tabeli `ocena`
 --
 ALTER TABLE `ocena`
   ADD CONSTRAINT `ocena_ibfk_2` FOREIGN KEY (`id_przydzial`) REFERENCES `przydzial` (`id`),
   ADD CONSTRAINT `ocena_ibfk_3` FOREIGN KEY (`id_uczen`) REFERENCES `uczen` (`id_osoba`);
 
 --
--- Constraints for table `przydzial`
+-- Ograniczenia dla tabeli `przydzial`
 --
 ALTER TABLE `przydzial`
   ADD CONSTRAINT `przydzial_ibfk_2` FOREIGN KEY (`id_klasa`) REFERENCES `klasa` (`id`),
@@ -391,7 +389,7 @@ ALTER TABLE `przydzial`
   ADD CONSTRAINT `przydzial_ibfk_5` FOREIGN KEY (`id_przedmiot`) REFERENCES `przedmiot` (`id`);
 
 --
--- Constraints for table `uczen`
+-- Ograniczenia dla tabeli `uczen`
 --
 ALTER TABLE `uczen`
   ADD CONSTRAINT `uczen_ibfk_2` FOREIGN KEY (`id_klasa`) REFERENCES `klasa` (`id`),
