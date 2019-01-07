@@ -54,47 +54,6 @@
     $_SESSION['edytowany_id_przedmiot'] = $rezultat[0]['id_przedmiot'];
     $_SESSION['edytowany_id_klasa'] = $rezultat[0]['id_klasa'];
   }
-
-  //EDYTOWANIE PRZYDZIAŁU
-  if (isset($_POST['wyb_nauczyciel']) && isset($_POST['wyb_przedmiot']) && isset($_POST['wyb_klasa'])) {
-    $wyb_nauczyciel = $_POST['wyb_nauczyciel'];
-    $wyb_przedmiot = $_POST['wyb_przedmiot'];
-    $wyb_klasa = $_POST['wyb_klasa'];
-
-    $wszystko_ok = true;
-
-    //Sprawdzam czy taki przydział już nie istnieje
-    $sql = "SELECT * FROM przydzial WHERE id_nauczyciel='$wyb_nauczyciel' AND id_przedmiot='$wyb_przedmiot' AND id_klasa='$wyb_klasa'";
-
-    $rezultat = $pdo->sql_table($sql);
-
-    if (count($rezultat) > 0) {
-      $wszystko_ok = false;
-      $_SESSION['edytowanie_przydzialow'] = "Taki przydział już istnieje!";
-    }
-
-    //Jeśli wszystko poszło ok to edytuję przydział
-    if ($wszystko_ok) {
-      $edytowany_id = $_SESSION['edytowany_id'];
-      $sql = "UPDATE przydzial SET id_nauczyciel='$wyb_nauczyciel', id_klasa='$wyb_klasa' WHERE id='$edytowany_id'";
-
-      if ($rezultat = $pdo->sql_query($sql) > 0) {
-        $_SESSION['edytowanie_przydzialow'] = "Przydział został zedytowany";
-
-        //Wyciaganie edytowanego przydziału
-        $sql = "SELECT * FROM przydzial WHERE id='$edytowany_id'";
-
-        $rezultat = $pdo->sql_table($sql);
-
-        $_SESSION['edytowany_id'] = $rezultat[0]['id'];
-        $_SESSION['edytowany_id_nauczyciel'] = $rezultat[0]['id_nauczyciel'];
-        $_SESSION['edytowany_id_przedmiot'] = $rezultat[0]['id_przedmiot'];
-        $_SESSION['edytowany_id_klasa'] = $rezultat[0]['id_klasa'];
-      }
-      else
-        $_SESSION['edytowanie_przydzialow'] = "Przydział nie został zedytowany";
-    }
-  }
 ?>
 <!doctype html>
 <html lang="pl">
@@ -163,7 +122,7 @@
   </header>
 
   <main>
-    <form method="post">
+    <form method="post" action="zadania/edytowanie_przydzialow.php">
       <h2>Edytuj Przydział</h2>
       <div class="form-group">
         <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
@@ -194,12 +153,6 @@
       </div>
       <div class="form-group form-inf">
       <button type="submit" class="btn btn-dark">Edytuj</button>
-        <?php
-          if (isset($_SESSION['edytowanie_przydzialow'])) {
-            echo '<p>'.$_SESSION['edytowanie_przydzialow'].'</p>';
-            unset($_SESSION['edytowanie_przydzialow']);
-          }
-        ?>
       </div>
     </form>
 

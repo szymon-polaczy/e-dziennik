@@ -389,6 +389,11 @@
     <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
+        if (isset($_SESSION['edytowanie_przydzialow'])) {
+          echo '<p>'.$_SESSION['edytowanie_przydzialow'].'</p>';
+          unset($_SESSION['edytowanie_przydzialow']);
+        }
+
         if ($_SESSION['ilosc_przydzialow'] <= 0) {
           echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
         } else {
