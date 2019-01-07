@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if(!isset($_SESSION['zalogowany'])) {
     header('Location: ../wszyscy/index.php');
@@ -7,316 +8,33 @@
   }
 
   require_once "../../polacz.php";
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  require_once "../../wg_pdo_mysql.php";
 
-  //USUWAM PRZYDZIAŁY
-  if (isset($_POST['wyb_przydzial'])){
-    $wyb_przydzial = $_POST['wyb_przydzial'];
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    $wszystko_ok = true;
+  //Wyciągam przydziały
+  $sql = "SELECT przydzial.*, klasa.nazwa AS klasa_nazwa, przedmiot.nazwa AS przedmiot_nazwa, nauczyciel.id_osoba, osoba.imie, osoba.nazwisko
+            FROM przydzial, klasa, przedmiot, nauczyciel, osoba
+            WHERE przydzial.id_przedmiot=przedmiot.id AND przydzial.id_klasa=klasa.id
+            AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
 
-    //Zabezpieczenie jeśli są jakieś oceny do danego przydziału
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
+  $rezultat = $pdo->sql_table($sql);
 
-      if ($polaczenie->connect_errno == 0) {
-        $sql = sprintf("SELECT * FROM ocena WHERE id_przydzial='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_przydzial));
+  $_SESSION['ilosc_przydzialow'] = count($rezultat);
 
-        if ($rezultat = $polaczenie->query($sql)) {
-          if ($rezultat->num_rows > 0) {
-            $_SESSION['usuwanie_przydzialow'] = "Ten przydział jest powiązany z ocenami, nie można go usunąć!";
-            $wszystko_ok = false;
-          }
-        } else
-          throw new Exception();
+  for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
+    $_SESSION['przydzial'.$i] = $rezultat[$i];
 
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
+  //Wyciągam nauczycieli
+  $sql = "SELECT nauczyciel.*, osoba.imie, osoba.nazwisko FROM nauczyciel, osoba
+          WHERE nauczyciel.id_osoba=osoba.id";
 
+  $rezultat = $pdo->sql_table($sql);
 
+  $_SESSION['ilosc_nauczycieli'] = count($rezultat);
 
-    if ($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
-
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("DELETE FROM przydzial WHERE id='%s'",
-                          mysqli_real_escape_string($polaczenie, $wyb_przydzial));
-
-          if ($polaczenie->query($sql))
-            $_SESSION['usuwanie_przydzialow'] = "Przydział został usunięty!";
-          else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
-    }
-  }
-
-
-
-  //DODAJĘ PRZYDZIAŁ
-  if (isset($_POST['wyb_klasa']) && isset($_POST['wyb_przedmiot']) && isset($_POST['wyb_nauczyciel'])) {
-    $wyb_nauczyciel = $_POST['wyb_nauczyciel'];
-    $wyb_przedmiot = $_POST['wyb_przedmiot'];
-    $wyb_klasa = $_POST['wyb_klasa'];
-
-    $wszystko_ok = true;
-
-    //Sprawdzam czy taki przydział już nie istnieje
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
-
-      if ($polaczenie->connect_errno == 0) {
-        $sql = sprintf("SELECT * FROM przydzial WHERE id_nauczyciel='%s'
-                        AND id_przedmiot='%s' AND id_klasa='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_nauczyciel),
-                        mysqli_real_escape_string($polaczenie, $wyb_przedmiot),
-                        mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-        if ($rezultat = $polaczenie->query($sql)) {
-          if ($rezultat->num_rows > 0) {
-            $wszystko_ok = false;
-            $_SESSION['dodawanie_przydzialow'] = "Taki przydział już istnieje!";
-          }
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-
-
-    if ($wszystko_ok) {
-      try {
-        $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-        $polaczenie->query("SET NAMES utf8");
-
-        if ($polaczenie->connect_errno == 0) {
-          $sql = sprintf("INSERT INTO przydzial VALUES(NULL, '%s', '%s', '%s')",
-                          mysqli_real_escape_string($polaczenie, $wyb_nauczyciel),
-                          mysqli_real_escape_string($polaczenie, $wyb_przedmiot),
-                          mysqli_real_escape_string($polaczenie, $wyb_klasa));
-
-          if ($polaczenie->query($sql))
-            $_SESSION['dodawanie_przydzialow'] = "Nowy przydział został dodany!";
-          else
-            throw new Exception();
-
-          $polaczenie->close();
-        } else {
-          throw new Exception(mysqli_connect_errno());
-        }
-      } catch (Exception $blad) {
-        echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-        echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-      }
-    }
-  }
-
-
-
-  //WYCIĄGAM PRZYDZIAŁY
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM przydzial";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przydzialow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
-          $_SESSION['przydzial'.$i] = $rezultat->fetch_assoc();
-        }
-
-        $rezultat->free_result();
-      } else {
-          throw new Exception();
-      }
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-
-  //WYCIĄGAM OSOBY
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM osoba WHERE uprawnienia='n'";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $ilosc_osob = $rezultat->num_rows;
-
-        for ($i = 0; $i < $ilosc_osob; $i++) {
-          $_SESSION['osoba'.$i] = $rezultat->fetch_assoc();
-        }
-
-        //Dodaję osobę do wyświetlenia
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
-          for ($j = 0; $j < $ilosc_osob; $j++) {
-            if ($_SESSION['przydzial'.$i]['id_nauczyciel'] == $_SESSION['osoba'.$j]['id']) {
-              $_SESSION['przydzial'.$i]['nauczyciel-id'] = $_SESSION['osoba'.$j]['id'];
-              $_SESSION['przydzial'.$i]['nauczyciel-imie'] = $_SESSION['osoba'.$j]['imie'];
-              $_SESSION['przydzial'.$i]['nauczyciel-nazwisko'] = $_SESSION['osoba'.$j]['nazwisko'];
-            }
-          }
-        }
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-  //WYCIĄGAM NAUCZYCIELI
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM nauczyciel";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_nauczycieli'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++) {
-          $_SESSION['nauczyciel'.$i] = $rezultat->fetch_assoc();
-        }
-
-        //Dodaję osobę do wyświetlenia
-        for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++) {
-          for ($j = 0; $j < $ilosc_osob; $j++) {
-            if ($_SESSION['nauczyciel'.$i]['id_osoba'] == $_SESSION['osoba'.$j]['id']) {
-              $_SESSION['nauczyciel'.$i]['imie'] = $_SESSION['osoba'.$j]['imie'];
-              $_SESSION['nauczyciel'.$i]['nazwisko'] = $_SESSION['osoba'.$j]['nazwisko'];
-            }
-          }
-        }
-
-        $rezultat->free_result();
-      } else {
-          throw new Exception();
-      }
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-
-  //WYCIĄGAM PRZEDMIOTY
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM przedmiot";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przedmiotow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++) {
-          $_SESSION['przedmiot'.$i] = $rezultat->fetch_assoc();
-        }
-
-        //Dodaję przedmiot do wyświetlenia
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-          for ($j = 0; $j < $_SESSION['ilosc_przedmiotow']; $j++)
-            if ($_SESSION['przydzial'.$i]['id_przedmiot'] == $_SESSION['przedmiot'.$j]['id']) {
-              $_SESSION['przydzial'.$i]['przedmiot-id'] = $_SESSION['przedmiot'.$j]['id'];
-              $_SESSION['przydzial'.$i]['przedmiot-nazwa'] = $_SESSION['przedmiot'.$j]['nazwa'];
-            }
-
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-  //WYCIĄGAM KLASY
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM klasa";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_klas'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-          $_SESSION['klasa'.$i] = $rezultat->fetch_assoc();
-        }
-
-        //Dodaję osobę do wyświetlenia
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-          for ($j = 0; $j < $_SESSION['ilosc_klas']; $j++)
-            if ($_SESSION['przydzial'.$i]['id_klasa'] == $_SESSION['klasa'.$j]['id']) {
-              $_SESSION['przydzial'.$i]['klasa-id'] = $_SESSION['klasa'.$j]['id'];
-              $_SESSION['przydzial'.$i]['klasa-nazwa'] = $_SESSION['klasa'.$j]['nazwa'];
-            }
-
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
+    $_SESSION['nauczyciel'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
@@ -387,11 +105,63 @@
 
   <main>
     <section>
+      <form method="post" action="zadania/dodawanie_przydzialow.php">
+        <h2>DODAJ PRZYDZIAŁY</h2>
+        <?php
+          if ($_SESSION['ilosc_nauczycieli'] <= 0 || $_SESSION['ilosc_przedmiotow'] <= 0 || $_SESSION['ilosc_klas'] <= 0) {
+            echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
+          } else {
+            echo '<div class="form-group">';
+              echo '<select name="wyb_nauczyciel" class="form-control">';
+
+                for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
+                  echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
+
+              echo '</select>';
+            echo '</div>';
+
+            echo '<div class="form-group">';
+              echo '<select name="wyb_przedmiot" class="form-control">';
+
+                for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
+                  echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
+
+              echo '</select>';
+            echo '</div>';
+
+            echo '<div class="form-group">';
+              echo '<select name="wyb_klasa" class="form-control">';
+
+                for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+                  echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
+
+              echo '</select>';
+            echo '</div>';
+
+            echo '<div class="form-group form-inf">';
+              echo '<button type="submit" class="btn btn-dark">DODAJ</button>';
+
+              if (isset($_SESSION['dodawanie_przydzialow'])) {
+                echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
+                unset($_SESSION['dodawanie_przydzialow']);
+              }
+
+            echo '</div>';
+          }
+        ?>
+      </form>
+    </section>
+    <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
         if (isset($_SESSION['edytowanie_przydzialow'])) {
           echo '<p>'.$_SESSION['edytowanie_przydzialow'].'</p>';
           unset($_SESSION['edytowanie_przydzialow']);
+        }
+
+        if (isset($_SESSION['usuwanie_przydzialow'])) {
+          echo '<p>'.$_SESSION['usuwanie_przydzialow'].'</p>';
+          unset($_SESSION['usuwanie_przydzialow']);
         }
 
         if ($_SESSION['ilosc_przydzialow'] <= 0) {
@@ -405,6 +175,8 @@
               echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
               echo '<th class="tabela-tekst">NAZWA KLASY</th>';
+              echo '<th class="tabela-zadania">EDYTUJ</th>';
+              echo '<th class="tabela-zadania">USUWANIE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -413,10 +185,12 @@
           for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
             echo '<tr>';
               echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nauczyciel-imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nauczyciel-nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot-nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa-nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
+              echo '<td><a href="edytowanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Edytuj</a></td>';
+              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Usuń</a></td>';
             echo '</tr>';
           }
 
@@ -424,95 +198,6 @@
           echo '</table>';
         }
       ?>
-    </section>
-    <section>
-      <form method="post">
-        <h2>DODAJ PRZYDZIAŁY</h2>
-        <?php
-          if ($_SESSION['ilosc_nauczycieli'] <= 0 || $_SESSION['ilosc_przedmiotow'] <= 0 || $_SESSION['ilosc_klas'] <= 0) {
-            echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW ALBO KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
-          } else {
-            echo '<select name="wyb_nauczyciel">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
-              echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
-
-            echo '</select>';
-            echo '<select name="wyb_przedmiot">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-              echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
-
-            echo '</select>';
-            echo '<select name="wyb_klasa">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-              echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
-
-            echo '</select>';
-
-            echo '<button type="submit">DODAJ</button>';
-
-            echo '<div class="info">';
-              if (isset($_SESSION['dodawanie_przydzialow'])) {
-                echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
-                unset($_SESSION['dodawanie_przydzialow']);
-              }
-            echo '</div>';
-          }
-        ?>
-      </form>
-    </section>
-    <section>
-      <form method="post" action="edytowanie_przydzialow.php">
-        <h2>EDYTUJ PRZYDZIAŁY</h2>
-        <?php
-          if ($_SESSION['ilosc_przydzialow'] <= 0) {
-            echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</div>';
-          } else {
-            echo '<select name="wyb_przydzial">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-              echo '<option value="'.$_SESSION['przydzial'.$i]['id'].'">'.$_SESSION['przydzial'.$i]['nauczyciel-imie']
-              .' '.$_SESSION['przydzial'.$i]['nauczyciel-nazwisko']
-              .' | '.$_SESSION['przydzial'.$i]['przedmiot-nazwa']
-              .' | '.$_SESSION['przydzial'.$i]['klasa-nazwa'].'</option>';
-
-            echo '</select>';
-
-            echo '<button type="submit">WYBIERZ</button>';
-          }
-        ?>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h2>USUŃ PRZYDZIAŁY</h2>
-        <?php
-          if ($_SESSION['ilosc_przydzialow'] <= 0) {
-            echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</div>';
-          } else {
-            echo '<select name="wyb_przydzial">';
-
-            for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-              echo '<option value="'.$_SESSION['przydzial'.$i]['id'].'">'.$_SESSION['przydzial'.$i]['nauczyciel-imie']
-              .' '.$_SESSION['przydzial'.$i]['nauczyciel-nazwisko']
-              .' | '.$_SESSION['przydzial'.$i]['przedmiot-nazwa']
-              .' | '.$_SESSION['przydzial'.$i]['klasa-nazwa'].'</option>';
-
-            echo '</select>';
-
-            echo '<button type="submit">USUŃ</button>';
-
-            echo '<div class="info">';
-              if (isset($_SESSION['usuwanie_przydzialow'])) {
-                echo '<p>'.$_SESSION['usuwanie_przydzialow'].'</p>';
-                unset($_SESSION['usuwanie_przydzialow']);
-              }
-            echo '</div>';
-          }
-        ?>
-      </form>
     </section>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>

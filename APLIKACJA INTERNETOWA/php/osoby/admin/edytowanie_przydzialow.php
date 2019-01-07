@@ -2,7 +2,7 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
 
-  if(!isset($_POST['wyb_przydzial']) && !isset($_POST['wyb_nauczyciel'])) {
+  if(!isset($_GET['wyb_przydzial'])) {
     header('Location: admin_przydzialy.php');
     exit();
   }
@@ -43,17 +43,15 @@
     $_SESSION['klasa'.$i] = $rezultat[$i];
 
   //Wyciąganie edytowanego przydziału
-  if (isset($_POST['wyb_przydzial'])) {
-    $wyb_przydzial = $_POST['wyb_przydzial'];
-    $sql = "SELECT * FROM przydzial WHERE id='$wyb_przydzial'";
+  $wyb_przydzial = $_GET['wyb_przydzial'];
+  $sql = "SELECT * FROM przydzial WHERE id='$wyb_przydzial'";
 
-    $rezultat = $pdo->sql_table($sql);
+  $rezultat = $pdo->sql_table($sql);
 
-    $_SESSION['edytowany_id'] = $rezultat[0]['id'];
-    $_SESSION['edytowany_id_nauczyciel'] = $rezultat[0]['id_nauczyciel'];
-    $_SESSION['edytowany_id_przedmiot'] = $rezultat[0]['id_przedmiot'];
-    $_SESSION['edytowany_id_klasa'] = $rezultat[0]['id_klasa'];
-  }
+  $_SESSION['edytowany_id'] = $rezultat[0]['id'];
+  $_SESSION['edytowany_id_nauczyciel'] = $rezultat[0]['id_nauczyciel'];
+  $_SESSION['edytowany_id_przedmiot'] = $rezultat[0]['id_przedmiot'];
+  $_SESSION['edytowany_id_klasa'] = $rezultat[0]['id_klasa'];
 ?>
 <!doctype html>
 <html lang="pl">
