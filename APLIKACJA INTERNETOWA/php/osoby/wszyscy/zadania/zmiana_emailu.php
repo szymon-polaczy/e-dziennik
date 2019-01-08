@@ -2,14 +2,15 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
 
-  require_once "../../../polacz.php";
-  require_once "../../../wg_pdo_mysql.php";
-
   if (isset($_POST['semail']) && isset($_POST['nemail'])) {
+    require_once "../../../polacz.php";
+    require_once "../../../wg_pdo_mysql.php";
+
+    $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+
     $wszystko_ok = true;
     $semail = $_POST['semail'];
     $nemail = $_POST['nemail'];
-    $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
     //Sprawdzanie czy stary email zgadza się z prawdą
     $moje_id = $_SESSION['id'];
