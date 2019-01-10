@@ -1,233 +1,42 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
-  if(!isset($_POST['wyb_przydzial']) && !isset($_POST['wyb_uczen']) && !isset($_POST['wyb_ocena'])) {
-    header('Location: wybierzprzydzial.php');
+  if(!isset($_GET['wyb_przydzial'])) {
+    header('Location: wybierz_przydzial.php');
     exit();
   }
 
+  $_SESSION['wyb_przydzial'] = $_GET['wyb_przydzial'];
+  $wyb_przydzial = $_SESSION['wyb_przydzial'];
+
   require_once "../../polacz.php";
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  require_once "../../wg_pdo_mysql.php";
 
-  if (isset($_POST['wyb_przydzial']))
-    $_SESSION['wyb_przydzial'] = $_POST['wyb_przydzial'];
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  //EDYTOWANIE OCEN
-  if (isset($_POST['wyb_ocena']) && isset($_POST['wyb_wartosc'])) {
-    $wyb_ocena = $_POST['wyb_ocena'];
-    $wyb_wartosc = $_POST['wyb_wartosc'];
+  //pobieranie uczniów do wyświetlenia w selecie przy dodawaniu ocen
+  $sql = "SELECT osoba.imie, osoba.nazwisko, osoba.id FROM osoba, uczen, przydzial
+                  WHERE osoba.uprawnienia='u' AND uczen.id_osoba=osoba.id
+                  AND przydzial.id_klasa=uczen.id_klasa AND przydzial.id='$wyb_przydzial'";
 
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
+  $rezultat = $pdo->sql_table($sql);
 
-      if ($polaczenie->connect_errno == 0) {
-        $sql = sprintf("UPDATE ocena SET wartosc='%s', data=NULL WHERE id='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_wartosc),
-                        mysqli_real_escape_string($polaczenie, $wyb_ocena));
+  $_SESSION['ilosc_uczniow'] = count($rezultat);
 
-        if ($polaczenie->query($sql)) {
-          $_SESSION['edytowanie_ocen'] = "Ocena została zedytowana.";
-        } else
-          throw new Exception();
+  for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
+    $_SESSION['uczen'.$i] = $rezultat[$i];
 
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-  }
+  //pobieranie ocen do wyświetlania w tabelce
+  $sql = "SELECT ocena.*, osoba.imie, osoba.nazwisko FROM ocena, uczen, osoba
+          WHERE ocena.id_uczen=uczen.id_osoba AND uczen.id_osoba=osoba.id AND ocena.id_przydzial='$wyb_przydzial'";
 
-  //USUWANIE OCEN
-  if (isset($_POST['wyb_ocena']) && !isset($_POST['wyb_wartosc'])) {
-    $wyb_ocena = $_POST['wyb_ocena'];
+  $rezultat = $pdo->sql_table($sql);
 
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
+  $_SESSION['ilosc_ocen'] = count($rezultat);
 
-      if ($polaczenie->connect_errno == 0) {
-        $sql = sprintf("DELETE FROM ocena WHERE id='%s'",
-                        mysqli_real_escape_string($polaczenie, $wyb_ocena));
-
-        if ($polaczenie->query($sql)) {
-          $_SESSION['usuwanie_ocen'] = "Ocena została usunięta";
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-  }
-
-  //DODAWANIE OCEN
-  if (isset($_POST['wyb_uczen']) && isset($_POST['wyb_wartosc'])) {
-    $wyb_uczen = $_POST['wyb_uczen'];
-    echo $wyb_uczen;
-    $wyb_wartosc = $_POST['wyb_wartosc'];
-    $wyb_przydzial = $_SESSION['wyb_przydzial'];
-
-    try {
-      $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-      $polaczenie->query("SET NAMES utf8");
-
-      if ($polaczenie->connect_errno == 0) {
-
-        $sql = sprintf("INSERT INTO ocena VALUES(NULL, '%s', '%s', NULL, '%s')",
-                        mysqli_real_escape_string($polaczenie, $_SESSION['wyb_przydzial']),
-                        mysqli_real_escape_string($polaczenie, $wyb_uczen),
-                        mysqli_real_escape_string($polaczenie, $wyb_wartosc));
-
-        if ($polaczenie->query($sql)) {
-          $_SESSION['dodawanie_ocen'] = "Nowa ocena została dodana.";
-        } else
-          throw new Exception();
-
-        $polaczenie->close();
-      } else {
-        throw new Exception(mysqli_connect_errno());
-      }
-    } catch (Exception $blad) {
-      echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-      echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-    }
-  }
-
-
-  //POBIERANIE UCZNIA DO WYŚWIETLENIA
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-
-      //Pobieram osobę która jest uczniem, który jest w klasie, która jest przypisana do jakiegoś przydziału
-      $sql = sprintf("SELECT osoba.imie, osoba.nazwisko, osoba.id FROM osoba, uczen, przydzial
-                      WHERE osoba.uprawnienia='u' AND uczen.id_osoba=osoba.id
-                      AND przydzial.id_klasa=uczen.id_klasa AND przydzial.id='%s'",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['wyb_przydzial']));
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_uczniow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
-          $_SESSION['uczen'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-  //Pobieranie ocen do wyświetlenia
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-
-      $sql = sprintf("SELECT * FROM ocena WHERE ocena.id_przydzial='%s'",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['wyb_przydzial']));
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_ocen'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-          $_SESSION['ocena'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-  //Pobieranie Ucznia do wyświetlenia
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-
-      $sql = sprintf("SELECT * FROM ocena, uczen, osoba WHERE ocena.id_przydzial='%s'
-                      AND ocena.id_uczen=uczen.id_osoba AND uczen.id_osoba=osoba.id",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['wyb_przydzial']));
-
-      if ($rezultat = $polaczenie->query($sql)) {
-
-        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++) {
-          $wiersz = $rezultat->fetch_assoc();
-          $_SESSION['ocena'.$i]['uczen-imie'] = $wiersz['imie'];
-          $_SESSION['ocena'.$i]['uczen-nazwisko'] = $wiersz['nazwisko'];
-        }
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
-
-  //Pobieranie Nauczyciela do wyświetlenia
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-
-      $sql = sprintf("SELECT * FROM ocena, przydzial, nauczyciel, osoba
-                      WHERE ocena.id_przydzial='%s' AND ocena.id_przydzial=przydzial.id
-                      AND przydzial.id_nauczyciel=nauczyciel.id_osoba
-                      AND nauczyciel.id_osoba=osoba.id",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['wyb_przydzial']));
-
-      if ($rezultat = $polaczenie->query($sql)) {
-
-        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++) {
-          $wiersz = $rezultat->fetch_assoc();
-          $_SESSION['ocena'.$i]['nauczyciel-imie'] = $wiersz['imie'];
-          $_SESSION['ocena'.$i]['nauczyciel-nazwisko'] = $wiersz['nazwisko'];
-        }
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
+    $_SESSION['ocena'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
@@ -301,143 +110,94 @@
 
   <main>
     <section>
+      <div class="container p-0">
+        <form method="post" action="zadania/dodawanie_ocen.php">
+          <h2>Dodaj ocenę</h2>
+          <?php
+            if ($_SESSION['ilosc_uczniow'] == 0) {
+              echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
+            } else {
+              echo '<div class="form-group">';
+                echo '<select name="wyb_uczen" class="form-control">';
+
+                  for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
+                    echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
+
+                echo '</select>';
+              echo '</div>';
+
+              echo '<div class="form-group">';
+                $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
+
+                echo '<select name="wyb_wartosc" class="form-control">';
+
+                  for ($i = 0; $i < count($oceny); $i++)
+                    echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
+
+                echo '</select>';
+              echo '</div>';
+
+              echo '<div class="form-grou form-inf">';
+                echo '<button type="submit" class="btn btn-dark">Dodaj ocenę</button>';
+                echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
+
+                if (isset($_SESSION['dodawanie_ocen'])) {
+                  echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
+                  unset($_SESSION['dodawanie_ocen']);
+                }
+              echo '</div>';
+            }
+          ?>
+        </form>
+      </div>
+    </section>
+    <section>
       <h2>ZOBACZ OCENY</h2>
       <?php
-
-      if ($_SESSION['ilosc_ocen'] == 0) {
-        echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
-      } else {
-        echo '<table class="table">';
-        echo '<thead class="thead-dark">';
-          echo '<tr>';
-            echo '<th class="tabela-liczby">#</th>';
-            echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
-            echo '<th class="tabela-tekst">IMIE UCZNIA</th>';
-            echo '<th class="tabela-tekst">NAZWISKO UCZNIA</th>';
-            echo '<th class="tabela-tekst">DATA I GODZINA</th>';
-            echo '<th class="tabela-tekst">WARTOŚĆ</th>';
-          echo '</tr>';
-        echo '</thead>';
-
-        echo '<tbody>';
-
-        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
-          echo '<tr>';
-            echo '<td class="tabela-liczby">'.$i.'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko'].'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['uczen-imie'].'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['uczen-nazwisko'].'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['data'].'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
-          echo '</tr>';
+        if (isset($_SESSION['edytowanie_ocen'])) {
+          echo '<p style="color: red">'.$_SESSION['edytowanie_ocen'].'</p>';
+          unset($_SESSION['edytowanie_ocen']);
         }
 
-        echo '</tbody>';
-        echo '</table>';
-      }
+        if (isset($_SESSION['usuwanie_ocen'])) {
+          echo '<p style="color: red">'.$_SESSION['usuwanie_ocen'].'</p>';
+          unset($_SESSION['usuwanie_ocen']);
+        }
 
+        if ($_SESSION['ilosc_ocen'] == 0) {
+          echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
+        } else {
+          echo '<table class="table">';
+          echo '<thead class="thead-dark">';
+            echo '<tr>';
+              echo '<th class="tabela-liczby">#</th>';
+              echo '<th class="tabela-tekst">IMIE UCZNIA</th>';
+              echo '<th class="tabela-tekst">NAZWISKO UCZNIA</th>';
+              echo '<th class="tabela-liczby">DATA I GODZINA</th>';
+              echo '<th class="tabela-liczby">WARTOŚĆ</th>';
+              echo '<th class="tabela-zadania">EDYTOWANIE</th>';
+              echo '<th class="tabela-zadania">USUWANIE</th>';
+            echo '</tr>';
+          echo '</thead>';
+
+          echo '<tbody>';
+
+          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
+            echo '<tr>';
+              echo '<td class="tabela-liczby">'.$i.'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
+              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['data'].'</td>';
+              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
+              echo '<td class="tabela-zadania"><a href="edytowanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Edytuj</a></td>';
+              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Usuń</a></td>';
+            echo '</tr>';
+          }
+
+          echo '</tbody>';
+          echo '</table>';
+        }
       ?>
-    </section>
-    <section>
-      <form method="post">
-        <h2>Dodaj ocenę</h2>
-
-        <?php
-
-        if ($_SESSION['ilosc_uczniow'] == 0) {
-          echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
-        } else {
-          echo '<select name="wyb_uczen">';
-
-          for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
-            echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
-
-          echo '</select>';
-
-
-          $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
-
-          echo '<select name="wyb_wartosc">';
-
-          for ($i = 0; $i < count($oceny); $i++)
-            echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
-
-          echo '</select>';
-
-          echo '<button type="submit">Dodaj ocenę</button>';
-
-          if (isset($_SESSION['dodawanie_ocen'])) {
-            echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
-            unset($_SESSION['dodawanie_ocen']);
-          }
-        }
-
-        ?>
-
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h2>EDYTUJ OCENY</h2>
-        <?php
-
-        if ($_SESSION['ilosc_ocen'] == 0) {
-          echo 'Nie ma żadnych ocen do edycji';
-        } else {
-          echo '<select name="wyb_ocena" id="wyb_ocena_uzu"  onchange="pokazOdpOcene()">';
-
-          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-            echo '<option value="'.$_SESSION['ocena'.$i]['id'].'">'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko']
-            .' | '.$_SESSION['ocena'.$i]['uczen-imie'].' '.$_SESSION['ocena'.$i]['uczen-nazwisko'].' | Wartość: '.$_SESSION['ocena'.$i]['wartosc'].'</option>';
-
-          echo '</select>';
-
-          $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
-
-          echo '<select name="wyb_wartosc" id="wyb_wartosc_uzu">';
-
-          for ($i = 0; $i < count($oceny); $i++)
-            echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
-
-          echo '</select>';
-
-          echo '<button type="submit">EDYTUJ</button>';
-
-          if (isset($_SESSION['edytowanie_ocen'])) {
-            echo '<p style="color: red">'.$_SESSION['edytowanie_ocen'].'</p>';
-            unset($_SESSION['edytowanie_ocen']);
-          }
-        }
-
-        ?>
-      </form>
-    </section>
-    <section>
-      <form method="post">
-        <h2>USUŃ OCENY</h2>
-        <?php
-
-        if ($_SESSION['ilosc_ocen'] == 0) {
-          echo 'Nie ma żadnych ocen do usunięcia';
-        } else {
-          echo '<select name="wyb_ocena">';
-
-          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-            echo '<option value="'.$_SESSION['ocena'.$i]['id'].'">'.$_SESSION['ocena'.$i]['nauczyciel-nazwisko']
-            .' | '.$_SESSION['ocena'.$i]['uczen-imie'].' '.$_SESSION['ocena'.$i]['uczen-nazwisko'].' | '.$_SESSION['ocena'.$i]['wartosc'].'</option>';
-
-          echo '</select>';
-
-          echo '<button type="submit">USUŃ</button>';
-
-          if (isset($_SESSION['usuwanie_ocen'])) {
-            echo '<p style="color: red">'.$_SESSION['usuwanie_ocen'].'</p>';
-            unset($_SESSION['usuwanie_ocen']);
-          }
-        }
-
-        ?>
-      </form>
     </section>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>

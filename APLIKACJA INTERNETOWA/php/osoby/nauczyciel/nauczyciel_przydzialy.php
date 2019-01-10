@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if(!isset($_SESSION['zalogowany'])) {
     header('Location: ../wszyscy/dziennik.php');
@@ -7,57 +8,24 @@
   }
 
   require_once "../../polacz.php";
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  require_once "../../wg_pdo_mysql.php";
+
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
   //Wyciąganie przydziały do wyświetlenia
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $moje_id = $_SESSION['id'];
+  $sql = "SELECT klasa.nazwa AS klasa_nazwa, przedmiot.nazwa AS przedmiot_nazwa, przydzial.id
+          FROM przydzial, klasa, przedmiot
+          WHERE przydzial.id_nauczyciel='$moje_id'
+          AND przydzial.id_klasa=klasa.id
+          AND przydzial.id_przedmiot=przedmiot.id";
 
-    if ($polaczenie->connect_errno == 0) {
+  $rezultat = $pdo->sql_table($sql);
 
-      $sql = sprintf("SELECT klasa.nazwa, przydzial.id
-                      FROM klasa, przydzial
-                      WHERE przydzial.id_nauczyciel='%s'
-                      AND przydzial.id_klasa=klasa.id",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['id']));
+  $_SESSION['ilosc_przydzialow'] = count($rezultat);
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przydzialow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-          $_SESSION['przydzial'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-
-
-      $sql = sprintf("SELECT przedmiot.nazwa
-                      FROM przedmiot, przydzial
-                      WHERE przydzial.id_nauczyciel='%s'
-                      AND przydzial.id_przedmiot=przedmiot.id",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['id']));
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przydzialow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-          $_SESSION['przydzial'.$i]['przedmiot'] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
+    $_SESSION['przydzial'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
@@ -147,8 +115,8 @@
           for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
             echo '<tr>';
               echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot']['nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
             echo '</tr>';
           }
 
