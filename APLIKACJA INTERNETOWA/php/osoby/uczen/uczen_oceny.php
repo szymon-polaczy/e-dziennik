@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if (!isset($_SESSION['zalogowany']) || !($_SESSION['uprawnienia'] == 'u')) {
     header('Location: ../wszyscy/dziennik.php');
@@ -7,43 +8,24 @@
   }
 
   require_once "../../polacz.php";
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  require_once "../../wg_pdo_mysql.php";
 
-  //Wyciąganie ocen do wyświetlenia
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    if ($polaczenie->connect_errno == 0) {
+  //wyciąganie ocen do wyświetlania
+  $moje_id = $_SESSION['id'];
+  $sql = "SELECT osoba.imie, osoba.nazwisko, przedmiot.nazwa, ocena.*
+                  FROM osoba, nauczyciel, przydzial, przedmiot, uczen, ocena
+                  WHERE uczen.id_osoba='$moje_id' AND ocena.id_uczen=uczen.id_osoba
+                  AND ocena.id_przydzial=przydzial.id AND przydzial.id_nauczyciel=nauczyciel.id_osoba
+                  AND nauczyciel.id_osoba=osoba.id AND przydzial.id_przedmiot=przedmiot.id";
 
-      $sql = sprintf("SELECT osoba.imie, osoba.nazwisko, przedmiot.nazwa, ocena.*
-                      FROM osoba, nauczyciel, przydzial, przedmiot, uczen, ocena
-                      WHERE uczen.id_osoba='%s'
-                      AND ocena.id_uczen=uczen.id_osoba
-                      AND ocena.id_przydzial=przydzial.id
-                      AND przydzial.id_nauczyciel=nauczyciel.id_osoba
-                      AND nauczyciel.id_osoba=osoba.id
-                      AND przydzial.id_przedmiot=przedmiot.id",
-                      mysqli_real_escape_string($polaczenie, $_SESSION['id']));
+  $rezultat = $pdo->sql_table($sql);
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_ocen'] = $rezultat->num_rows;
+  $_SESSION['ilosc_ocen'] = count($rezultat);
 
-        for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-          $_SESSION['ocena'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-          throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
+    $_SESSION['ocena'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
@@ -114,6 +96,7 @@
 
   <main>
     <section>
+      <h2>TWOJE OCENY</h2>
       <?php
         if ($_SESSION['ilosc_ocen'] == 0) {
           echo '<p>Nie posiadasz żadnych ocen</p>';
@@ -125,8 +108,8 @@
               echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
-              echo '<th class="tabela-tekst">DATA</th>';
-              echo '<th class="tabela-tekst">WARTOŚĆ</th>';
+              echo '<th class="tabela-liczby">DATA</th>';
+              echo '<th class="tabela-liczby">WARTOŚĆ</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -138,8 +121,8 @@
               echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['imie'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['data'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
+              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['data'].'</td>';
+              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
             echo '</tr>';
           }
 
