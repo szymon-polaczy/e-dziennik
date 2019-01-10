@@ -35,6 +35,26 @@
 
   for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
     $_SESSION['nauczyciel'.$i] = $rezultat[$i];
+
+  //Wyciągam nauczycieli
+  $sql = "SELECT przedmiot.* FROM przedmiot";
+
+  $rezultat = $pdo->sql_table($sql);
+
+  $_SESSION['ilosc_przedmiotow'] = count($rezultat);
+
+  for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
+    $_SESSION['przedmiot'.$i] = $rezultat[$i];
+
+  //Wyciągam nauczycieli
+  $sql = "SELECT klasa.* FROM klasa";
+
+  $rezultat = $pdo->sql_table($sql);
+
+  $_SESSION['ilosc_klas'] = count($rezultat);
+
+  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+    $_SESSION['klasa'.$i] = $rezultat[$i];
 ?>
 
 <!doctype html>
