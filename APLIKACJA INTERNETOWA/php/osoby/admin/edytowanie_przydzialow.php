@@ -120,39 +120,41 @@
   </header>
 
   <main>
-    <form method="post" action="zadania/edytowanie_przydzialow.php">
-      <h2>Edytuj Przydział</h2>
-      <div class="form-group">
-        <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
-        <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela">
-          <?php
-            for ($i = 0; $i < $ilosc_osob; $i++)
-              echo '<option '.($_SESSION['osoba'.$i]['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$_SESSION['osoba'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['osoba'.$i]['imie'].' '.$_SESSION['osoba'.$i]['nazwisko'].'</option>';
-           ?>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="wybor_przedmiotu">Wybierz przedmiot</label>
-        <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu">
-          <?php
-            for ($i = 0; $i < $ilosc_przedmiotow; $i++)
-              echo '<option '.($_SESSION['przedmiot'.$i]['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
-           ?>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="wybor_klasy">Wybierz klasę</label>
-        <select name="wyb_klasa" class="form-control" id="wybor_klasy">
-          <?php
-            for ($i = 0; $i < $ilosc_klas; $i++)
-              echo '<option '.($_SESSION['klasa'.$i]['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
-           ?>
-        </select>
-      </div>
-      <div class="form-group form-inf">
-      <button type="submit" class="btn btn-dark">Edytuj</button>
-      </div>
-    </form>
+    <div class="container p-0">
+      <form method="post" action="zadania/edytowanie_przydzialow.php">
+        <h2>Edytuj Przydział</h2>
+        <div class="form-group">
+          <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
+          <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela">
+            <?php
+              for ($i = 0; $i < $ilosc_osob; $i++)
+                echo '<option '.($_SESSION['osoba'.$i]['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$_SESSION['osoba'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['osoba'.$i]['imie'].' '.$_SESSION['osoba'.$i]['nazwisko'].'</option>';
+             ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="wybor_przedmiotu">Wybierz przedmiot</label>
+          <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu">
+            <?php
+              for ($i = 0; $i < $ilosc_przedmiotow; $i++)
+                echo '<option '.($_SESSION['przedmiot'.$i]['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
+             ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="wybor_klasy">Wybierz klasę</label>
+          <select name="wyb_klasa" class="form-control" id="wybor_klasy">
+            <?php
+              for ($i = 0; $i < $ilosc_klas; $i++)
+                echo '<option '.($_SESSION['klasa'.$i]['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
+             ?>
+          </select>
+        </div>
+        <div class="form-group form-inf">
+        <button type="submit" class="btn btn-dark">Edytuj</button>
+        </div>
+      </form>
+    </div>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
   </main>

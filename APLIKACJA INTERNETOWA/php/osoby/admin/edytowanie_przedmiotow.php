@@ -2,50 +2,30 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
 
-  if(!isset($_SESSION['zalogowany'])) {
-    header('Location: ../wszyscy/index.php');
+  if(!isset($_GET['wyb_przedmiot'])) {
+    header('Location: admin_przydzialy.php');
     exit();
   }
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
-  //------------------------------------------------WYCIĄGANIE PRZEDMIOTÓW DO OBEJRZENIA-----------------------------------------------//
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $wyb_przedmiot = $_GET['wyb_przedmiot'];
 
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM przedmiot";
+  //Wyciągam to c potrzebuję do edycji
+  $sql = "SELECT przedmiot.nazwa FROM przedmiot WHERE id='$wyb_przedmiot'";
 
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przedmiotow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-          $_SESSION['przedmiot'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  $rezultat = $pdo->sql_record($sql);
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-  <title>BDG DZIENNIK - Zobacz, Dodaj, Usuń, Edytuj PRZEDMIOT</title>
+  <title>BDG DZIENNIK - Edytuj Przedmiot</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="Szymon Polaczy">
@@ -54,7 +34,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/style.css">
 </head>
-<body>
+<body class="index-body">
   <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <a href="../wszyscy/dziennik.php" class="navbar-brand">BDG DZIENNIK</a>
@@ -106,71 +86,19 @@
   </header>
 
   <main>
-    <section>
-      <div class="container p-0">
-        <form method="post" action="zadania/dodawanie_przedmiotow.php">
-          <h2>DODAJ PRZEDMIOT</h2>
-          <div class="form-group">
-            <div class="form-group">
-              <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
-              <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control">
-            </div>
-          </div>
-          <div class="form-group form-inf">
-            <?php
-              if (isset($_SESSION['dodawanie_przedmiotow'])) {
-                echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
-                unset($_SESSION['dodawanie_przedmiotow']);
-              }
-            ?>
-
-            <button class="btn btn-dark" type="submit">Dodaj</button>
-          </div>
-        </form>
-      </div>
-    </section>
-    <section>
-      <h2>ZOBACZ PRZEDMIOT</h2>
-      <?php
-        if (isset($_SESSION['edytowanie_przedmiotow'])) {
-          echo '<p>'.$_SESSION['edytowanie_przedmiotow'].'</p>';
-          unset($_SESSION['edytowanie_przedmiotow']);
-        }
-
-        if (isset($_SESSION['usuwanie_przedmiotow'])) {
-          echo '<p>'.$_SESSION['usuwanie_przedmiotow'].'</p>';
-          unset($_SESSION['usuwanie_przedmiotow']);
-        }
-
-        if ($_SESSION['ilosc_przedmiotow'] == 0) {
-          echo '<p>ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
-              echo '<th class="tabela-tekst">NAZWA</th>';
-              echo '<th class="tabela-zadania">EDYTUJ</th>';
-              echo '<th class="tabela-zadania">USUWANIE</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++) {
-            echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
-              echo '<td class="tabela-zadania"><a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Usuń</a></td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
-      ?>
-    </section>
+    <div class="container p-0">
+      <form method="post" action="zadania/edytowanie_przedmiotow.php">
+        <h2>Edytuj przedmiot</h2>
+        <div class="form-group">
+          <label for="przedmiot-nazwa">Edytuj nazwę przedmiotu</label>
+          <input name="nazwa" id="przedmiot-nazwa" value="<?php echo $rezultat['nazwa']; ?>" type="text" class="form-control">
+        </div>
+        <div class="form-group form-inf">
+          <input type="hidden" name="wyb_przedmiot" value="<?php echo $wyb_przedmiot?>">
+          <button type="submit" class="btn btn-dark">Edytuj</button>
+        </div>
+      </form>
+    </div>
 
     <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
   </main>
