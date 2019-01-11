@@ -108,25 +108,31 @@
   <main>
     <section>
       <div class="container p-0">
-        <form method="post" action="zadania/dodawanie_przedmiotow.php">
-          <h2>DODAJ PRZEDMIOT</h2>
-          <div class="form-group">
+        <p>
+          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Dodaj przedmiot
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <form method="post" action="zadania/dodawanie_przedmiotow.php">
             <div class="form-group">
-              <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
-              <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control">
+              <div class="form-group">
+                <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
+                <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control">
+              </div>
             </div>
-          </div>
-          <div class="form-group form-inf">
-            <?php
-              if (isset($_SESSION['dodawanie_przedmiotow'])) {
-                echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
-                unset($_SESSION['dodawanie_przedmiotow']);
-              }
-            ?>
+            <div class="form-group form-inf">
+              <?php
+                if (isset($_SESSION['dodawanie_przedmiotow'])) {
+                  echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
+                  unset($_SESSION['dodawanie_przedmiotow']);
+                }
+              ?>
 
-            <button class="btn btn-dark" type="submit">Dodaj</button>
-          </div>
-        </form>
+              <button class="btn btn-dark" type="submit">Dodaj</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
     <section>

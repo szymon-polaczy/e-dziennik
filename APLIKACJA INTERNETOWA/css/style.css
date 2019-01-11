@@ -81,3 +81,30 @@ h2 {
 .niewidoczne {
 	display: none;
 }
+
+.dodawanie-collapse-btn {
+	background: transparent;
+	outline: none;
+	border: none;
+	transition: all .1s ease-in-out;
+	font-size: 2.5em;
+	padding: 10px 0;
+	color: #343a40;
+	text-transform: uppercase;
+}
+
+.dodawanie-collapse-btn:hover {
+	background: transparent;
+	font-size: 2.7em;
+	color: #444;
+	transition: all .2s ease-in-out;
+}
+
+.dodawanie-collapse-btn:active {
+	background: #eee;
+	color: #333;
+}
+
+.dodawanie-collapse-btn:focus {
+	box-shadow: none;
+}

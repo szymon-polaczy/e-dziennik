@@ -140,85 +140,87 @@
   <main>
     <section>
       <div class="container p-0">
-        <div class="row">
-          <div class="col-12">
-            <form action="zadania/dodawanie_osob.php" method="post">
-              <h2>DODAJ OSOBĘ</h2>
-              <div class="form-group">
-                <label for="dodajImie">Wpisz Imię</label>
-                <input id="dodajImie" class="form-control" type="text" placeholder="Imię" name="imie"/>
-              </div>
-              <div class="form-group">
-                <label for="dodajImie">Wpisz Nazwisko</label>
-                <input id="dodajImie" class="form-control" type="text" placeholder="Nazwisko" name="nazwisko"/>
-              </div>
-              <div class="form-group">
-                <label for="dodajImie">Wpisz Email</label>
-                <input id="dodajImie" class="form-control" type="email" placeholder="Email" name="email"/>
-              </div>
-              <div class="form-group">
-                <label for="dodajImie">Wpisz Hasło</label>
-                <input id="dodajImie" class="form-control" type="password" placeholder="Hasło" name="haslo"/>
-              </div>
-              <div class="form-group">
-                <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
-                <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" onchange="pokazUzupelnienie()">
-                  <option value="a">Administrator</option>
-                  <option value="n">Nauczyciel</option>
-                  <option value="u">Uczeń</option>
-                </select>
-              </div>
-              <div class="niewidoczne" id="nauczyciel-uzu">
-                <?php
-                  if ($_SESSION['ilosc_sal'] == 0) {
-                    echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
-                  } else {
-                    echo '<div class="form-group">';
-                      echo '<label for="wybierzSale">Wybierz Salę</label>';
-                      echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
+        <p>
+          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Dodaj osobę
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <form action="zadania/dodawanie_osob.php" method="post">
+            <div class="form-group">
+              <label for="dodajImie">Wpisz Imię</label>
+              <input id="dodajImie" class="form-control" type="text" placeholder="Imię" name="imie"/>
+            </div>
+            <div class="form-group">
+              <label for="dodajImie">Wpisz Nazwisko</label>
+              <input id="dodajImie" class="form-control" type="text" placeholder="Nazwisko" name="nazwisko"/>
+            </div>
+            <div class="form-group">
+              <label for="dodajImie">Wpisz Email</label>
+              <input id="dodajImie" class="form-control" type="email" placeholder="Email" name="email"/>
+            </div>
+            <div class="form-group">
+              <label for="dodajImie">Wpisz Hasło</label>
+              <input id="dodajImie" class="form-control" type="password" placeholder="Hasło" name="haslo"/>
+            </div>
+            <div class="form-group">
+              <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
+              <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" onchange="pokazUzupelnienie()">
+                <option value="a">Administrator</option>
+                <option value="n">Nauczyciel</option>
+                <option value="u">Uczeń</option>
+              </select>
+            </div>
+            <div class="niewidoczne" id="nauczyciel-uzu">
+              <?php
+                if ($_SESSION['ilosc_sal'] == 0) {
+                  echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
+                } else {
+                  echo '<div class="form-group">';
+                    echo '<label for="wybierzSale">Wybierz Salę</label>';
+                    echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
 
-                      for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
-                        echo '<option value="'.$_SESSION['sala'.$i]['id'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
+                    for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
+                      echo '<option value="'.$_SESSION['sala'.$i]['id'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
 
-                      echo '</select>';
-                    echo '</div>';
-                  }
+                    echo '</select>';
+                  echo '</div>';
+                }
+              ?>
+            </div>
+            <div class="niewidoczne" id="uczen-uzu">
+              <?php
+                if ($_SESSION['ilosc_klas'] == 0) {
+                  echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
+                } else {
+                  echo '<div class="form-group">';
+                    echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
+                    echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia"/>';
+                  echo '</div>';
+
+                  echo '<div class="form-group">';
+                    echo '<label for="wybierzKlase">Wybierz Klasę</label>';
+                    echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
+
+                    for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+                      echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';
+
+                    echo '</select>';
+                  echo '</div>';
+                }
+              ?>
+            </div>
+            <div class="form-group form-inf">
+              <?php
+                if (isset($_SESSION['dodawanie_osob'])) {
+                  echo '<small class="form-text uzytk-blad">'.$_SESSION['dodawanie_osob'].'</small>';
+                  unset($_SESSION['dodawanie_osob']);
+                }
                 ?>
-              </div>
-              <div class="niewidoczne" id="uczen-uzu">
-                <?php
-                  if ($_SESSION['ilosc_klas'] == 0) {
-                    echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
-                  } else {
-                    echo '<div class="form-group">';
-                      echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
-                      echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia"/>';
-                    echo '</div>';
 
-                    echo '<div class="form-group">';
-                      echo '<label for="wybierzKlase">Wybierz Klasę</label>';
-                      echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
-
-                      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-                        echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';
-
-                      echo '</select>';
-                    echo '</div>';
-                  }
-                ?>
-              </div>
-              <div class="form-group form-inf">
-                <?php
-                  if (isset($_SESSION['dodawanie_osob'])) {
-                    echo '<small class="form-text uzytk-blad">'.$_SESSION['dodawanie_osob'].'</small>';
-                    unset($_SESSION['dodawanie_osob']);
-                  }
-                  ?>
-
-                <button class="btn btn-dark" type="submit">Dodaj</button>
-              </div>
-            </form>
-          </div>
+              <button class="btn btn-dark" type="submit">Dodaj</button>
+            </div>
+          </form>
         </div>
       </div>
     </section>

@@ -111,44 +111,50 @@
   <main>
     <section>
       <div class="container p-0">
-        <form method="post" action="zadania/dodawanie_ocen.php">
-          <h2>Dodaj ocenę</h2>
-          <?php
-            if ($_SESSION['ilosc_uczniow'] == 0) {
-              echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
-            } else {
-              echo '<div class="form-group">';
-                echo '<select name="wyb_uczen" class="form-control">';
+        <p>
+          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Dodaj ocenę
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <form method="post" action="zadania/dodawanie_ocen.php">
+            <?php
+              if ($_SESSION['ilosc_uczniow'] == 0) {
+                echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
+              } else {
+                echo '<div class="form-group">';
+                  echo '<select name="wyb_uczen" class="form-control">';
 
-                  for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
-                    echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
+                    for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
+                      echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+                  echo '</select>';
+                echo '</div>';
 
-              echo '<div class="form-group">';
-                $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
+                echo '<div class="form-group">';
+                  $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-                echo '<select name="wyb_wartosc" class="form-control">';
+                  echo '<select name="wyb_wartosc" class="form-control">';
 
-                  for ($i = 0; $i < count($oceny); $i++)
-                    echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
+                    for ($i = 0; $i < count($oceny); $i++)
+                      echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+                  echo '</select>';
+                echo '</div>';
 
-              echo '<div class="form-grou form-inf">';
-                echo '<button type="submit" class="btn btn-dark">Dodaj ocenę</button>';
-                echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
+                echo '<div class="form-grou form-inf">';
+                  echo '<button type="submit" class="btn btn-dark">Dodaj ocenę</button>';
+                  echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
 
-                if (isset($_SESSION['dodawanie_ocen'])) {
-                  echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
-                  unset($_SESSION['dodawanie_ocen']);
-                }
-              echo '</div>';
-            }
-          ?>
-        </form>
+                  if (isset($_SESSION['dodawanie_ocen'])) {
+                    echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
+                    unset($_SESSION['dodawanie_ocen']);
+                  }
+                echo '</div>';
+              }
+            ?>
+          </form>
+        </div>
       </div>
     </section>
     <section>

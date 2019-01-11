@@ -92,30 +92,32 @@
   <main>
     <section>
       <div class="container p-0">
-        <div class="row">
-          <div class="col-12">
-            <form method="post" action="zadania/dodawanie_klas.php">
-              <h2>DODAJ KLASĘ</h2>
-              <div class="form-group">
-                <label for="dodanieNazwa">Wpisz Nazwę</label>
-                <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa"/>
-              </div>
-              <div class="form-group">
-                <label for="dodanieOpis">Wpisz Opis</label>
-                <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis"/>
-              </div>
-              <div class="form-group form-inf">
-                <?php
-                  if (isset($_SESSION['dodawanie_klas'])) {
-                    echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
-                    unset($_SESSION['dodawanie_klas']);
-                  }
-                  ?>
+        <p>
+          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Dodaj klasę
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <form method="post" action="zadania/dodawanie_klas.php">
+            <div class="form-group">
+              <label for="dodanieNazwa">Wpisz Nazwę</label>
+              <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa"/>
+            </div>
+            <div class="form-group">
+              <label for="dodanieOpis">Wpisz Opis</label>
+              <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis"/>
+            </div>
+            <div class="form-group form-inf">
+              <?php
+                if (isset($_SESSION['dodawanie_klas'])) {
+                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
+                  unset($_SESSION['dodawanie_klas']);
+                }
+                ?>
 
-                <button class="btn btn-dark" type="submit">Dodaj</button>
-              </div>
-            </form>
-          </div>
+              <button class="btn btn-dark" type="submit">Dodaj</button>
+            </div>
+          </form>
         </div>
       </div>
     </section>

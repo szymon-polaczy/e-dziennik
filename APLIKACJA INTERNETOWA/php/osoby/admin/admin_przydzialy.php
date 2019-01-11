@@ -126,51 +126,57 @@
   <main>
     <section>
       <div class="container p-0">
-        <form method="post" action="zadania/dodawanie_przydzialow.php">
-          <h2>DODAJ PRZYDZIAŁY</h2>
-          <?php
-            if ($_SESSION['ilosc_nauczycieli'] <= 0 || $_SESSION['ilosc_przedmiotow'] <= 0 || $_SESSION['ilosc_klas'] <= 0) {
-              echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
-            } else {
-              echo '<div class="form-group">';
-                echo '<select name="wyb_nauczyciel" class="form-control">';
+        <p>
+          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Dodaj przydziały
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <form method="post" action="zadania/dodawanie_przydzialow.php">
+            <?php
+              if ($_SESSION['ilosc_nauczycieli'] <= 0 || $_SESSION['ilosc_przedmiotow'] <= 0 || $_SESSION['ilosc_klas'] <= 0) {
+                echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
+              } else {
+                echo '<div class="form-group">';
+                  echo '<select name="wyb_nauczyciel" class="form-control">';
 
-                  for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
-                    echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
+                    for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
+                      echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+                  echo '</select>';
+                echo '</div>';
 
-              echo '<div class="form-group">';
-                echo '<select name="wyb_przedmiot" class="form-control">';
+                echo '<div class="form-group">';
+                  echo '<select name="wyb_przedmiot" class="form-control">';
 
-                  for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-                    echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
+                    for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
+                      echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+                  echo '</select>';
+                echo '</div>';
 
-              echo '<div class="form-group">';
-                echo '<select name="wyb_klasa" class="form-control">';
+                echo '<div class="form-group">';
+                  echo '<select name="wyb_klasa" class="form-control">';
 
-                  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-                    echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
+                    for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+                      echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+                  echo '</select>';
+                echo '</div>';
 
-              echo '<div class="form-group form-inf">';
-                echo '<button type="submit" class="btn btn-dark">DODAJ</button>';
+                echo '<div class="form-group form-inf">';
+                  echo '<button type="submit" class="btn btn-dark">DODAJ</button>';
 
-                if (isset($_SESSION['dodawanie_przydzialow'])) {
-                  echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
-                  unset($_SESSION['dodawanie_przydzialow']);
-                }
+                  if (isset($_SESSION['dodawanie_przydzialow'])) {
+                    echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
+                    unset($_SESSION['dodawanie_przydzialow']);
+                  }
 
-              echo '</div>';
-            }
-          ?>
-        </form>
+                echo '</div>';
+              }
+            ?>
+          </form>
+        </div>
       </div>
     </section>
     <section>
