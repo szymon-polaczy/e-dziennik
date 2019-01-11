@@ -183,17 +183,17 @@
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
         if (isset($_SESSION['edytowanie_przydzialow'])) {
-          echo '<p>'.$_SESSION['edytowanie_przydzialow'].'</p>';
+          echo '<small class="form-text uzytk-blad">'.$_SESSION['edytowanie_przydzialow'].'</small>';
           unset($_SESSION['edytowanie_przydzialow']);
         }
 
         if (isset($_SESSION['usuwanie_przydzialow'])) {
-          echo '<p>'.$_SESSION['usuwanie_przydzialow'].'</p>';
+          echo '<small class="form-text uzytk-blad">'.$_SESSION['usuwanie_przydzialow'].'</small>';
           unset($_SESSION['usuwanie_przydzialow']);
         }
 
         if ($_SESSION['ilosc_przydzialow'] <= 0) {
-          echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
+          echo '<p class="form-text uzytk-blad">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
@@ -218,7 +218,7 @@
               echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
               echo '<td><a href="edytowanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Usuń</a></td>';
+              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
 

@@ -139,17 +139,17 @@
       <h2>ZOBACZ PRZEDMIOT</h2>
       <?php
         if (isset($_SESSION['edytowanie_przedmiotow'])) {
-          echo '<p>'.$_SESSION['edytowanie_przedmiotow'].'</p>';
+          echo '<small class="form-text uzytk-blad">'.$_SESSION['edytowanie_przedmiotow'].'</small>';
           unset($_SESSION['edytowanie_przedmiotow']);
         }
 
         if (isset($_SESSION['usuwanie_przedmiotow'])) {
-          echo '<p>'.$_SESSION['usuwanie_przedmiotow'].'</p>';
+          echo '<small class="form-text uzytk-blad">'.$_SESSION['usuwanie_przedmiotow'].'</small>';
           unset($_SESSION['usuwanie_przedmiotow']);
         }
 
         if ($_SESSION['ilosc_przedmiotow'] == 0) {
-          echo '<p>ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
+          echo '<p class="form-text uzytk-blad">ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
@@ -168,7 +168,7 @@
               echo '<td class="tabela-liczby">'.$i.'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
               echo '<td class="tabela-zadania"><a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Usuń</a></td>';
+              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
 

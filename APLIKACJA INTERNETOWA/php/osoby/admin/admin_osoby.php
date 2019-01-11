@@ -270,7 +270,7 @@
             echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
             echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
-            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'">Usuń</a></td>';
+            echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
         }

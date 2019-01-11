@@ -196,7 +196,7 @@
               echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['data'].'</td>';
               echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
               echo '<td class="tabela-zadania"><a href="edytowanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Usuń</a></td>';
+              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
 

@@ -156,7 +156,7 @@
               echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['opis'].'</td>';
               echo '<td class="tabela-zadania"><a href="edytowanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Usuń</a></td>';
+              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
 

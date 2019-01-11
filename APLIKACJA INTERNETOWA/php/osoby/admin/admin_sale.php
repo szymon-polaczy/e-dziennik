@@ -138,16 +138,16 @@
       <h2>ZOBACZ SALE</h2>
       <?php
         if (isset($_SESSION['usuwanie_sal'])) {
-          echo '<p>'.$_SESSION['usuwanie_sal'].'</p>';
+          echo '<p class="form-text uzytk-blad">'.$_SESSION['usuwanie_sal'].'</p>';
           unset($_SESSION['usuwanie_sal']);
         }
         if (isset($_SESSION['edytowanie_sal'])) {
-          echo '<p>'.$_SESSION['edytowanie_sal'].'</p>';
+          echo '<p class="form-text uzytk-blad">'.$_SESSION['edytowanie_sal'].'</p>';
           unset($_SESSION['edytowanie_sal']);
         }
 
         if ($_SESSION['ilosc_sal'] == 0) {
-          echo '<p>ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
+          echo '<p class="form-text uzytk-blad">ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
@@ -166,7 +166,7 @@
               echo '<td class="tabela-liczby">'.$i.'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['sala'.$i]['nazwa'].'</td>';
               echo '<td class="tabela-zadania"><a href="edytowanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="tabela-zadania"><a href="zadania/usuwanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'">Usuń</a></td>';
+              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
             echo '</tr>';
           }
 
