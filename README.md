@@ -1,4 +1,3 @@
 BDG_DZIENNIK
 
-Jest to twój następny dziennik elektroniczny, tworzony przez ucznia technikum informatycznego. 
-Projekt został przeniesiony z githuba [Został tam usunięty].
+Jest to tworzony przeze mnie dziennik elektronczny. Początkowo projekt był tworzony na githubie [Został tam usunięty] ale przeniosłem go tutaj.
