@@ -64,7 +64,7 @@
 
   $_SESSION['ilosc_sal'] = count($rezultat);
 
-  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
+  for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
     $_SESSION['sala'.$i] = $rezultat[$i];
 ?>
 
