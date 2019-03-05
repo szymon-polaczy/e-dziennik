@@ -114,7 +114,7 @@
             </div>
             <div class="form-group">
               <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
-              <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" onchange="pokazUzupelnienie()" required>
+              <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" required>
                 <option></option>
                 <option value="a">Administrator</option>
                 <option value="n">Nauczyciel</option>
