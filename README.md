@@ -1,7 +1,5 @@
 # BDG_DZIENNIK
-
-Jest to tworzony przeze mnie zalążek dziennika elektronicznego.</br>
-Początkowo projekt był tworzony na githubie [Został tam usunięty] ale przeniosłem go tutaj.
+Projekt dziennika elektronicznego tworzony - dla uczniów do nauki - przez ucznia.
 
 # JAKIE UMIEJĘTNOŚCI ROZWIJAŁEM
  - PHP [PDO]
