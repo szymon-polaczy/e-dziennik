@@ -59,6 +59,7 @@
             } else {
               echo '<div class="form-group">';
                 echo '<select name="wyb_przydzial" class="form-control">';
+                  echo '<option></option>';
 
                 for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
                   echo '<option value="'.$_SESSION['przydzial'.$i]['id'].'">'.$_SESSION['przydzial'.$i]['imie']

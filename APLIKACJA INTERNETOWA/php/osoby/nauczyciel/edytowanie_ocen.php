@@ -50,6 +50,7 @@
 
                   echo '<div class="form-group">';
                     echo '<select name="wyb_wartosc" class="form-control">';
+                      echo '<option></option>';
 
                     for ($i = 0; $i < count($oceny); $i++)
                       echo '<option '.($oceny[$i] == $rezultat? 'selected' : '').' value="'.$oceny[$i].'">'.$oceny[$i].'</option>';

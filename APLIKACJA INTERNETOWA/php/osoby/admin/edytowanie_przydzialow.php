@@ -78,6 +78,7 @@
         <div class="form-group">
           <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
           <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela">
+            <option></option>
             <?php
               for ($i = 0; $i < $ilosc_osob; $i++)
                 echo '<option '.($_SESSION['osoba'.$i]['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$_SESSION['osoba'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['osoba'.$i]['imie'].' '.$_SESSION['osoba'.$i]['nazwisko'].'</option>';
@@ -87,6 +88,7 @@
         <div class="form-group">
           <label for="wybor_przedmiotu">Wybierz przedmiot</label>
           <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu">
+            <option></option>
             <?php
               for ($i = 0; $i < $ilosc_przedmiotow; $i++)
                 echo '<option '.($_SESSION['przedmiot'.$i]['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
@@ -96,6 +98,7 @@
         <div class="form-group">
           <label for="wybor_klasy">Wybierz klasę</label>
           <select name="wyb_klasa" class="form-control" id="wybor_klasy">
+            <option></option>
             <?php
               for ($i = 0; $i < $ilosc_klas; $i++)
                 echo '<option '.($_SESSION['klasa'.$i]['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';

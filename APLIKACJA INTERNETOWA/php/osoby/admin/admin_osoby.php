@@ -114,7 +114,8 @@
             </div>
             <div class="form-group">
               <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
-              <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" onchange="pokazUzupelnienie()">
+              <select class="form-control" id="nadajUprawnienia"  name="uprawnienia" onchange="pokazUzupelnienie()" required>
+                <option></option>
                 <option value="a">Administrator</option>
                 <option value="n">Nauczyciel</option>
                 <option value="u">Uczeń</option>
@@ -128,6 +129,7 @@
                   echo '<div class="form-group">';
                     echo '<label for="wybierzSale">Wybierz Salę</label>';
                     echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
+                      echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++)
                       echo '<option value="'.$_SESSION['sala'.$i]['id'].'">'.$_SESSION['sala'.$i]['nazwa'].'</option>';
@@ -150,6 +152,7 @@
                   echo '<div class="form-group">';
                     echo '<label for="wybierzKlase">Wybierz Klasę</label>';
                     echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
+                     echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
                       echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">'.$_SESSION['klasa'.$i]['nazwa'].'</option>';

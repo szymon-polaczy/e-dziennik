@@ -65,8 +65,7 @@
                   echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
                   unset($_SESSION['dodawanie_klas']);
                 }
-                ?>
-
+              ?>
               <button class="btn btn-dark" type="submit">Dodaj</button>
             </div>
           </form>

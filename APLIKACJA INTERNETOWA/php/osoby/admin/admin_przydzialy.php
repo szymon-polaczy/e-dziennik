@@ -91,6 +91,7 @@
               } else {
                 echo '<div class="form-group">';
                   echo '<select name="wyb_nauczyciel" class="form-control">';
+                    echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
                       echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
@@ -100,6 +101,7 @@
 
                 echo '<div class="form-group">';
                   echo '<select name="wyb_przedmiot" class="form-control">';
+                    echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
                       echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
@@ -109,6 +111,7 @@
 
                 echo '<div class="form-group">';
                   echo '<select name="wyb_klasa" class="form-control">';
+                    echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
                       echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';

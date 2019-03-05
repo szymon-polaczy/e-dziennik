@@ -76,6 +76,7 @@
               } else {
                 echo '<div class="form-group">';
                   echo '<select name="wyb_uczen" class="form-control">';
+                    echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
                       echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
@@ -87,6 +88,7 @@
                   $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
                   echo '<select name="wyb_wartosc" class="form-control">';
+                    echo '<option></option>';
 
                     for ($i = 0; $i < count($oceny); $i++)
                       echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
