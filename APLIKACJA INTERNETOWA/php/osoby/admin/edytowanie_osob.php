@@ -111,7 +111,7 @@
               <?php echo '<input id="zmianHasla" class="form-control" type="password" value="'.$_SESSION['edytowana']['haslo'].'" name="haslo"/>'; ?>
             </div>
             <div class="form-group form-inf">
-              <button class="btn btn-dark" type="submit">Edytuj</button>
+              <button class="btn btn-dark" type="submit">Zmień</button>
             </div>
           </form>
         </div>

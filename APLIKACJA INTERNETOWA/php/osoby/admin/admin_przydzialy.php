@@ -36,7 +36,7 @@
   for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
     $_SESSION['nauczyciel'.$i] = $rezultat[$i];
 
-  //Wyciągam nauczycieli
+  //Wyciągam przedmioty
   $sql = "SELECT przedmiot.* FROM przedmiot";
 
   $rezultat = $pdo->sql_table($sql);
@@ -46,7 +46,7 @@
   for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
     $_SESSION['przedmiot'.$i] = $rezultat[$i];
 
-  //Wyciągam nauczycieli
+  //Wyciągam klasy
   $sql = "SELECT klasa.* FROM klasa";
 
   $rezultat = $pdo->sql_table($sql);
@@ -203,8 +203,7 @@
               echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
               echo '<th class="tabela-tekst">NAZWA KLASY</th>';
-              echo '<th class="tabela-zadania">EDYTUJ</th>';
-              echo '<th class="tabela-zadania">USUWANIE</th>';
+              echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -217,8 +216,11 @@
               echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
-              echo '<td><a href="edytowanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
+              echo '<td class="tabela-zadania">';
+                echo '<a href="edytowanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Edytuj</a>';
+                echo '<span>|</span>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+              echo '</td>';
             echo '</tr>';
           }
 

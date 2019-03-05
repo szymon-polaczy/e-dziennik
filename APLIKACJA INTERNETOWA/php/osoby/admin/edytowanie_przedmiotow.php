@@ -95,7 +95,7 @@
         </div>
         <div class="form-group form-inf">
           <input type="hidden" name="wyb_przedmiot" value="<?php echo $wyb_przedmiot?>">
-          <button type="submit" class="btn btn-dark">Edytuj</button>
+          <button type="submit" class="btn btn-dark">Zmień</button>
         </div>
       </form>
     </div>

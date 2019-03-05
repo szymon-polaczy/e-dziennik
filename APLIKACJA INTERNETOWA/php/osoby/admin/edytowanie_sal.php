@@ -92,7 +92,7 @@
               </div>
               <div class="form-group form-inf">
                 <input type="hidden" name="wyb_sala" value="<?php echo $rezultat['id']; ?>">
-                <button class="btn btn-dark" type="submit">Edytuj</button>
+                <button class="btn btn-dark" type="submit">Zmień</button>
               </div>
             </form>
           </div>

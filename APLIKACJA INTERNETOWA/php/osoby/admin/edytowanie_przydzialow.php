@@ -151,7 +151,7 @@
           </select>
         </div>
         <div class="form-group form-inf">
-        <button type="submit" class="btn btn-dark">Edytuj</button>
+        <button type="submit" class="btn btn-dark">Zmień</button>
         </div>
       </form>
     </div>

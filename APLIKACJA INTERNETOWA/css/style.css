@@ -38,7 +38,11 @@ main {
 }
 
 .tabela-zadania {
-	width: 100px;
+	width: 10vw;
+}
+
+.tabela-zadania span {
+	padding: .5vw;
 }
 
 form {
@@ -95,16 +99,18 @@ h2 {
 
 .dodawanie-collapse-btn:hover {
 	background: transparent;
-	font-size: 2.7em;
-	color: #444;
+	text-decoration: underline;
 	transition: all .2s ease-in-out;
+	color: #343a40;
 }
 
 .dodawanie-collapse-btn:active {
-	background: #eee;
-	color: #333;
+	background: transparent;
+	color: #343a40;
 }
 
 .dodawanie-collapse-btn:focus {
 	box-shadow: none;
+	background: transparent;
+	color: #343a40;
 }

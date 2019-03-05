@@ -253,8 +253,7 @@
             echo '<th class="tabela-tekst">EMAIL</th>';
             echo '<th class="tabela-tekst">HASŁO</th>';
             echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
-            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
-            echo '<th class="tabela-zadania">USUWANIE</th>';
+            echo '<th class="tabela-zadania">OPCJE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -267,10 +266,13 @@
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['email'].'</td>';
-            echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['haslo'][0].'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
-            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
-            echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a></td>';
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
             echo '</tr>';
           }
         }
@@ -291,8 +293,7 @@
             echo '<th class="tabela-tekst">HASŁO</th>';
             echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
             echo '<th class="tabela-tekst">NAZWA SALI</th>';
-            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
-            echo '<th class="tabela-zadania">USUWANIE</th>';
+            echo '<th class="tabela-zadania">OPCJE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -305,11 +306,14 @@
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['email'].'</td>';
-            echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['haslo'][0].'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['sala_nazwa'].'</td>';
-            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
-            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'">Usuń</a></td>';
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
             echo '</tr>';
           }
         }
@@ -332,8 +336,7 @@
             echo '<th class="tabela-liczby">DATA URODZENIA</th>';
             echo '<th class="tabela-tekst">NAZWA KLASY</th>';
             echo '<th class="tabela-tekst">OPIS KLASY</th>';
-            echo '<th class="tabela-zadania">EDYTOWANIE</th>';
-            echo '<th class="tabela-zadania">USUWANIE</th>';
+            echo '<th class="tabela-zadania">OPCJE</th>';
           echo '</tr>';
         echo '</thead>';
 
@@ -346,13 +349,16 @@
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['imie'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['nazwisko'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['email'].'</td>';
-            echo '<td class="tabela-tekst">'.substr($_SESSION['osoba'.$i]['haslo'], 0, 4).'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['haslo'][0].'...'.'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['uprawnienia'].'</td>';
             echo '<td class="tabela-liczby">'.$_SESSION['osoba'.$i]['data_urodzenia'].'</td>';
             echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['klasa_nazwa'].'</td>';
-            echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['klasa_opis'].'</td>';
-            echo '<td class="tabela-zadania"><a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a></td>';
-            echo '<td class="tabela-zadania"><a href="zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'">Usuń</a></td>';
+            echo '<td class="tabela-tekst">'.$_SESSION['osoba'.$i]['klasa_opis'].'</td>';            
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$_SESSION['osoba'.$i]['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
             echo '</tr>';
           }
         }

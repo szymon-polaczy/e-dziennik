@@ -143,8 +143,7 @@
               echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA</th>';
               echo '<th class="tabela-tekst">OPIS</th>';
-              echo '<th class="tabela-zadania">EDYTOWANIE</th>';
-              echo '<th class="tabela-zadania">USUWANIE</th>';
+              echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -155,8 +154,11 @@
               echo '<td class="tabela-liczby">'.$i.'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['opis'].'</td>';
-              echo '<td class="tabela-zadania"><a href="edytowanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
+              echo '<td class="tabela-zadania">';
+                echo '<a href="edytowanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Edytuj</a>';
+                echo '<span>|</span>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+              echo '</td>';
             echo '</tr>';
           }
 

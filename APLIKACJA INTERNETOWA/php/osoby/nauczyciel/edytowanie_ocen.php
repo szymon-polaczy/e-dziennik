@@ -109,7 +109,7 @@
               <div class="form-group form-inf">
                 <input type="hidden" name="wyb_przydzial" value="<?php echo $_GET['wyb_przydzial']; ?>">
                 <input type="hidden" name="wyb_ocena" value="<?php echo $wyb_ocena; ?>">
-                <button class="btn btn-dark" type="submit">Edytuj</button>
+                <button class="btn btn-dark" type="submit">Zmień</button>
               </div>
             </form>
           </div>

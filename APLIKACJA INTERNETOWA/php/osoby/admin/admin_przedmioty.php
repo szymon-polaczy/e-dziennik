@@ -156,8 +156,7 @@
             echo '<tr>';
               echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA</th>';
-              echo '<th class="tabela-zadania">EDYTUJ</th>';
-              echo '<th class="tabela-zadania">USUWANIE</th>';
+              echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -167,8 +166,11 @@
             echo '<tr>';
               echo '<td class="tabela-liczby">'.$i.'</td>';
               echo '<td class="tabela-tekst">'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
-              echo '<td class="tabela-zadania"><a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Edytuj</a></td>';
-              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'\':\'\')" href="#">Usuń</a></td>';
+              echo '<td class="tabela-zadania">';
+                echo '<a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Edytuj</a>';
+                echo '<span>|</span>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+              echo '</td>';
             echo '</tr>';
           }
 

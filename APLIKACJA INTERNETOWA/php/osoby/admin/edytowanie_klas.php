@@ -94,7 +94,7 @@
             </div>
             <div class="form-group form-inf">
               <input type="hidden" value="'.$wyb_klasa.'" name="wyb_klasa"/>
-              <button class="btn btn-dark" type="submit">Edytuj</button>
+              <button class="btn btn-dark" type="submit">Zmień</button>
             </div>
           </form>
         </div>
