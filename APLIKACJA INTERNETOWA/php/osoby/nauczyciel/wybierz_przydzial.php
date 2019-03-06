@@ -24,10 +24,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_przydzialow'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-    $_SESSION['przydzial'.$i] = $rezultat[$i];
+  $_SESSION['przydzialy'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -54,7 +51,7 @@
       <div class="container p-0">
         <form action="nauczyciel_oceny.php" method="get">
           <?php
-            if ($_SESSION['ilosc_przydzialow'] == 0) {
+            if (count($_SESSION['przydzialy']) == 0) {
               echo 'Nie ma żadnych przydziałów, musisz jakieś utworzyć, aby dodać do nich oceny';
             } else {
               echo '<div class="form-group">';
@@ -62,11 +59,11 @@
                 echo '<select name="wyb_przydzial" id="wyb_przydzial" class="form-control">';
                   echo '<option></option>';
 
-                for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-                  echo '<option value="'.$_SESSION['przydzial'.$i]['id'].'">'.$_SESSION['przydzial'.$i]['imie']
-                  .' '.$_SESSION['przydzial'.$i]['nazwisko']
-                  .' | '.$_SESSION['przydzial'.$i]['przedmiot_nazwa']
-                  .' | '.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</option>';
+                foreach ($_SESSION['przydzialy'] as $przydzial)
+                  echo '<option value="'.$przydzial['id'].'">'.$przydzial['imie']
+                    .' '.$przydzial['nazwisko']
+                    .' | '.$przydzial['przedmiot_nazwa']
+                    .' | '.$przydzial['klasa_nazwa'].'</option>';
 
                 echo '</select>';
               echo '</div>';

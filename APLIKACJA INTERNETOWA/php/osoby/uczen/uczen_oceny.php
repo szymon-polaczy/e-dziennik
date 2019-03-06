@@ -22,10 +22,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_ocen'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-    $_SESSION['ocena'.$i] = $rezultat[$i];
+  $_SESSION['oceny'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -50,13 +47,12 @@
     <section>
       <h2>TWOJE OCENY</h2>
       <?php
-        if ($_SESSION['ilosc_ocen'] == 0) {
+        if (count($_SESSION['oceny']) == 0) {
           echo '<p>Nie posiadasz żadnych ocen</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
@@ -67,14 +63,13 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++) {
+          foreach($_SESSION['oceny'] as $ocena) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwa'].'</td>';
-              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['data'].'</td>';
-              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
+              echo '<td class="tabela-tekst">'.$ocena['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$ocena['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$ocena['nazwa'].'</td>';
+              echo '<td class="tabela-liczby">'.$ocena['data'].'</td>';
+              echo '<td class="tabela-liczby">'.$ocena['wartosc'].'</td>';
             echo '</tr>';
           }
 

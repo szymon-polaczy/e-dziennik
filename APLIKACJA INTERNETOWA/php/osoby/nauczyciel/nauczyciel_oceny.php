@@ -22,10 +22,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_uczniow'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
-    $_SESSION['uczen'.$i] = $rezultat[$i];
+  $_SESSION['uczniowie'] = $rezultat;
 
   //pobieranie ocen do wyświetlania w tabelce
   $sql = "SELECT ocena.*, osoba.imie, osoba.nazwisko FROM ocena, uczen, osoba
@@ -33,10 +30,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_ocen'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++)
-    $_SESSION['ocena'.$i] = $rezultat[$i];
+  $_SESSION['oceny'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -71,7 +65,7 @@
         <div class="collapse" id="collapseExample">
           <form method="post" action="zadania/dodawanie_ocen.php">
             <?php
-              if ($_SESSION['ilosc_uczniow'] == 0) {
+              if (count($_SESSION['uczniowie']) == 0) {
                 echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
               } else {
                 echo '<div class="form-group">';
@@ -79,8 +73,8 @@
                   echo '<select name="wyb_uczen" id="wyb_ucznia" class="form-control">';
                     echo '<option></option>';
 
-                    for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
-                      echo '<option value="'.$_SESSION['uczen'.$i]['id'].'">'.$_SESSION['uczen'.$i]['imie'].' '.$_SESSION['uczen'.$i]['nazwisko'].'</option>';
+                    foreach ($_SESSION['uczniowie'] as $uczen)
+                      echo '<option value="'.$uczen['id'].'">'.$uczen['imie'].' '.$uczen['nazwisko'].'</option>';
 
                   echo '</select>';
                 echo '</div>';
@@ -92,8 +86,8 @@
                   echo '<select name="wyb_wartosc" id="wyb_wartosc" class="form-control">';
                     echo '<option></option>';
 
-                    for ($i = 0; $i < count($oceny); $i++)
-                      echo '<option value="'.$oceny[$i].'">'.$oceny[$i].'</option>';
+                    foreach ($oceny as $ocena)
+                      echo '<option value="'.$ocena.'">'.$ocena.'</option>';
 
                   echo '</select>';
                 echo '</div>';
@@ -126,33 +120,33 @@
           unset($_SESSION['usuwanie_ocen']);
         }
 
-        if ($_SESSION['ilosc_ocen'] == 0) {
+        if (count($_SESSION['oceny']) == 0) {
           echo '<p>Nie ma żadnych ocen do wyświetlania</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">IMIE UCZNIA</th>';
               echo '<th class="tabela-tekst">NAZWISKO UCZNIA</th>';
               echo '<th class="tabela-liczby">DATA I GODZINA</th>';
               echo '<th class="tabela-liczby">WARTOŚĆ</th>';
-              echo '<th class="tabela-zadania">EDYTOWANIE</th>';
-              echo '<th class="tabela-zadania">USUWANIE</th>';
+              echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
           echo '</thead>';
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_ocen']; $i++){
+          foreach ($_SESSION['oceny'] as $ocena) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['ocena'.$i]['nazwisko'].'</td>';
-              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['data'].'</td>';
-              echo '<td class="tabela-liczby">'.$_SESSION['ocena'.$i]['wartosc'].'</td>';
-              echo '<td class="tabela-zadania"><a href="edytowanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Edytuj</a></td>';
-              echo '<td class="td-task"><a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_ocen.php?wyb_ocena='.$_SESSION['ocena'.$i]['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'\':\'\')" href="#">Usuń</a></td>';
+              echo '<td class="tabela-tekst">'.$ocena['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$ocena['nazwisko'].'</td>';
+              echo '<td class="tabela-liczby">'.$ocena['data'].'</td>';
+              echo '<td class="tabela-liczby">'.$ocena['wartosc'].'</td>';
+              echo '<td class="tabela-zadania">';
+                echo '<a href="edytowanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Edytuj</a>';
+                echo '<span>|</span>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'\':\'\')" href="#">Usuń</a>';
+              echo '</td>';
             echo '</tr>';
           }
 

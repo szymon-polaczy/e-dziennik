@@ -17,10 +17,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_klas'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-    $_SESSION['klasa'.$i] = $rezultat[$i];
+  $_SESSION['klasa'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -85,7 +82,7 @@
           unset($_SESSION['edytowanie_klas']);
         }
 
-        if ($_SESSION['ilosc_klas'] == 0) {
+        if (count($_SESSION['klasa']) == 0) {
           echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table class="table">';
@@ -100,15 +97,15 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
+          foreach ($_SESSION['klasa'] as $klasa) {
             echo '<tr>';
               echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['klasa'.$i]['opis'].'</td>';
+              echo '<td class="tabela-tekst">'.$klasa['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$klasa['opis'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_klas.php?wyb_klasa='.$klasa['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$_SESSION['klasa'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$klasa['id'].'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
             echo '</tr>';
           }

@@ -22,10 +22,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['ilosc_przydzialow'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-    $_SESSION['przydzial'.$i] = $rezultat[$i];
+  $_SESSION['przydzialy'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -50,13 +47,12 @@
     <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
-        if ($_SESSION['ilosc_przydzialow'] <= 0) {
+        if (count($_SESSION['przydzialy']) <= 0) {
           echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
               echo '<th class="tabela-tekst">NAZWA KLASY</th>';
             echo '</tr>';
@@ -64,11 +60,10 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
+          foreach ($_SESSION['przydzialy'] as $przydzial) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['przedmiot_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['klasa_nazwa'].'</td>';
             echo '</tr>';
           }
 

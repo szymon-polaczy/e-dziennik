@@ -19,42 +19,25 @@
             AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
 
   $rezultat = $pdo->sql_table($sql);
+  $_SESSION['przydzialy'] = $rezultat;
 
-  $_SESSION['ilosc_przydzialow'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
-    $_SESSION['przydzial'.$i] = $rezultat[$i];
 
   //Wyciągam nauczycieli
-  $sql = "SELECT nauczyciel.*, osoba.imie, osoba.nazwisko FROM nauczyciel, osoba
-          WHERE nauczyciel.id_osoba=osoba.id";
-
+  $sql = "SELECT nauczyciel.*, osoba.imie, osoba.nazwisko FROM nauczyciel, osoba WHERE nauczyciel.id_osoba=osoba.id";
   $rezultat = $pdo->sql_table($sql);
+  $_SESSION['nauczyciele'] = $rezultat;
 
-  $_SESSION['ilosc_nauczycieli'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
-    $_SESSION['nauczyciel'.$i] = $rezultat[$i];
 
   //Wyciągam przedmioty
   $sql = "SELECT przedmiot.* FROM przedmiot";
-
   $rezultat = $pdo->sql_table($sql);
+  $_SESSION['przedmioty'] = $rezultat;
 
-  $_SESSION['ilosc_przedmiotow'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-    $_SESSION['przedmiot'.$i] = $rezultat[$i];
 
   //Wyciągam klasy
   $sql = "SELECT klasa.* FROM klasa";
-
   $rezultat = $pdo->sql_table($sql);
-
-  $_SESSION['ilosc_klas'] = count($rezultat);
-
-  for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-    $_SESSION['klasa'.$i] = $rezultat[$i];
+  $_SESSION['klasy'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -86,7 +69,7 @@
         <div class="collapse" id="collapseExample">
           <form method="post" action="zadania/dodawanie_przydzialow.php">
             <?php
-              if ($_SESSION['ilosc_nauczycieli'] <= 0 || $_SESSION['ilosc_przedmiotow'] <= 0 || $_SESSION['ilosc_klas'] <= 0) {
+              if (count($_SESSION['nauczyciele']) == 0 || count($_SESSION['przedmioty']) <= 0 || count($_SESSION['klasy']) <= 0) {
                 echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
               } else {
                 echo '<div class="form-group">';
@@ -94,8 +77,8 @@
                   echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control">';
                     echo '<option></option>';
 
-                    for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
-                      echo '<option value="'.$_SESSION['nauczyciel'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['nauczyciel'.$i]['imie'].' '.$_SESSION['nauczyciel'.$i]['nazwisko'].'</option>';
+                    foreach ($_SESSION['nauczyciele'] as $nauczyciel)
+                      echo '<option value="'.$nauczyciel['id_osoba'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
 
                   echo '</select>';
                 echo '</div>';
@@ -105,8 +88,8 @@
                   echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control">';
                     echo '<option></option>';
 
-                    for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-                      echo '<option value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
+                    foreach ($_SESSION['przedmioty'] as $przedmiot)
+                      echo '<option value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
 
                   echo '</select>';
                 echo '</div>';
@@ -116,8 +99,8 @@
                   echo '<select name="wyb_klasa" id="wyb_klase" class="form-control">';
                     echo '<option></option>';
 
-                    for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)
-                      echo '<option value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
+                    foreach ($_SESSION['klasy'] as $klasa)
+                      echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
 
                   echo '</select>';
                 echo '</div>';
@@ -150,13 +133,12 @@
           unset($_SESSION['usuwanie_przydzialow']);
         }
 
-        if ($_SESSION['ilosc_przydzialow'] <= 0) {
+        if (count($_SESSION['przydzialy']) <= 0) {
           echo '<p class="form-text uzytk-blad">NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
               echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
@@ -167,17 +149,16 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++) {
+          foreach ($_SESSION['przydzialy'] as $przydzial) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['przedmiot_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przydzial'.$i]['klasa_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['przedmiot_nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$przydzial['klasa_nazwa'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_przydzialow.php?wyb_przydzial='.$przydzial['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przydzialow.php?wyb_przydzial='.$_SESSION['przydzial'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przydzialow.php?wyb_przydzial='.$przydzial['id'].'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
             echo '</tr>';
           }

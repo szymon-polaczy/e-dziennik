@@ -1,5 +1,7 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
+
 
   if(!isset($_SESSION['zalogowany'])) {
     header('Location: ../wszyscy/index.php');
@@ -7,37 +9,17 @@
   }
 
   require_once "../../polacz.php";
+  require_once "../../wg_pdo_mysql.php";
 
   mysqli_report(MYSQLI_REPORT_STRICT);
 
   //------------------------------------------------WYCIĄGANIE SAL DO OBEJRZENIA-----------------------------------------------//
 
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM sala";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_sal'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-          $_SESSION['sala'.$i] = $rezultat->fetch_assoc();
-        }
-
-        $rezultat->free_result();
-      } else {
-        throw new Exception();
-      }
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  $sql = "SELECT * FROM sala";
+  $rezultat = $pdo->sql_table($sql);
+  $_SESSION['sale'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -98,13 +80,12 @@
           unset($_SESSION['edytowanie_sal']);
         }
 
-        if ($_SESSION['ilosc_sal'] == 0) {
+        if (count($_SESSION['sale']) == 0) {
           echo '<p class="form-text uzytk-blad">ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA</th>';
               echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
@@ -112,14 +93,13 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
+          foreach ($_SESSION['sale'] as $sala) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['sala'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$sala['nazwa'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_sal.php?wyb_sala='.$sala['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_sal.php?wyb_sala='.$_SESSION['sala'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_sal.php?wyb_sala='.$sala['id'].'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
             echo '</tr>';
           }

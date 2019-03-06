@@ -12,31 +12,10 @@
 
   //------------------------------------------------WYCIĄGANIE PRZEDMIOTÓW DO OBEJRZENIA-----------------------------------------------//
 
-  try {
-    $polaczenie = new mysqli($host, $bd_uzytk, $bd_haslo, $bd_nazwa);
-    $polaczenie->query("SET NAMES utf8");
-
-    if ($polaczenie->connect_errno == 0) {
-      $sql = "SELECT * FROM przedmiot";
-
-      if ($rezultat = $polaczenie->query($sql)) {
-        $_SESSION['ilosc_przedmiotow'] = $rezultat->num_rows;
-
-        for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
-          $_SESSION['przedmiot'.$i] = $rezultat->fetch_assoc();
-
-        $rezultat->free_result();
-      } else
-        throw new Exception();
-
-      $polaczenie->close();
-    } else {
-      throw new Exception(mysqli_connect_errno());
-    }
-  } catch (Exception $blad) {
-    echo '<span style="color: #f33">Błąd serwera! Przepraszam za niedogodności i prosimy o powrót w innym terminie!</span>';
-    echo '</br><span style="color: #c00">Informacja developerska: '.$blad.'</span>';
-  }
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $sql = "SELECT * FROM przedmiot";
+  $rezultat = $pdo->sql_table($sql);
+  $_SESSION['przedmioty'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -100,13 +79,12 @@
           unset($_SESSION['usuwanie_przedmiotow']);
         }
 
-        if ($_SESSION['ilosc_przedmiotow'] == 0) {
+        if (count($_SESSION['przedmioty']) == 0) {
           echo '<p class="form-text uzytk-blad">ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
               echo '<th class="tabela-tekst">NAZWA</th>';
               echo '<th class="tabela-zadania">OPCJE</th>';
             echo '</tr>';
@@ -114,14 +92,13 @@
 
           echo '<tbody>';
 
-          for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++) {
+          foreach($_SESSION['przedmioty'] as $przedmioty) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$_SESSION['przedmiot'.$i]['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$przedmioty['nazwa'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$przedmioty['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$_SESSION['przedmiot'.$i]['id'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$przedmioty['id'].'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
             echo '</tr>';
           }
