@@ -90,7 +90,8 @@
                 echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
               } else {
                 echo '<div class="form-group">';
-                  echo '<select name="wyb_nauczyciel" class="form-control">';
+                  echo '<label for="wyb_nauczyciela">Wybierz Nauczyciela</label>';
+                  echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control">';
                     echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_nauczycieli']; $i++)
@@ -100,7 +101,8 @@
                 echo '</div>';
 
                 echo '<div class="form-group">';
-                  echo '<select name="wyb_przedmiot" class="form-control">';
+                  echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
+                  echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control">';
                     echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_przedmiotow']; $i++)
@@ -110,7 +112,8 @@
                 echo '</div>';
 
                 echo '<div class="form-group">';
-                  echo '<select name="wyb_klasa" class="form-control">';
+                echo '<label for="wyb_klase">Wybierz Klasę</label>';
+                  echo '<select name="wyb_klasa" id="wyb_klase" class="form-control">';
                     echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++)

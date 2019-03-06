@@ -75,7 +75,8 @@
                 echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
               } else {
                 echo '<div class="form-group">';
-                  echo '<select name="wyb_uczen" class="form-control">';
+                  echo '<label for="wyb_ucznia">Wybierz Ucznia</label>';
+                  echo '<select name="wyb_uczen" id="wyb_ucznia" class="form-control">';
                     echo '<option></option>';
 
                     for ($i = 0; $i < $_SESSION['ilosc_uczniow']; $i++)
@@ -87,7 +88,8 @@
                 echo '<div class="form-group">';
                   $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-                  echo '<select name="wyb_wartosc" class="form-control">';
+                  echo '<label for="wyb_wartosc">Wybierz Ocenę</label>';
+                  echo '<select name="wyb_wartosc" id="wyb_wartosc" class="form-control">';
                     echo '<option></option>';
 
                     for ($i = 0; $i < count($oceny); $i++)

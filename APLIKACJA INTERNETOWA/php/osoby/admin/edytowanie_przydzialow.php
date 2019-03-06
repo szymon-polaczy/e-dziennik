@@ -14,33 +14,18 @@
 
   //Wyciągam osoby
   $sql = "SELECT * FROM osoba, nauczyciel WHERE uprawnienia='n' AND osoba.id=nauczyciel.id_osoba";
-
   $rezultat = $pdo->sql_table($sql);
-
-  $ilosc_osob = count($rezultat);
-
-  for ($i = 0; $i < $ilosc_osob; $i++)
-    $_SESSION['osoba'.$i] = $rezultat[$i];
+  $_SESSION['osoba'] = $rezultat;
 
   //Wyciągam przedmioty
   $sql = "SELECT * FROM przedmiot";
-
   $rezultat = $pdo->sql_table($sql);
-
-  $ilosc_przedmiotow = count($rezultat);
-
-  for ($i = 0; $i < $ilosc_przedmiotow; $i++)
-    $_SESSION['przedmiot'.$i] = $rezultat[$i];
+  $_SESSION['przedmiot'] = $rezultat;
 
   //Wyciągam klasy
   $sql = "SELECT * FROM klasa";
-
   $rezultat = $pdo->sql_table($sql);
-
-  $ilosc_klas = count($rezultat);
-
-  for ($i = 0; $i < $ilosc_klas; $i++)
-    $_SESSION['klasa'.$i] = $rezultat[$i];
+  $_SESSION['klasa'] = $rezultat;
 
   //Wyciąganie edytowanego przydziału
   $wyb_przydzial = $_GET['wyb_przydzial'];
@@ -78,31 +63,28 @@
         <div class="form-group">
           <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
           <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela">
-            <option></option>
             <?php
-              for ($i = 0; $i < $ilosc_osob; $i++)
-                echo '<option '.($_SESSION['osoba'.$i]['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$_SESSION['osoba'.$i]['id_osoba'].'">Nauczyciel '.$_SESSION['osoba'.$i]['imie'].' '.$_SESSION['osoba'.$i]['nazwisko'].'</option>';
-             ?>
+              foreach ($_SESSION['osoba'] as $osoba)
+                echo '<option '.($osoba['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$osoba['id_osoba'].'">Nauczyciel '.$osoba['imie'].' '.$osoba['nazwisko'].'</option>';
+            ?>
           </select>
         </div>
         <div class="form-group">
           <label for="wybor_przedmiotu">Wybierz przedmiot</label>
           <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu">
-            <option></option>
             <?php
-              for ($i = 0; $i < $ilosc_przedmiotow; $i++)
-                echo '<option '.($_SESSION['przedmiot'.$i]['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$_SESSION['przedmiot'.$i]['id'].'">Przedmiot '.$_SESSION['przedmiot'.$i]['nazwa'].'</option>';
-             ?>
+              foreach ($_SESSION['przedmiot'] as $przedmiot)
+                echo '<option '.($przedmiot['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
+            ?>
           </select>
         </div>
         <div class="form-group">
           <label for="wybor_klasy">Wybierz klasę</label>
           <select name="wyb_klasa" class="form-control" id="wybor_klasy">
-            <option></option>
             <?php
-              for ($i = 0; $i < $ilosc_klas; $i++)
-                echo '<option '.($_SESSION['klasa'.$i]['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$_SESSION['klasa'.$i]['id'].'">Klasa '.$_SESSION['klasa'.$i]['nazwa'].' | '.$_SESSION['klasa'.$i]['opis'].'</option>';
-             ?>
+              foreach ($_SESSION['klasa'] as $klasa)
+                echo '<option '.($klasa['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
+            ?>
           </select>
         </div>
         <div class="form-group form-inf">

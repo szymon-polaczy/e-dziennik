@@ -58,7 +58,8 @@
               echo 'Nie ma żadnych przydziałów, musisz jakieś utworzyć, aby dodać do nich oceny';
             } else {
               echo '<div class="form-group">';
-                echo '<select name="wyb_przydzial" class="form-control">';
+                echo '<label for="wyb_przydzial">Wybierz Przydział</label>';
+                echo '<select name="wyb_przydzial" id="wyb_przydzial" class="form-control">';
                   echo '<option></option>';
 
                 for ($i = 0; $i < $_SESSION['ilosc_przydzialow']; $i++)
