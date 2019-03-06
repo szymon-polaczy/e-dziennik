@@ -27,7 +27,7 @@
     //Jeśli wszystko poszło ok to edytuję przydział
     if ($wszystko_ok) {
       $edytowany_id = $_SESSION['edytowany_id'];
-      $sql = "UPDATE przydzial SET id_nauczyciel='$wyb_nauczyciel', id_klasa='$wyb_klasa' WHERE id='$edytowany_id'";
+      $sql = "UPDATE przydzial SET id_nauczyciel='$wyb_nauczyciel', id_klasa='$wyb_klasa', id_przedmiot='$wyb_przedmiot' WHERE id='$edytowany_id'";
 
       if ($rezultat = $pdo->sql_query($sql) > 0)
         $_SESSION['edytowanie_przydzialow'] = "Przydział został zedytowany";
