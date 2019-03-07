@@ -37,15 +37,15 @@
           <form action="zadania/edytowanie_klas.php" method="post">
             <h2>EDYTUJ KLASĘ</h2>
             <div class="form-group">
-              <label for="zmianaNazwy">Edytuj Nazwę</label>
-              <?php echo '<input id="zmianaNazwy" class="form-control" type="text" value="'.$rezultat['nazwa'].'" name="nazwa"/>'; ?>
+              <label for="zmianaNazwy">Zmień Nazwę</label>
+              <input id="zmianaNazwy" class="form-control" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa"/>
             </div>
             <div class="form-group">
-              <label for="zmianaOpisu">Edytuj Opis</label>
-              <?php echo '<input id="zmianaOpisu" class="form-control" type="text" value="'.$rezultat['opis'].'" name="opis"/>'; ?>
+              <label for="zmianaOpisu">Zmień Opis</label>
+              <input id="zmianaOpisu" class="form-control" type="text" value="<?php echo $rezultat['opis']; ?>" name="opis"/>
             </div>
             <div class="form-group form-inf">
-              <input type="hidden" value="'.$wyb_klasa.'" name="wyb_klasa"/>
+              <input type="hidden" value="<?php echo $wyb_klasa; ?>" name="wyb_klasa"/>
               <button class="btn btn-dark" type="submit">Zmień</button>
             </div>
           </form>

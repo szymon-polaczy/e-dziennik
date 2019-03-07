@@ -59,7 +59,6 @@
                   unset($_SESSION['dodawanie_przedmiotow']);
                 }
               ?>
-
               <button class="btn btn-dark" type="submit">Dodaj</button>
             </div>
           </form>

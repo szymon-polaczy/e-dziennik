@@ -42,21 +42,17 @@
         <div class="row">
           <div class="col-12">
             <form method="post" action="zadania/edytowanie_ocen.php">
-              <h2>EDYTUJ OCENĘ</h2>
+              <h2>ZMIEŃ OCENĘ</h2>
               <div class="form-group">
-                <label for="nazwa_sali">Edytuj wartość oceny</label>
-                <?php
-                  $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
+                <label for="wyb_ocene">Zmień wartość oceny</label>
+                <select name="wyb_wartosc" class="form-control" id="wyb_ocene">
+                  <?php
+                    $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-                  echo '<div class="form-group">';
-                    echo '<select name="wyb_wartosc" class="form-control">';
-
-                      foreach ($oceny as $ocena) 
-                        echo '<option '.($ocena == $rezultat? 'selected' : '').' value="'.$ocena.'">'.$ocena.'</option>';
-
-                    echo '</select>';
-                  echo '</div>';
-                ?>
+                    foreach ($oceny as $oc) 
+                      echo '<option '.($oc == $rezultat? 'selected' : '').' value="'.$oc.'">'.$oc.'</option>';
+                  ?>
+                </select>
               </div>
               <div class="form-group form-inf">
                 <input type="hidden" name="wyb_przydzial" value="<?php echo $_GET['wyb_przydzial']; ?>">

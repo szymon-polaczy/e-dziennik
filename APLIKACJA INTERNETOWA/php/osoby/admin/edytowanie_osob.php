@@ -48,19 +48,19 @@
             <h2>EDYTUJ OSOBĘ</h2>
             <div class="form-group">
               <label for="zmianaImienia">Edytuj Imię</label>
-              <?php echo '<input id="zmianaImienia" class="form-control" type="text" value="'.$_SESSION['edytowana']['imie'].'" name="imie"/>'; ?>
+              <input id="zmianaImienia" class="form-control" type="text" value="<?php echo $_SESSION['edytowana']['imie']; ?>" name="imie"/>
             </div>
             <div class="form-group">
               <label for="zmianaNazwiska">Edytuj Nazwisko</label>
-              <?php echo '<input id="zmianaNazwiska" class="form-control" type="text" value="'.$_SESSION['edytowana']['nazwisko'].'" name="nazwisko"/>'; ?>
+              <input id="zmianaNazwiska" class="form-control" type="text" value="<?php echo $_SESSION['edytowana']['nazwisko']; ?>" name="nazwisko"/>
             </div>
             <div class="form-group">
               <label for="zmianaEmailu">Edytuj Email</label>
-              <?php echo '<input id="zmianaEmailu" class="form-control" type="email" value="'.$_SESSION['edytowana']['email'].'" name="email"/>'; ?>
+              <input id="zmianaEmailu" class="form-control" type="email" value="<?php echo $_SESSION['edytowana']['email']; ?>" name="email"/>
             </div>
             <div class="form-group">
               <label for="zmianHasla">Edytuj Haslo</label>
-              <?php echo '<input id="zmianHasla" class="form-control" type="password" value="'.$_SESSION['edytowana']['haslo'].'" name="haslo"/>'; ?>
+              <input id="zmianHasla" class="form-control" type="password" value="<?php echo $_SESSION['edytowana']['haslo']; ?>" name="haslo"/>
             </div>
             <div class="form-group form-inf">
               <button class="btn btn-dark" type="submit">Zmień</button>

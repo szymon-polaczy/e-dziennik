@@ -109,7 +109,7 @@
             <div class="niewidoczne" id="nauczyciel-uzu">
               <?php
                 if (count($_SESSION['sale']) == 0) {
-                  echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
+                  echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</span>';
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="wybierzSale">Wybierz Salę</label>';
@@ -154,7 +154,6 @@
                   unset($_SESSION['dodawanie_osob']);
                 }
                 ?>
-
               <button class="btn btn-dark" type="submit">Dodaj</button>
             </div>
           </form>
