@@ -2,7 +2,7 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);  
 
-  if(!isset($_SESSION['zalogowany'])) {
+  if(!isset($_SESSION['zalogowany']) || !($_SESSION['uprawnienia'] == 'a')) {
     header('Location: ../wszyscy/index.php');
     exit();
   }
