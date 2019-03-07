@@ -2,6 +2,11 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
 
+  if(!isset($_SESSION['zalogowany'])) {
+    header('Location: ../wszyscy/index.php');
+    exit();
+  }
+
   if(!isset($_GET['wyb_przedmiot'])) {
     header('Location: admin_przydzialy.php');
     exit();
@@ -10,11 +15,11 @@
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
+  //Wyciągam to c potrzebuję do edycji
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
   $wyb_przedmiot = $_GET['wyb_przedmiot'];
 
-  //Wyciągam to c potrzebuję do edycji
   $sql = "SELECT przedmiot.nazwa FROM przedmiot WHERE id='$wyb_przedmiot'";
 
   $rezultat = $pdo->sql_record($sql);

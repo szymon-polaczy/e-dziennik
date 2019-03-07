@@ -1,26 +1,29 @@
 <?php
   session_start();
-  mysqli_report(MYSQLI_REPORT_STRICT);
+  mysqli_report(MYSQLI_REPORT_STRICT);  
 
-  require_once "../../polacz.php";
-  require_once "../../wg_pdo_mysql.php";
+  if(!isset($_SESSION['zalogowany'])) {
+    header('Location: ../wszyscy/index.php');
+    exit();
+  }
 
   if (!isset($_GET['wyb_osoba'])) {
     header('Location: admin_osoby.php');
     exit();
   }
 
+  require_once "../../polacz.php";
+  require_once "../../wg_pdo_mysql.php";
+
   //Wyciągam wszystkie wartości użytkownika
-  if (isset($_GET['wyb_osoba'])) {
-    $id_osoba = $_GET['wyb_osoba'];
-    $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $id_osoba = $_GET['wyb_osoba'];
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    $sql = "SELECT * FROM osoba WHERE id='$id_osoba'";
+  $sql = "SELECT * FROM osoba WHERE id='$id_osoba'";
 
-    $rezultat = $pdo->sql_record($sql);
+  $rezultat = $pdo->sql_record($sql);
 
-    $_SESSION['edytowana'] = $rezultat;
-  }
+  $_SESSION['edytowana'] = $rezultat;  
 ?>
 <!doctype html>
 <html lang="pl">

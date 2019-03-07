@@ -1,5 +1,16 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);  
+
+  if(!isset($_SESSION['zalogowany'])) {
+    header('Location: ../wszyscy/index.php');
+    exit();
+  }
+
+  if (!isset($_GET['wyb_klasa'])) {
+    header('Location: admin_klasy.php');
+    exit();
+  }
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";

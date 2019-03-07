@@ -2,6 +2,11 @@
   session_start();
   mysqli_report(MYSQLI_REPORT_STRICT);
 
+  if(!isset($_SESSION['zalogowany'])) {
+    header('Location: ../wszyscy/index.php');
+    exit();
+  }
+
   if(!isset($_GET['wyb_przydzial'])) {
     header('Location: admin_przydzialy.php');
     exit();
