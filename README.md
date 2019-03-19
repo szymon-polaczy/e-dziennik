@@ -1,4 +1,4 @@
-# BDG_DZIENNIK
+# E_DZIENNIK
 Projekt dziennika elektronicznego tworzony przez ucznia dla uczniów do nauki budowania aplikacji internetowych.
 
 # JAKIE UMIEJĘTNOŚCI ROZWIJAŁEM
