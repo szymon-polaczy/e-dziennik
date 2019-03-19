@@ -13,7 +13,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-  <title>BDG DZIENNIK - Zaloguj Się</title>
+  <title>E-DZIENNIK - Zaloguj Się</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="Szymon Polaczy">
@@ -25,7 +25,7 @@
 
   <header>
     <nav class="navbar navbar-dark bg-dark">
-      <a href="#" class="navbar-brand">BDG DZIENNIK</a>
+      <a href="#" class="navbar-brand">E-DZIENNIK</a>
       <span class="navbar-text">Twój następny e-dziennik.</span>
     </nav>
   </header>
