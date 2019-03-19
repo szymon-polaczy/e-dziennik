@@ -1,4 +1,4 @@
-# E_DZIENNIK
+# E-DZIENNIK
 Projekt dziennika elektronicznego tworzony przez ucznia dla uczniów do nauki budowania aplikacji internetowych.
 
 # JAKIE UMIEJĘTNOŚCI ROZWIJAŁEM
