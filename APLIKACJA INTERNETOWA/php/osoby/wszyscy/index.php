@@ -38,11 +38,11 @@
             <h2>Zaloguj Się</h2>
             <div class="form-group">
               <label for="logowanieEmail">Wpisz Email</label>
-              <input id="logowanieEmail" class="form-control" type="email" placeholder="Email" name="email">
+              <input id="logowanieEmail" class="form-control" type="email" placeholder="Email" name="email" required>
             </div>
             <div class="form-group">
               <label for="logowanieHaslo">Wpisz Hasło</label>
-              <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo">
+              <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo" required>
             </div>
             <div class="form-group form-inf">
               <small  class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>

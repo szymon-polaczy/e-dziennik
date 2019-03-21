@@ -48,7 +48,7 @@
         <h2>Edytuj przedmiot</h2>
         <div class="form-group">
           <label for="przedmiot-nazwa">Edytuj nazwę przedmiotu</label>
-          <input name="nazwa" id="przedmiot-nazwa" value="<?php echo $rezultat['nazwa']; ?>" type="text" class="form-control">
+          <input name="nazwa" id="przedmiot-nazwa" value="<?php echo $rezultat['nazwa']; ?>" type="text" class="form-control" required>
         </div>
         <div class="form-group form-inf">
           <input type="hidden" name="wyb_przedmiot" value="<?php echo $wyb_przedmiot?>">

@@ -67,7 +67,7 @@
         <h2>Edytuj Przydział</h2>
         <div class="form-group">
           <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
-          <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela">
+          <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela" required>
             <?php
               foreach ($_SESSION['osoba'] as $osoba)
                 echo '<option '.($osoba['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$osoba['id_osoba'].'">Nauczyciel '.$osoba['imie'].' '.$osoba['nazwisko'].'</option>';
@@ -76,7 +76,7 @@
         </div>
         <div class="form-group">
           <label for="wybor_przedmiotu">Wybierz przedmiot</label>
-          <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu">
+          <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu" required>
             <?php
               foreach ($_SESSION['przedmiot'] as $przedmiot)
                 echo '<option '.($przedmiot['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
@@ -85,7 +85,7 @@
         </div>
         <div class="form-group">
           <label for="wybor_klasy">Wybierz klasę</label>
-          <select name="wyb_klasa" class="form-control" id="wybor_klasy">
+          <select name="wyb_klasa" class="form-control" id="wybor_klasy" required>
             <?php
               foreach ($_SESSION['klasa'] as $klasa)
                 echo '<option '.($klasa['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';

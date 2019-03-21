@@ -83,19 +83,19 @@
           <form action="zadania/dodawanie_osob.php" method="post">
             <div class="form-group">
               <label for="dodajImie">Wpisz Imię</label>
-              <input id="dodajImie" class="form-control" type="text" placeholder="Imię" name="imie"/>
+              <input id="dodajImie" class="form-control" type="text" placeholder="Imię" name="imie" required/>
             </div>
             <div class="form-group">
               <label for="dodajImie">Wpisz Nazwisko</label>
-              <input id="dodajImie" class="form-control" type="text" placeholder="Nazwisko" name="nazwisko"/>
+              <input id="dodajImie" class="form-control" type="text" placeholder="Nazwisko" name="nazwisko" required/>
             </div>
             <div class="form-group">
               <label for="dodajImie">Wpisz Email</label>
-              <input id="dodajImie" class="form-control" type="email" placeholder="Email" name="email"/>
+              <input id="dodajImie" class="form-control" type="email" placeholder="Email" name="email" required/>
             </div>
             <div class="form-group">
               <label for="dodajImie">Wpisz Hasło</label>
-              <input id="dodajImie" class="form-control" type="password" placeholder="Hasło" name="haslo"/>
+              <input id="dodajImie" class="form-control" type="password" placeholder="Hasło" name="haslo" required/>
             </div>
             <div class="form-group">
               <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
@@ -113,7 +113,7 @@
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="wybierzSale">Wybierz Salę</label>';
-                    echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
+                    echo '<select class="form-control" id="wybierzSale" name="wyb_sala" required>';
                       echo '<option></option>';
 
                     foreach($_SESSION['sale'] as $sala)
@@ -131,12 +131,12 @@
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
-                    echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia"/>';
+                    echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia required"/>';
                   echo '</div>';
 
                   echo '<div class="form-group">';
                     echo '<label for="wybierzKlase">Wybierz Klasę</label>';
-                    echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
+                    echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa" required>';
                      echo '<option></option>';
 
                     foreach($_SESSION['klasy'] as $klasa)

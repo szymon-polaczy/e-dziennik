@@ -51,7 +51,7 @@
           <form method="post" action="zadania/dodawanie_sal.php">
             <div class="form-group">
               <label for="nazwa_sali">Wpisz nazwę sali</label>
-              <input class="form-control" id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa"/>
+              <input class="form-control" id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
             </div>
             <div class="form-group form-inf">
               <?php
@@ -60,7 +60,6 @@
                   unset($_SESSION['dodawanie_sal']);
                 }
               ?>
-
               <button class="btn btn-dark" type="submit">Dodaj</button>
             </div>
           </form>

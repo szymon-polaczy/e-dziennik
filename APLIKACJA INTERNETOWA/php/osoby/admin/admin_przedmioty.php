@@ -49,7 +49,7 @@
             <div class="form-group">
               <div class="form-group">
                 <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
-                <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control">
+                <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control" required>
               </div>
             </div>
             <div class="form-group form-inf">

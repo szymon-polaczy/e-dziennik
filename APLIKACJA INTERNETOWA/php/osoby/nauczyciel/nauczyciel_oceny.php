@@ -76,7 +76,7 @@
               } else {
                 echo '<div class="form-group">';
                   echo '<label for="wyb_ucznia">Wybierz Ucznia</label>';
-                  echo '<select name="wyb_uczen" id="wyb_ucznia" class="form-control">';
+                  echo '<select name="wyb_uczen" id="wyb_ucznia" class="form-control" required>';
                     echo '<option></option>';
 
                     foreach ($_SESSION['uczniowie'] as $uczen)
@@ -89,7 +89,7 @@
                   $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
                   echo '<label for="wyb_wartosc">Wybierz Ocenę</label>';
-                  echo '<select name="wyb_wartosc" id="wyb_wartosc" class="form-control">';
+                  echo '<select name="wyb_wartosc" id="wyb_wartosc" class="form-control" required>';
                     echo '<option></option>';
 
                     foreach ($oceny as $ocena)

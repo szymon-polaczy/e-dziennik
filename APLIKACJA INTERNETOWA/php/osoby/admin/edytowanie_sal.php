@@ -50,7 +50,7 @@
               <h2>EDYTUJ SALE</h2>
               <div class="form-group">
                 <label for="nazwa_sali">Edytuj nazwę sali</label>
-                <input class="form-control" id="nazwa_sali" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa"/>
+                <input class="form-control" id="nazwa_sali" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
               </div>
               <div class="form-group form-inf">
                 <input type="hidden" name="wyb_sala" value="<?php echo $rezultat['id']; ?>">

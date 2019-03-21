@@ -50,7 +50,7 @@
               <h2>ZMIEŃ OCENĘ</h2>
               <div class="form-group">
                 <label for="wyb_ocene">Zmień wartość oceny</label>
-                <select name="wyb_wartosc" class="form-control" id="wyb_ocene">
+                <select name="wyb_wartosc" class="form-control" id="wyb_ocene" required>
                   <?php
                     $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 

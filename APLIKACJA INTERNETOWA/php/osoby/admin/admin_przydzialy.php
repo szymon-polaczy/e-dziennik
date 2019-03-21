@@ -74,7 +74,7 @@
               } else {
                 echo '<div class="form-group">';
                   echo '<label for="wyb_nauczyciela">Wybierz Nauczyciela</label>';
-                  echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control">';
+                  echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control" required>';
                     echo '<option></option>';
 
                     foreach ($_SESSION['nauczyciele'] as $nauczyciel)
@@ -85,7 +85,7 @@
 
                 echo '<div class="form-group">';
                   echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
-                  echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control">';
+                  echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control" required>';
                     echo '<option></option>';
 
                     foreach ($_SESSION['przedmioty'] as $przedmiot)
@@ -96,7 +96,7 @@
 
                 echo '<div class="form-group">';
                 echo '<label for="wyb_klase">Wybierz Klasę</label>';
-                  echo '<select name="wyb_klasa" id="wyb_klase" class="form-control">';
+                  echo '<select name="wyb_klasa" id="wyb_klase" class="form-control" required>';
                     echo '<option></option>';
 
                     foreach ($_SESSION['klasy'] as $klasa)

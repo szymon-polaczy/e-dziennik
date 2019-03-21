@@ -56,7 +56,7 @@
             } else {
               echo '<div class="form-group">';
                 echo '<label for="wyb_przydzial">Wybierz Przydział</label>';
-                echo '<select name="wyb_przydzial" id="wyb_przydzial" class="form-control">';
+                echo '<select name="wyb_przydzial" id="wyb_przydzial" class="form-control" required>';
                   echo '<option></option>';
 
                 foreach ($_SESSION['przydzialy'] as $przydzial)

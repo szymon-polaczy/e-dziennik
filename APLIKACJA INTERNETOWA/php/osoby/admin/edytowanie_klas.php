@@ -49,11 +49,11 @@
             <h2>EDYTUJ KLASĘ</h2>
             <div class="form-group">
               <label for="zmianaNazwy">Zmień Nazwę</label>
-              <input id="zmianaNazwy" class="form-control" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa"/>
+              <input id="zmianaNazwy" class="form-control" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
             </div>
             <div class="form-group">
               <label for="zmianaOpisu">Zmień Opis</label>
-              <input id="zmianaOpisu" class="form-control" type="text" value="<?php echo $rezultat['opis']; ?>" name="opis"/>
+              <input id="zmianaOpisu" class="form-control" type="text" value="<?php echo $rezultat['opis']; ?>" name="opis" required/>
             </div>
             <div class="form-group form-inf">
               <input type="hidden" value="<?php echo $wyb_klasa; ?>" name="wyb_klasa"/>

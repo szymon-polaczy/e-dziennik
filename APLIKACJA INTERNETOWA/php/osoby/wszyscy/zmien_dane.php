@@ -34,11 +34,11 @@
             <h2>Zmień Hasło</h2>
             <div class="form-group">
               <label for="zmianaHaslaStary">Wpisz Stare Hasło</label>
-              <input id="zmianaHaslaStary" class="form-control" type="password" placeholder="Stare hasło" name="shaslo">
+              <input id="zmianaHaslaStary" class="form-control" type="password" placeholder="Stare hasło" name="shaslo" required>
             </div>
             <div class="form-group">
               <label for="zmianaHaslaNowe">Wpisz Nowe Hasło</label>
-              <input id="zmianaHaslaNowe" class="form-control" type="password" placeholder="Nowe hasło" name="nhaslo">
+              <input id="zmianaHaslaNowe" class="form-control" type="password" placeholder="Nowe hasło" name="nhaslo" required>
             </div>
             <div class="form-group form-inf">
               <?php
@@ -56,11 +56,11 @@
             <h2>Zmień Email</h2>
             <div class="form-group">
               <label for="zmianaEmailuStary">Wpisz Stary Email</label>
-              <input id="zmianaEmailuStary" class="form-control" type="email" placeholder="Stary email" name="semail">
+              <input id="zmianaEmailuStary" class="form-control" type="email" placeholder="Stary email" name="semail" required>
             </div>
             <div class="form-group">
               <label for="zmianaEmailuNowy">Wpisz Nowy Email</label>
-              <input id="zmianaEmailuNowy" class="form-control" type="email" placeholder="Nowy email" name="nemail">
+              <input id="zmianaEmailuNowy" class="form-control" type="email" placeholder="Nowy email" name="nemail" required>
             </div>
             <div class="form-group form-inf">
               <?php

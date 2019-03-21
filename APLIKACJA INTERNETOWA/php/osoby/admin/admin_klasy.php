@@ -50,11 +50,11 @@
           <form method="post" action="zadania/dodawanie_klas.php">
             <div class="form-group">
               <label for="dodanieNazwa">Wpisz Nazwę</label>
-              <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa"/>
+              <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa" required/>
             </div>
             <div class="form-group">
               <label for="dodanieOpis">Wpisz Opis</label>
-              <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis"/>
+              <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis" required/>
             </div>
             <div class="form-group form-inf">
               <?php
