@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   require_once "../../../polacz.php";
   require_once "../../../wg_pdo_mysql.php";

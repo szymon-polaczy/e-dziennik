@@ -1,5 +1,6 @@
 <?php
   session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
   if(isset($_SESSION['zalogowany'])) {
     header('Location: dziennik.php');

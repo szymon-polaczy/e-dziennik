@@ -10,8 +10,6 @@
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
-  mysqli_report(MYSQLI_REPORT_STRICT);
-
   //------------------------------------------------WYCIĄGANIE SAL DO OBEJRZENIA-----------------------------------------------//
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
