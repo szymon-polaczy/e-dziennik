@@ -52,9 +52,16 @@ form {
 
 h2 {
 	text-align: center;
-	font-size: 4em;
+	font-size: 4vh;
 	padding: 1.25vh 0;
 	color: #343a40;
+}
+
+h3 {
+	text-align: left;
+	font-size: 2.75vh;
+	color: #444;
+	padding-left: 2.5vw;
 }
 
 .uzytk-blad {
@@ -91,7 +98,7 @@ h2 {
 	outline: none;
 	border: none;
 	transition: all .1s ease-in-out;
-	font-size: 4em;
+	font-size: 4vh;
 	padding: 10px 0;
 	color: #343a40;
 	text-transform: uppercase;

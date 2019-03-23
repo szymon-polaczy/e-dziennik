@@ -9,37 +9,34 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../users-adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  //------------------------------------------------WYŚWIETLNIE OSOB-----------------------------------------------//
-  $sql = "SELECT * FROM osoba";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['osoby'] = $rezultat;
+  $user_adm = new User_Adm($pdo);
 
-  //WYCIĄGANIE DODATKOWYCH INFORMACJI
-  for ($i = 0; $i < count($_SESSION['osoby']); $i++) {
-    //NAUCZYCIEL
-    if ($_SESSION['osoby'][$i]['uprawnienia'] == "n") {
-      $id_osoba = $_SESSION['osoby'][$i]['id'];
-      $sql = "SELECT nazwa FROM osoba, nauczyciel, sala WHERE osoba.id='$id_osoba' AND nauczyciel.id_osoba=osoba.id AND nauczyciel.id_sala=sala.id";
+  $adm = $user_adm->getUserByCategory("administrator");
+  $nau = $user_adm->getUserByCategory("nauczyciel");
+  $ucz = $user_adm->getUserByCategory("uczen");
 
-      $rezultat = $pdo->sql_value($sql);
+  //dodawanie informacji do nauczyciela
+  for ($i = 0; $i < count($nau); $i++) {
+    $id = $nau[$i]['id_sala'];
+    $sql = "SELECT nazwa FROM sala WHERE sala.id='$id'";
 
-      $_SESSION['osoby'][$i]['nazwa_sali'] = $rezultat;
-    }
+    $res = $pdo->sql_value($sql);
 
-    //UCZEN
-    if ($_SESSION['osoby'][$i]['uprawnienia'] == "u") {
-      $id_osoba = $_SESSION['osoby'][$i]['id'];
-      $sql = "SELECT data_urodzenia, nazwa AS klasa_nazwa, opis AS klasa_opis FROM osoba, uczen, klasa WHERE osoba.id='$id_osoba' AND uczen.id_osoba=osoba.id AND klasa.id=uczen.id_klasa";
+    $nau[$i]['nazwa'] = $res;
+  }
 
-      $rezultat = $pdo->sql_record($sql);
+  //dodawanie informacji do ucznia
+  for ($i = 0; $i < count($ucz); $i++) {
+    $id = $ucz[$i]['id_klasa'];
+    $sql = "SELECT nazwa, opis FROM klasa WHERE klasa.id='$id'";
 
-      $_SESSION['osoby'][$i]['data_urodzenia'] = $rezultat['data_urodzenia'];
-      $_SESSION['osoby'][$i]['klasa_nazwa'] = $rezultat['klasa_nazwa'];
-      $_SESSION['osoby'][$i]['klasa_opis'] = $rezultat['klasa_opis'];
-    }
+    $res = $pdo->sql_record($sql);
+
+    $ucz[$i] = array_merge($ucz[$i], $res);
   }
   
   //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
@@ -156,7 +153,7 @@
       <h2>ZOBACZ OSOBY</h2>
       <?php
         //HEH to się nigdy nie wydarzy
-        if (count($_SESSION['osoby']) == 0) {
+        if (count($adm) === 0 && count(($nau) === 0 && count($ucz) === 0)) {
           echo '<p>Nie ma żadnych osób w bazie</p>';
         } else {
           //ZADANIA PHP
@@ -170,7 +167,10 @@
             unset($_SESSION['edytowanie_osob']);
           }
 
+
           //WYŚWIETLAM ADMINISTATORÓW
+          echo '<h3>Administratorzy</h3>';
+
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
@@ -185,18 +185,18 @@
 
           echo '<tbody>';
 
-          foreach($_SESSION['osoby'] as $osoba) {
-            if ($osoba['uprawnienia'] == "a") {
+          foreach($adm as $os) {
+            if ($os['uprawnienia'] == "a") {
               echo '<tr>';
-              echo '<td class="tabela-tekst">'.$osoba['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['uprawnienia'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$osoba['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$osoba['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
               echo '</tr>';
             }
@@ -207,7 +207,9 @@
 
 
 
-          //WYŚWIETLAM NAUCZYCIELi
+          //WYŚWIETLAM NAUCZYCIELI
+          echo '<h3>Nauczyciele</h3>';
+
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
@@ -223,19 +225,19 @@
 
           echo '<tbody>';
 
-          foreach($_SESSION['osoby'] as $osoba) {
-            if ($osoba['uprawnienia'] == "n") {
+          foreach($nau as $os) {
+            if ($os['uprawnienia'] == "n") {
               echo '<tr>';
-              echo '<td class="tabela-tekst">'.$osoba['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['uprawnienia'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['nazwa_sali'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$osoba['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$osoba['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
               echo '</tr>';
             }
@@ -247,6 +249,8 @@
 
 
           //UCZNIOWIE
+          echo '<h3>Uczniowie</h3>';
+
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
@@ -264,21 +268,21 @@
 
           echo '<tbody>';
 
-          foreach($_SESSION['osoby'] as $osoba) {
-            if ($osoba['uprawnienia'] == "u") {
+          foreach($ucz as $os) {
+            if ($os['uprawnienia'] == "u") {
               echo '<tr>';
-              echo '<td class="tabela-tekst">'.$osoba['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['uprawnienia'].'</td>';
-              echo '<td class="tabela-liczby">'.$osoba['data_urodzenia'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['klasa_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$osoba['klasa_opis'].'</td>';            
+              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
+              echo '<td class="tabela-liczby">'.$os['data_urodzenia'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
+              echo '<td class="tabela-tekst">'.$os['opis'].'</td>';            
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$osoba['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$osoba['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
               echo '</tr>';
             }
