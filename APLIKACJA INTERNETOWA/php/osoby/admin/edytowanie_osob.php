@@ -5,9 +5,7 @@
   if(!isset($_SESSION['zalogowany']) || !($_SESSION['uprawnienia'] == 'a')) {
     header('Location: ../wszyscy/index.php');
     exit();
-  }
-
-  if (!isset($_GET['wyb_osoba'])) {
+  } else if (!isset($_GET['wyb_osoba'])) {
     header('Location: admin_osoby.php');
     exit();
   }
