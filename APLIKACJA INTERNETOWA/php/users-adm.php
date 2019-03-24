@@ -6,19 +6,22 @@
       $this->pdo_db = $pdo;
     }
 
-    function getUserById($user_id) {
-      //check if user_id is a string
-      if (!is_numeric($user_id))
+    function getUserById($user_id, $get_info = "*") {
+      //check if user_id is a number and check if get_info is a string
+      if (!is_numeric($user_id) || !is_string($get_info))
         return NULL;
 
       //write sql
-      $sql = "SELECT * FROM osoba WHERE id='$user_id'";
+      $sql = "SELECT ".$get_info." FROM osoba WHERE id='$user_id'";
 
       //retrive data from database
       $res = $this->pdo_db->sql_record($sql);
 
-      //return data
-      return $res;
+      //return data - if there is an array return array if one value return one value
+      if (count($res) === 1)
+        return $res[$get_info];
+      else
+        return $res;
     }
 
     function getUserByCategory($cat_name) {
