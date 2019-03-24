@@ -12,16 +12,15 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../users-adm.php";
 
-  //Wyciągam wszystkie wartości użytkownika
-  $id_osoba = $_GET['wyb_osoba'];
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  $sql = "SELECT * FROM osoba WHERE id='$id_osoba'";
+  $user_adm = new User_Adm($pdo);
 
-  $rezultat = $pdo->sql_record($sql);
+  $id_osoba = $_GET['wyb_osoba'];
 
-  $_SESSION['edytowana'] = $rezultat;  
+  $edytowana = $user_adm->getUserById($id_osoba);
 ?>
 <!doctype html>
 <html lang="pl">
@@ -41,19 +40,19 @@
             <h2>EDYTUJ OSOBĘ</h2>
             <div class="form-group">
               <label for="zmianaImienia">Edytuj Imię</label>
-              <input id="zmianaImienia" class="form-control" type="text" value="<?php echo $_SESSION['edytowana']['imie']; ?>" name="imie" required/>
+              <input id="zmianaImienia" class="form-control" type="text" value="<?php echo $edytowana['imie']; ?>" name="imie" required/>
             </div>
             <div class="form-group">
               <label for="zmianaNazwiska">Edytuj Nazwisko</label>
-              <input id="zmianaNazwiska" class="form-control" type="text" value="<?php echo $_SESSION['edytowana']['nazwisko']; ?>" name="nazwisko" required/>
+              <input id="zmianaNazwiska" class="form-control" type="text" value="<?php echo $edytowana['nazwisko']; ?>" name="nazwisko" required/>
             </div>
             <div class="form-group">
               <label for="zmianaEmailu">Edytuj Email</label>
-              <input id="zmianaEmailu" class="form-control" type="email" value="<?php echo $_SESSION['edytowana']['email']; ?>" name="email" required/>
+              <input id="zmianaEmailu" class="form-control" type="email" value="<?php echo $edytowana['email']; ?>" name="email" required/>
             </div>
             <div class="form-group">
               <label for="zmianHasla">Edytuj Haslo</label>
-              <input id="zmianHasla" class="form-control" type="password" value="<?php echo $_SESSION['edytowana']['haslo']; ?>" name="haslo" required/>
+              <input id="zmianHasla" class="form-control" type="password" value="<?php echo $edytowana['haslo']; ?>" name="haslo" required/>
             </div>
             <div class="form-group form-inf">
               <button class="btn btn-dark" type="submit">Zmień</button>
