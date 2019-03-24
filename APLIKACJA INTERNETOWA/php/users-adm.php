@@ -26,8 +26,13 @@
       if (!is_string($cat_name))
         return NULL;
 
+      //sql settings
+      $select = ($cat_name[0] === 'u'? ", klasa.nazwa, klasa.opis" : ($cat_name[0] === 'n'? ", sala.nazwa" : ""));
+      $from = ($cat_name[0] === 'u'? ", klasa" : ($cat_name[0] === 'n'? ", sala" : ""));
+      $where = ($cat_name[0] === 'u'? "AND `$cat_name`.id_klasa=klasa.id" : ($cat_name[0] === 'n'? "AND `$cat_name`.id_sala=sala.id" : ""));
+
       //write sql
-      $sql = "SELECT * FROM osoba, `$cat_name` WHERE uprawnienia='$cat_name[0]' AND osoba.id=`$cat_name`.id_osoba";
+      $sql = "SELECT osoba.*, `$cat_name`.* ".$select." FROM osoba, `$cat_name` ".$from." WHERE uprawnienia='$cat_name[0]' AND osoba.id=`$cat_name`.id_osoba ".$where;
 
       //retrive data from database
       $res = $this->pdo_db->sql_table($sql);

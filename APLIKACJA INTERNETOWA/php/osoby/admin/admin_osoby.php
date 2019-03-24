@@ -18,26 +18,6 @@
   $adm = $user_adm->getUserByCategory("administrator");
   $nau = $user_adm->getUserByCategory("nauczyciel");
   $ucz = $user_adm->getUserByCategory("uczen");
-
-  //dodawanie informacji do nauczyciela
-  for ($i = 0; $i < count($nau); $i++) {
-    $id = $nau[$i]['id_sala'];
-    $sql = "SELECT nazwa FROM sala WHERE sala.id='$id'";
-
-    $res = $pdo->sql_value($sql);
-
-    $nau[$i]['nazwa'] = $res;
-  }
-
-  //dodawanie informacji do ucznia
-  for ($i = 0; $i < count($ucz); $i++) {
-    $id = $ucz[$i]['id_klasa'];
-    $sql = "SELECT nazwa, opis FROM klasa WHERE klasa.id='$id'";
-
-    $res = $pdo->sql_record($sql);
-
-    $ucz[$i] = array_merge($ucz[$i], $res);
-  }
   
   //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
   $sql = "SELECT * FROM klasa";
