@@ -166,20 +166,18 @@
           echo '<tbody>';
 
           foreach($adm as $os) {
-            if ($os['uprawnienia'] == "a") {
-              echo '<tr>';
-              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-              echo '</tr>';
-            }
+            echo '<tr>';
+            echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
+            echo '</tr>';
           }
 
           echo '</tbody>';
@@ -206,21 +204,19 @@
           echo '<tbody>';
 
           foreach($nau as $os) {
-            if ($os['uprawnienia'] == "n") {
-              echo '<tr>';
-              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-              echo '</tr>';
-            }
+            echo '<tr>';
+            echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
+            echo '</tr>';
           }
 
           echo '</tbody>';
@@ -249,23 +245,21 @@
           echo '<tbody>';
 
           foreach($ucz as $os) {
-            if ($os['uprawnienia'] == "u") {
-              echo '<tr>';
-              echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-              echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-              echo '<td class="tabela-liczby">'.$os['data_urodzenia'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$os['opis'].'</td>';            
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-              echo '</tr>';
-            }
+            echo '<tr>';
+            echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['email'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
+            echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
+            echo '<td class="tabela-liczby">'.$os['data_urodzenia'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
+            echo '<td class="tabela-tekst">'.$os['opis'].'</td>';            
+            echo '<td class="tabela-zadania">';
+              echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
+            echo '</tr>';
           }
 
           echo '</tbody>';
