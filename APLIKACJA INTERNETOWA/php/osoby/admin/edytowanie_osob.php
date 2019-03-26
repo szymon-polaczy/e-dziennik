@@ -12,7 +12,7 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-  require_once "../../users-adm.php";
+  require_once "../../user-adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 

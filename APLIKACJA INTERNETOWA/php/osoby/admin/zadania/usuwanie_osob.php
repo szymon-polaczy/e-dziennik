@@ -4,12 +4,15 @@
 
   require_once "../../../polacz.php";
   require_once "../../../wg_pdo_mysql.php";
+  require_once "../../../user-adm.php";
 
   if (isset($_GET['wyb_osoba'])) {
     $wszystko_ok = true;
     $wyb_osoba = $_GET['wyb_osoba'];
-    $numer_osoby = $_GET['numer_osoby'];
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+    $user_adm = new User_Adm($pdo);
+
+    $u_upr = $user_adm->getUserById($wyb_osoba, "uprawnienia");
 
     //Test czy usuwasz samego siebie
     if ($_SESSION['id'] == $wyb_osoba) {
@@ -17,22 +20,20 @@
       $_SESSION['usuwanie_osob'] = "Usuwasz sam siebie, wybierz kogoś innego!";
     }
 
-    //Sprawdzam czy usuwasz jedynego administratora
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "a") {
-      $ilosc_admin = 0;
-      for ($i = 0; $i < $_SESSION['ilosc_osob']; $i++)
-        if ($_SESSION['osoba'.$i]['uprawnienia'] == "a")
-          if ($ilosc_admin++ > 2)
-            break;
+    //-----------------------------------
 
-      if ($ilosc_admin < 2) {
+    //Sprawdzam czy usuwasz jedynego administratora
+    if ($u_upr == "a") {
+      $adm = $user_adm->getUserByCategory("administrator");
+
+      if (count($adm) < 2) {
         $wszystko_ok = false;
         $_SESSION['usuwanie_osob'] = "Usuwasz jedynego administratora, wybierz kogoś innego!";
       }
     }
 
     //testy czy usuwasz nauczyciela przypisanego do przydziału
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "n") {
+    if ($u_upr == "n") {
       $sql = "SELECT * FROM przydzial WHERE id_nauczyciel='$wyb_osoba'";
 
       $rezultat = $pdo->sql_record($sql);
@@ -44,7 +45,7 @@
     }
 
     //Sprawdzam czy jeśli jesteś uczniem to masz jakieś oceny
-    if ($_SESSION['osoba'.$numer_osoby]['uprawnienia'] == "u") {
+    if ($u_upr == "u") {
       $sql = "SELECT * FROM ocena WHERE id_uczen='$wyb_osoba'";
 
       $rezultat = $pdo->sql_record($sql);
@@ -69,7 +70,7 @@
       //Usuwanie odpowiedniego zadania danej osoby
       $zadanie = "";
 
-      switch ($_SESSION['osoba'.$numer_osoby]['uprawnienia']) {
+      switch ($u_upr) {
         case 'a': $zadanie = "administrator"; break;
         case 'n': $zadanie = "nauczyciel"; break;
         case 'u': $zadanie = "uczen"; break;

@@ -9,7 +9,7 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-  require_once "../../users-adm.php";
+  require_once "../../user-adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
@@ -28,6 +28,42 @@
   $sql = "SELECT * FROM sala";
   $rezultat = $pdo->sql_table($sql);
   $_SESSION['sale'] = $rezultat;
+
+  function showUserTable($who) {
+    if (count($who) === 0)
+      return NULL;
+
+    echo '<table class="table">';
+    echo '<thead class="thead-dark">';
+      echo '<tr>';
+
+        foreach($who[0] as $key => $val)
+          echo '<th>'.$key.'</th>';
+
+        echo '<th class="tabela-zadania">opcje</th>'; 
+      echo '</tr>';
+    echo '</thead>';
+
+    echo '<tbody>';
+
+    foreach ($who as $p) {
+      echo '<tr>';
+        foreach($p as $key => $val) {
+          echo '<td>'.$val.'</td>';
+        }
+
+        echo '<td class="tabela-zadania">';
+          echo '<a href="edytowanie_osob.php?wyb_osoba='.$p['id'].'">Edytuj</a>';
+          echo '<span>|</span>';
+          echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$p['id'].'\':\'\')" href="#">Usuń</a>';
+        echo '</td>';
+
+      echo '</tr>';
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+  }
 ?>
 
 <!doctype html>
@@ -82,7 +118,7 @@
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="wybierzSale">Wybierz Salę</label>';
-                    echo '<select class="form-control" id="wybierzSale" name="wyb_sala" required>';
+                    echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
                       echo '<option></option>';
 
                     foreach($_SESSION['sale'] as $sala)
@@ -100,12 +136,12 @@
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
-                    echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia required"/>';
+                    echo '<input id="dataUrodzenia" class="form-control" type="date" name="data_urodzenia"/>';
                   echo '</div>';
 
                   echo '<div class="form-group">';
                     echo '<label for="wybierzKlase">Wybierz Klasę</label>';
-                    echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa" required>';
+                    echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
                      echo '<option></option>';
 
                     foreach($_SESSION['klasy'] as $klasa)
@@ -122,7 +158,7 @@
                   echo '<small class="form-text uzytk-blad">'.$_SESSION['dodawanie_osob'].'</small>';
                   unset($_SESSION['dodawanie_osob']);
                 }
-                ?>
+              ?>
               <button class="btn btn-dark" type="submit">Dodaj</button>
             </div>
           </form>
@@ -143,123 +179,14 @@
           unset($_SESSION['edytowanie_osob']);
         }
 
-
-        //WYŚWIETLAM ADMINISTATORÓW
         echo '<h3>Administratorzy</h3>';
+        showUserTable($adm);
 
-        echo '<table class="table">';
-        echo '<thead class="thead-dark">';
-          echo '<tr>';
-            echo '<th class="tabela-tekst">IMIE</th>';
-            echo '<th class="tabela-tekst">NAZWISKO</th>';
-            echo '<th class="tabela-tekst">EMAIL</th>';
-            echo '<th class="tabela-tekst">HASŁO</th>';
-            echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
-            echo '<th class="tabela-zadania">OPCJE</th>';
-          echo '</tr>';
-        echo '</thead>';
-
-        echo '<tbody>';
-
-        foreach($adm as $os) {
-          echo '<tr>';
-          echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-          echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-          echo '<td class="tabela-zadania">';
-            echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-            echo '<span>|</span>';
-            echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-          echo '</td>';
-          echo '</tr>';
-        }
-
-        echo '</tbody>';
-        echo '</table>';
-
-
-
-        //WYŚWIETLAM NAUCZYCIELI
         echo '<h3>Nauczyciele</h3>';
+        showUserTable($nau);
 
-        echo '<table class="table">';
-        echo '<thead class="thead-dark">';
-          echo '<tr>';
-            echo '<th class="tabela-tekst">IMIE</th>';
-            echo '<th class="tabela-tekst">NAZWISKO</th>';
-            echo '<th class="tabela-tekst">EMAIL</th>';
-            echo '<th class="tabela-tekst">HASŁO</th>';
-            echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
-            echo '<th class="tabela-tekst">NAZWA SALI</th>';
-            echo '<th class="tabela-zadania">OPCJE</th>';
-          echo '</tr>';
-        echo '</thead>';
-
-        echo '<tbody>';
-
-        foreach($nau as $os) {
-          echo '<tr>';
-          echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-          echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
-          echo '<td class="tabela-zadania">';
-            echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-            echo '<span>|</span>';
-            echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-          echo '</td>';
-          echo '</tr>';
-        }
-
-        echo '</tbody>';
-        echo '</table>';
-
-
-
-        //UCZNIOWIE
         echo '<h3>Uczniowie</h3>';
-
-        echo '<table class="table">';
-        echo '<thead class="thead-dark">';
-          echo '<tr>';
-            echo '<th class="tabela-tekst">IMIE</th>';
-            echo '<th class="tabela-tekst">NAZWISKO</th>';
-            echo '<th class="tabela-tekst">EMAIL</th>';
-            echo '<th class="tabela-tekst">HASŁO</th>';
-            echo '<th class="tabela-tekst">UPRAWNIENIA</th>';
-            echo '<th class="tabela-liczby">DATA URODZENIA</th>';
-            echo '<th class="tabela-tekst">NAZWA KLASY</th>';
-            echo '<th class="tabela-tekst">OPIS KLASY</th>';
-            echo '<th class="tabela-zadania">OPCJE</th>';
-          echo '</tr>';
-        echo '</thead>';
-
-        echo '<tbody>';
-
-        foreach($ucz as $os) {
-          echo '<tr>';
-          echo '<td class="tabela-tekst">'.$os['imie'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['nazwisko'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['email'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['haslo'][0].'...'.'</td>';
-          echo '<td class="tabela-tekst">'.$os['uprawnienia'].'</td>';
-          echo '<td class="tabela-liczby">'.$os['data_urodzenia'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['nazwa'].'</td>';
-          echo '<td class="tabela-tekst">'.$os['opis'].'</td>';            
-          echo '<td class="tabela-zadania">';
-            echo '<a href="edytowanie_osob.php?wyb_osoba='.$os['id'].'">Edytuj</a>';
-            echo '<span>|</span>';
-            echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$os['id'].'&numer_osoby='.$i.'\':\'\')" href="#">Usuń</a>';
-          echo '</td>';
-          echo '</tr>';
-        }
-
-        echo '</tbody>';
-        echo '</table>';    
+        showUserTable($ucz); 
       ?>
     </section>
 
