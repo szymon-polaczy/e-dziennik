@@ -9,15 +9,32 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-  require_once "../../users-adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  $user_adm = new User_Adm($pdo);
+  function getUserByCategory($cat_name, $pdo) {
+    //check if cat_name is a string
+    if (!is_string($cat_name))
+      return NULL;
 
-  $adm = $user_adm->getUserByCategory("administrator");
-  $nau = $user_adm->getUserByCategory("nauczyciel");
-  $ucz = $user_adm->getUserByCategory("uczen");
+    //sql settings
+    $select = ($cat_name[0] === 'u'? ", klasa.nazwa, klasa.opis" : ($cat_name[0] === 'n'? ", sala.nazwa" : ""));
+    $from = ($cat_name[0] === 'u'? ", klasa" : ($cat_name[0] === 'n'? ", sala" : ""));
+    $where = ($cat_name[0] === 'u'? "AND `$cat_name`.id_klasa=klasa.id" : ($cat_name[0] === 'n'? "AND `$cat_name`.id_sala=sala.id" : ""));
+
+    //write sql
+    $sql = "SELECT osoba.*, `$cat_name`.* ".$select." FROM osoba, `$cat_name` ".$from." WHERE uprawnienia='$cat_name[0]' AND osoba.id=`$cat_name`.id_osoba ".$where;
+
+    //retrive data from database
+    $res = $pdo->sql_table($sql);
+
+    //return data
+    return $res;
+  }
+
+  $adm = getUserByCategory("administrator", $pdo);
+  $nau = getUserByCategory("nauczyciel", $pdo);
+  $ucz = getUserByCategory("uczen", $pdo);
   
   //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
   $sql = "SELECT * FROM klasa";

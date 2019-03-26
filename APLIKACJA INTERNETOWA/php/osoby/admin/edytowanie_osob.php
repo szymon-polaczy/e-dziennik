@@ -11,16 +11,31 @@
   }
 
   require_once "../../polacz.php";
-  require_once "../../wg_pdo_mysql.php";
-  require_once "../../users-adm.php";
+  require_once "../../wg_pdo_mysql.php";  
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  $user_adm = new User_Adm($pdo);
+  function getUserById($user_id, $pdo, $get_info = "*") {
+    //check if user_id is a number and check if get_info is a string
+    if (!is_numeric($user_id) || !is_string($get_info))
+      return NULL;
+
+    //write sql
+    $sql = "SELECT ".$get_info." FROM osoba WHERE id='$user_id'";
+
+    //retrive data from database
+    $res = $pdo->sql_record($sql);
+
+    //return data - if there is an array return array if one value return one value
+    if (count($res) === 1)
+      return $res[$get_info];
+    else
+      return $res;
+  }
 
   $id_osoba = $_GET['wyb_osoba'];
 
-  $edytowana = $user_adm->getUserById($id_osoba);
+  $edytowana = getUserById($id_osoba, $pdo);
 ?>
 <!doctype html>
 <html lang="pl">
