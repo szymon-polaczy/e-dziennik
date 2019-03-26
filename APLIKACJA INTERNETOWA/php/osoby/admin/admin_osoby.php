@@ -96,7 +96,7 @@
             <div class="niewidoczne" id="uczen-uzu">
               <?php
                 if (count($_SESSION['klasy']) == 0) {
-                  echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć nauczyciela. Dodaj pierw klasy!</span>';
+                  echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</span>';
                 } else {
                   echo '<div class="form-group">';
                     echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
