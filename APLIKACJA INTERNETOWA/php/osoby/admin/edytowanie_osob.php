@@ -21,6 +21,13 @@
   $id_osoba = $_GET['wyb_osoba'];
 
   $edytowana = $user_adm->getUserById($id_osoba);
+
+  //sprawdzenie czy jest co wyświetlać
+  if (count($edytowana) === 0) {
+    $_SESSION['edytowanie_osob'] = "Osoba o takim ID nie istnieje!";
+    header('Location: ../admin_osoby.php');
+    exit();
+  }
 ?>
 <!doctype html>
 <html lang="pl">
