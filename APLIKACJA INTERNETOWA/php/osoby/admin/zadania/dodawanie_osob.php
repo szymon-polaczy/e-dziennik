@@ -57,8 +57,8 @@
       $_SESSION['dodawanie_osob'] = "Taki adres email istnieje już w bazie!";
     }
 
-    if(strlen($haslo) < 8 || strlen($haslo) > 32) {
-      $_SESSION['dodawanie_osob'] = "Hasło osoby musi posiadać pomiędzy 8 a 32 znakami!";
+    if(strlen($haslo) < 8) {
+      $_SESSION['dodawanie_osob'] = "Hasło osoby musi posiadać minimum 8 znków!";
       $wszystko_ok = false;
     }
 
