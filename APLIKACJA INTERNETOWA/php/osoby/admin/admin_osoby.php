@@ -182,11 +182,15 @@
         echo '<h3>Administratorzy</h3>';
         showUserTable($adm);
 
-        echo '<h3>Nauczyciele</h3>';
-        showUserTable($nau);
+        if (count($nau) > 1) {
+          echo '<h3>Nauczyciele</h3>';
+          showUserTable($nau);
+        }
 
-        echo '<h3>Uczniowie</h3>';
-        showUserTable($ucz); 
+        if (count($ucz) > 1) {
+          echo '<h3>Uczniowie</h3>';
+          showUserTable($ucz); 
+        }
       ?>
     </section>
 
