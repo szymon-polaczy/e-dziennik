@@ -37,8 +37,10 @@
     echo '<thead class="thead-dark">';
       echo '<tr>';
 
-        foreach($who[0] as $key => $val)
-          echo '<th>'.$key.'</th>';
+        foreach($who[0] as $key => $val) {
+          if ($key != "id_osoba" && $key != "id_klasa" && $key != "id_sala" && $key != "uprawnienia")
+            echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+        }
 
         echo '<th class="tabela-zadania">opcje</th>'; 
       echo '</tr>';
@@ -49,7 +51,10 @@
     foreach ($who as $p) {
       echo '<tr>';
         foreach($p as $key => $val) {
-          echo '<td>'.$val.'</td>';
+          if ($key == "haslo")
+            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val[0].'</td>';
+          else if ($key != "id_osoba" && $key != "id_klasa" && $key != "id_sala" && $key != "uprawnienia")
+            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
         }
 
         echo '<td class="tabela-zadania">';
