@@ -48,9 +48,9 @@
 
     echo '<tbody>';
 
-    foreach ($who as $p) {
+    foreach ($who as $per) {
       echo '<tr>';
-        foreach($p as $key => $val) {
+        foreach($per as $key => $val) {
           if ($key == "haslo")
             echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val[0].'</td>';
           else if ($key != "id_osoba" && $key != "id_klasa" && $key != "id_sala" && $key != "uprawnienia")
@@ -58,7 +58,7 @@
         }
 
         echo '<td class="tabela-zadania">';
-          echo '<a href="edytowanie_osob.php?wyb_osoba='.$p['id'].'">Edytuj</a>';
+          echo '<a href="edytowanie_osob.php?wyb_osoba='.$per['id'].'">Edytuj</a>';
           echo '<span>|</span>';
           echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$p['id'].'\':\'\')" href="#">Usuń</a>';
         echo '</td>';
