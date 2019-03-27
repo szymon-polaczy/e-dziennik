@@ -60,7 +60,7 @@
         echo '<td class="tabela-zadania">';
           echo '<a href="edytowanie_osob.php?wyb_osoba='.$per['id'].'">Edytuj</a>';
           echo '<span>|</span>';
-          echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$p['id'].'\':\'\')" href="#">Usuń</a>';
+          echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$per['id'].'\':\'\')" href="#">Usuń</a>';
         echo '</td>';
 
       echo '</tr>';
