@@ -123,5 +123,29 @@ h3 {
 }
 
 
-/*-----NEW CSS NO BOOTSTRAP-----*/
-/*----*/
+/*----------NEW CSS NO BOOTSTRAP----------*/
+
+
+/*------------------------FOOTER START*/
+.main-footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	background: #343a40;
+	text-align: center;
+	color: #fff;
+}
+
+.main-footer h6 {
+	margin: 1vh 0;
+}
+
+.main-footer h6 a {
+	text-decoration: none;
+	color: #518bff;
+}
+
+.main-footer h6 a:hover {
+	color: #73adff;
+}
+/*--------------------------FOOTER END*/
