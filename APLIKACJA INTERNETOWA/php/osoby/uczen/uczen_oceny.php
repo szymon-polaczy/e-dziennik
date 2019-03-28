@@ -9,8 +9,46 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../user-adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+
+  $user_adm = new User_Adm($pdo);
+
+  echo '<h1>Łangielski</h1>';
+  $id = $_SESSION['id'];
+  $res = $user_adm->getUserMarkByCategory($id, "łangielski");
+
+  function showMarkTable($who) {
+    if (count($who) === 0)
+      return NULL;
+
+    echo '<table class="table">';
+    echo '<thead class="thead-dark">';
+      echo '<tr>';
+
+        foreach($who[0] as $key => $val)
+          echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+
+      echo '</tr>';
+    echo '</thead>';
+
+    echo '<tbody>';
+
+    foreach ($who as $per) {
+      echo '<tr>';
+
+        foreach($per as $key => $val)
+          echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
+
+      echo '</tr>';
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+  }
+
+  showUserTable($res);
 
   //wyciąganie ocen do wyświetlania
   $moje_id = $_SESSION['id'];

@@ -5,10 +5,19 @@ $('#nadajUprawnienia').on("change", function() {
   $('#nauczyciel-uzu').css({"display": "none"});
   $('#uczen-uzu').css({"display": "none"});
 
-  if (war_select_upr == "Nauczyciel")
-    $('#nauczyciel-uzu').css({"display": "block"});
-  else if (war_select_upr == "Uczeń")
+  document.getElementById("wybierzKlase").required = false;
+  document.getElementById("wybierzSale").required = false;
+  document.getElementById("dataUrodzenia").required = false;
+
+  if (war_select_upr == "Nauczyciel") {
+    $('#nauczyciel-uzu').css({"display": "block"}); 
+    document.getElementById("wybierzSale").required = true;
+  }
+  else if (war_select_upr == "Uczeń") {
     $('#uczen-uzu').css({"display": "block"});
+    document.getElementById("wybierzKlase").required = true;
+    document.getElementById("dataUrodzenia").required = true;
+  }
 });
 
 function pokazOdpOcene() {
