@@ -50,13 +50,28 @@
         return NULL;
 
       //write sql 
-      #Wyciągnij jeszcze dane nauczyciela
       $sql = "SELECT ocena.wartosc, ocena.data, osoba.imie, osoba.nazwisko FROM ocena, przydzial, przedmiot, nauczyciel, osoba
       WHERE ocena.id_uczen='$user_id' AND ocena.id_przydzial=przydzial.id 
       AND przydzial.id_przedmiot=przedmiot.id AND przedmiot.nazwa='$cat_name' 
       AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
 
-      echo $sql;
+      //retrive data from database
+      $res = $this->pdo_db->sql_table($sql);
+
+      //return data
+      return $res;
+    }
+
+    function getUserMark($user_id) {
+      //check if user_id is a number
+      if (!is_numeric($user_id))
+        return NULL;
+
+      //write sql 
+      $sql = "SELECT ocena.wartosc, ocena.data, osoba.imie, osoba.nazwisko, przedmiot.nazwa FROM ocena, przydzial, przedmiot, nauczyciel, osoba
+      WHERE ocena.id_uczen='$user_id' AND ocena.id_przydzial=przydzial.id AND przydzial.id_przedmiot=przedmiot.id
+      AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id
+      ORDER BY przedmiot.nazwa ASC";
 
       //retrive data from database
       $res = $this->pdo_db->sql_table($sql);

@@ -15,10 +15,6 @@
 
   $user_adm = new User_Adm($pdo);
 
-  echo '<h1>Łangielski</h1>';
-  $id = $_SESSION['id'];
-  $res = $user_adm->getUserMarkByCategory($id, "łangielski");
-
   function showMarkTable($who) {
     if (count($who) === 0)
       return NULL;
@@ -47,20 +43,6 @@
     echo '</tbody>';
     echo '</table>';
   }
-
-  showUserTable($res);
-
-  //wyciąganie ocen do wyświetlania
-  $moje_id = $_SESSION['id'];
-  $sql = "SELECT osoba.imie, osoba.nazwisko, przedmiot.nazwa, ocena.*
-                  FROM osoba, nauczyciel, przydzial, przedmiot, uczen, ocena
-                  WHERE uczen.id_osoba='$moje_id' AND ocena.id_uczen=uczen.id_osoba
-                  AND ocena.id_przydzial=przydzial.id AND przydzial.id_nauczyciel=nauczyciel.id_osoba
-                  AND nauczyciel.id_osoba=osoba.id AND przydzial.id_przedmiot=przedmiot.id";
-
-  $rezultat = $pdo->sql_table($sql);
-
-  $_SESSION['oceny'] = $rezultat;
 ?>
 
 <!doctype html>
@@ -77,34 +59,13 @@
     <section>
       <h2>TWOJE OCENY</h2>
       <?php
-        if (count($_SESSION['oceny']) == 0) {
+        $id = $_SESSION['id'];
+        $oceny = $user_adm->getUserMark($id);
+
+        if (count($oceny) == 0) {
           echo '<p>Nie posiadasz żadnych ocen</p>';
         } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
-              echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
-              echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
-              echo '<th class="tabela-liczby">DATA</th>';
-              echo '<th class="tabela-liczby">WARTOŚĆ</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          foreach($_SESSION['oceny'] as $ocena) {
-            echo '<tr>';
-              echo '<td class="tabela-tekst">'.$ocena['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$ocena['nazwisko'].'</td>';
-              echo '<td class="tabela-tekst">'.$ocena['nazwa'].'</td>';
-              echo '<td class="tabela-liczby">'.$ocena['data'].'</td>';
-              echo '<td class="tabela-liczby">'.$ocena['wartosc'].'</td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
+          showMarkTable($oceny);
         }
       ?>
     </section>
