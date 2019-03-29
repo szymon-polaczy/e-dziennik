@@ -35,7 +35,7 @@
       $where = ($cat_name[0] === 'u'? "AND `$cat_name`.id_klasa=klasa.id" : ($cat_name[0] === 'n'? "AND `$cat_name`.id_sala=sala.id" : ""));
 
       //write sql
-      $sql = "SELECT osoba.imie, osoba.nazwisko, osoba.email, osoba.haslo ".$select." 
+      $sql = "SELECT osoba.id, osoba.imie, osoba.nazwisko, osoba.email, osoba.haslo ".$select." 
               FROM osoba, `$cat_name` ".$from." 
               WHERE uprawnienia='$cat_name[0]' 
               AND osoba.id=`$cat_name`.id_osoba ".$where;

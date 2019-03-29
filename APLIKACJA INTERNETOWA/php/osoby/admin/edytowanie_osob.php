@@ -25,7 +25,7 @@
   //sprawdzenie czy jest co wyświetlać
   if (count($edytowana) === 0) {
     $_SESSION['edytowanie_osob'] = "Osoba o takim ID nie istnieje!";
-    header('Location: ../admin_osoby.php');
+    header('Location: admin_osoby.php');
     exit();
   }
 ?>

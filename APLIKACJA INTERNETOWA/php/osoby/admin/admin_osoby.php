@@ -38,7 +38,8 @@
       echo '<tr>';
 
         foreach($who[0] as $key => $val)
-          echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+          if ($key != "id")
+            echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
 
         echo '<th class="tabela-zadania">opcje</th>'; 
       echo '</tr>';
@@ -49,7 +50,8 @@
     foreach ($who as $per) {
       echo '<tr>';
         foreach($per as $key => $val)
-          echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.($key == "haslo"? $val[0] : $val).'</td>';
+          if ($key != "id")
+            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.($key == "haslo"? $val[0] : $val).'</td>';
 
         echo '<td class="tabela-zadania">';
           echo '<a href="edytowanie_osob.php?wyb_osoba='.$per['id'].'">Edytuj</a>';
