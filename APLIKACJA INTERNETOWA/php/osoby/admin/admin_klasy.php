@@ -17,7 +17,7 @@
 
   $rezultat = $pdo->sql_table($sql);
 
-  $_SESSION['klasa'] = $rezultat;
+  $classes = $rezultat;
 ?>
 
 <!doctype html>
@@ -74,31 +74,35 @@
           unset($_SESSION['edytowanie_klas']);
         }
 
-        if (count($_SESSION['klasa']) == 0) {
-          echo '<p>ŻADNA KLASA NIE ISTNIEJE W BAZIE</p>';
+        if (count($classes) == 0) {
+          echo '<p>Żadna klasa nie istnieje.</p>';
         } else {
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-liczby">#</th>';
-              echo '<th class="tabela-tekst">NAZWA</th>';
-              echo '<th class="tabela-tekst">OPIS</th>';
-              echo '<th class="tabela-zadania">OPCJE</th>';
+
+              foreach($classes[0] as $key => $val)
+                if ($key != "id")
+                  echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+
+              echo '<th class="tabela-zadania">opcje</th>'; 
             echo '</tr>';
           echo '</thead>';
 
           echo '<tbody>';
 
-          foreach ($_SESSION['klasa'] as $klasa) {
+          foreach ($classes as $class) {
             echo '<tr>';
-              echo '<td class="tabela-liczby">'.$i.'</td>';
-              echo '<td class="tabela-tekst">'.$klasa['nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$klasa['opis'].'</td>';
+              foreach($class as $key => $val) 
+                if ($key != "id")
+                  echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
+
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_klas.php?wyb_klasa='.$klasa['id'].'">Edytuj</a>';
+                echo '<a href="edytowanie_klas.php?wyb_klasa='.$class['id'].'">Edytuj</a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$klasa['id'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$class['id'].'\':\'\')" href="#">Usuń</a>';
               echo '</td>';
+
             echo '</tr>';
           }
 
