@@ -1,6 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a href="dziennik.php" class="navbar-brand">E-DZIENNIK</a>
+    <a href="../wszyscy/dziennik.php" class="navbar-brand">E-DZIENNIK</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#glowneMenu">
       <span class="navbar-toggler-icon"></span>
     </button>

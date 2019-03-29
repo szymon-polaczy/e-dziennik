@@ -44,7 +44,6 @@
     echo '</table>';
   }
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
@@ -62,11 +61,10 @@
         $id = $_SESSION['id'];
         $oceny = $user_adm->getUserMark($id);
 
-        if (count($oceny) == 0) {
+        if (count($oceny) == 0)
           echo '<p>Nie posiadasz żadnych ocen</p>';
-        } else {
+        else
           showMarkTable($oceny);
-        }
       ?>
     </section>
 
