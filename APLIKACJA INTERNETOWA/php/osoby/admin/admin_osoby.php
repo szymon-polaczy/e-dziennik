@@ -37,10 +37,8 @@
     echo '<thead class="thead-dark">';
       echo '<tr>';
 
-        foreach($who[0] as $key => $val) {
-          if ($key != "id_osoba" && $key != "id_klasa" && $key != "id_sala" && $key != "uprawnienia")
-            echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
-        }
+        foreach($who[0] as $key => $val)
+          echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
 
         echo '<th class="tabela-zadania">opcje</th>'; 
       echo '</tr>';
@@ -50,12 +48,8 @@
 
     foreach ($who as $per) {
       echo '<tr>';
-        foreach($per as $key => $val) {
-          if ($key == "haslo")
-            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val[0].'</td>';
-          else if ($key != "id_osoba" && $key != "id_klasa" && $key != "id_sala" && $key != "uprawnienia")
-            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
-        }
+        foreach($per as $key => $val)
+          echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.($key == "haslo"? $val[0] : $val).'</td>';
 
         echo '<td class="tabela-zadania">';
           echo '<a href="edytowanie_osob.php?wyb_osoba='.$per['id'].'">Edytuj</a>';

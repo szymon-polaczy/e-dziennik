@@ -30,12 +30,15 @@
         return NULL;
 
       //sql settings
-      $select = ($cat_name[0] === 'u'? ", klasa.nazwa, klasa.opis" : ($cat_name[0] === 'n'? ", sala.nazwa" : ""));
+      $select = ($cat_name[0] === 'u'? ", uczen.data_urodzenia, klasa.nazwa, klasa.opis" : ($cat_name[0] === 'n'? ", sala.nazwa" : ""));
       $from = ($cat_name[0] === 'u'? ", klasa" : ($cat_name[0] === 'n'? ", sala" : ""));
       $where = ($cat_name[0] === 'u'? "AND `$cat_name`.id_klasa=klasa.id" : ($cat_name[0] === 'n'? "AND `$cat_name`.id_sala=sala.id" : ""));
 
       //write sql
-      $sql = "SELECT osoba.*, `$cat_name`.* ".$select." FROM osoba, `$cat_name` ".$from." WHERE uprawnienia='$cat_name[0]' AND osoba.id=`$cat_name`.id_osoba ".$where;
+      $sql = "SELECT osoba.imie, osoba.nazwisko, osoba.email, osoba.haslo ".$select." 
+              FROM osoba, `$cat_name` ".$from." 
+              WHERE uprawnienia='$cat_name[0]' 
+              AND osoba.id=`$cat_name`.id_osoba ".$where;
 
       //retrive data from database
       $res = $this->pdo_db->sql_table($sql);
@@ -50,7 +53,8 @@
         return NULL;
 
       //write sql 
-      $sql = "SELECT ocena.wartosc, ocena.data, osoba.imie, osoba.nazwisko, przedmiot.nazwa FROM ocena, przydzial, przedmiot, nauczyciel, osoba
+      $sql = "SELECT ocena.wartosc, ocena.data, osoba.imie, osoba.nazwisko, przedmiot.nazwa 
+      FROM ocena, przydzial, przedmiot, nauczyciel, osoba
       WHERE ocena.id_uczen='$user_id' AND ocena.id_przydzial=przydzial.id AND przydzial.id_przedmiot=przedmiot.id
       AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id
       ORDER BY przedmiot.nazwa ASC";
