@@ -123,10 +123,22 @@ h3 {
 }
 
 
-/*----------NEW CSS NO BOOTSTRAP----------*/
+/*------------------------------NEW CSS NO BOOTSTRAP------------------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+/*------------------------BODY START*/
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Lato', sans-serif;
+}
+
+/*------------------------BODY END*/
 
 
-/*------------------------FOOTER START*/
+/*------------------------MAIN FOOTER START*/
 .main-footer {
 	position: fixed;
 	width: 100%;
@@ -148,4 +160,4 @@ h3 {
 .main-footer h6 a:hover {
 	color: #73adff;
 }
-/*--------------------------FOOTER END*/
+/*--------------------------MAIN FOOTER END*/
