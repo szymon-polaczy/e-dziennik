@@ -31,15 +31,9 @@
   $_SESSION['klasa'] = $rezultat;
 
   //Wyciąganie edytowanego przydziału
-  $wyb_przydzial = $_GET['wyb_przydzial'];
-  $sql = "SELECT * FROM przydzial WHERE id='$wyb_przydzial'";
-
-  $rezultat = $pdo->sql_table($sql);
-
-  $_SESSION['edytowany_id'] = $rezultat[0]['id'];
-  $_SESSION['edytowany_id_nauczyciel'] = $rezultat[0]['id_nauczyciel'];
-  $_SESSION['edytowany_id_przedmiot'] = $rezultat[0]['id_przedmiot'];
-  $_SESSION['edytowany_id_klasa'] = $rezultat[0]['id_klasa'];
+  $przydzial_id = $_GET['wyb_przydzial'];
+  $sql = "SELECT * FROM przydzial WHERE id='$przydzial_id'";
+  $edi = $pdo->sql_record($sql);
 ?>
 <!doctype html>
 <html lang="pl">
@@ -60,7 +54,7 @@
           <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela" required>
             <?php
               foreach ($_SESSION['osoba'] as $osoba)
-                echo '<option '.($osoba['id'] == $_SESSION['edytowany_id_nauczyciel']? 'selected' : '').' value="'.$osoba['id_osoba'].'">Nauczyciel '.$osoba['imie'].' '.$osoba['nazwisko'].'</option>';
+                echo '<option '.($osoba['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$osoba['id_osoba'].'">Nauczyciel '.$osoba['imie'].' '.$osoba['nazwisko'].'</option>';
             ?>
           </select>
         </div>
@@ -69,7 +63,7 @@
           <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu" required>
             <?php
               foreach ($_SESSION['przedmiot'] as $przedmiot)
-                echo '<option '.($przedmiot['id'] == $_SESSION['edytowany_id_przedmiot']? 'selected' : '').' value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
+                echo '<option '.($przedmiot['id'] == $edi['id_przedmiot']? 'selected' : '').' value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
             ?>
           </select>
         </div>
@@ -78,12 +72,12 @@
           <select name="wyb_klasa" class="form-control" id="wybor_klasy" required>
             <?php
               foreach ($_SESSION['klasa'] as $klasa)
-                echo '<option '.($klasa['id'] == $_SESSION['edytowany_id_klasa']? 'selected' : '').' value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
+                echo '<option '.($klasa['id'] == $edi['id_klasa']? 'selected' : '').' value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
             ?>
           </select>
         </div>
         <div class="form-group form-inf">
-        <button type="submit" class="btn btn-dark">Zmień</button>
+          <button type="submit" class="btn btn-dark">Zmień</button>
         </div>
       </form>
     </div>
