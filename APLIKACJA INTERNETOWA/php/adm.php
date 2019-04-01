@@ -1,5 +1,5 @@
 <?php
-  class User_Adm {
+  class Adm {
     private $pdo_db;
 
     function __construct($pdo) {
@@ -64,5 +64,43 @@
 
       //return data
       return $res;
+    }
+
+    function showDataTable($what, $task = NULL, $edit_file = NULL, $delete_file=NULL) {
+      if (count($what) === 0)
+        return NULL;
+
+      echo '<table class="table">';
+      echo '<thead class="thead-dark">';
+        echo '<tr>';
+
+          foreach($what[0] as $key => $val)
+            if ($key != "id")
+              echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+
+          if ($task != NULL)
+            echo '<th class="tabela-zadania">opcje</th>'; 
+        echo '</tr>';
+      echo '</thead>';
+
+      echo '<tbody>';
+
+      foreach ($what as $ele) {
+        echo '<tr>';
+          foreach($ele as $key => $val)
+            if ($key != "id")
+              echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
+
+          if ($task === true) {
+            echo '<td class="tabela-zadania">';
+              echo '<a href="'.$edit_file.'='.$ele['id'].'">Edytuj</a>';
+              echo '<span>|</span>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/'.$delete_file.'='.$ele['id'].'\':\'\')" href="#">Usuń</a>';
+            echo '</td>';
+          }
+        echo '</tr>';
+      }
+      echo '</tbody>';
+      echo '</table>';
     }
   }

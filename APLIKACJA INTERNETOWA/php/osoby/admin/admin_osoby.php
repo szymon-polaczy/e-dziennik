@@ -9,15 +9,15 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-  require_once "../../user-adm.php";
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-  $user_adm = new User_Adm($pdo);
+  $adm = new Adm($pdo);
 
-  $adm = $user_adm->getUserByCategory("administrator");
-  $nau = $user_adm->getUserByCategory("nauczyciel");
-  $ucz = $user_adm->getUserByCategory("uczen");
+  $u_adm = $adm->getUserByCategory("administrator");
+  $u_nau = $adm->getUserByCategory("nauczyciel");
+  $u_ucz = $adm->getUserByCategory("uczen");
   
   //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
   $sql = "SELECT * FROM klasa";
@@ -28,45 +28,7 @@
   $sql = "SELECT * FROM sala";
   $rezultat = $pdo->sql_table($sql);
   $_SESSION['sale'] = $rezultat;
-
-  function showUserTable($who) {
-    if (count($who) === 0)
-      return NULL;
-
-    echo '<table class="table">';
-    echo '<thead class="thead-dark">';
-      echo '<tr>';
-
-        foreach($who[0] as $key => $val)
-          if ($key != "id")
-            echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
-
-        echo '<th class="tabela-zadania">opcje</th>'; 
-      echo '</tr>';
-    echo '</thead>';
-
-    echo '<tbody>';
-
-    foreach ($who as $per) {
-      echo '<tr>';
-        foreach($per as $key => $val)
-          if ($key != "id")
-            echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.($key == "haslo"? $val[0] : $val).'</td>';
-
-        echo '<td class="tabela-zadania">';
-          echo '<a href="edytowanie_osob.php?wyb_osoba='.$per['id'].'">Edytuj</a>';
-          echo '<span>|</span>';
-          echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_osob.php?wyb_osoba='.$per['id'].'\':\'\')" href="#">Usuń</a>';
-        echo '</td>';
-
-      echo '</tr>';
-    }
-
-    echo '</tbody>';
-    echo '</table>';
-  }
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -169,7 +131,6 @@
     <section>
       <h2>ZOBACZ OSOBY</h2>
       <?php
-        //ZADANIA PHP
         if (isset($_SESSION['usuwanie_osob'])) {
           echo '<small   class="form-text uzytk-blad">'.$_SESSION['usuwanie_osob'].'</small>';
           unset($_SESSION['usuwanie_osob']);
@@ -181,16 +142,16 @@
         }
 
         echo '<h3>Administratorzy</h3>';
-        showUserTable($adm);
+        $adm->showDataTable($u_adm, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
 
-        if (count($nau) > 1) {
+        if (count($u_nau) > 1) {
           echo '<h3>Nauczyciele</h3>';
-          showUserTable($nau);
+          $adm->showDataTable($u_nau, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
         }
 
-        if (count($ucz) > 1) {
+        if (count($u_ucz) > 1) {
           echo '<h3>Uczniowie</h3>';
-          showUserTable($ucz); 
+          $adm->showDataTable($u_ucz, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
         }
       ?>
     </section>

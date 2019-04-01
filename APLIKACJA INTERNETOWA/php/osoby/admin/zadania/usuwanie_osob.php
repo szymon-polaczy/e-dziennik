@@ -4,13 +4,13 @@
 
   require_once "../../../polacz.php";
   require_once "../../../wg_pdo_mysql.php";
-  require_once "../../../user-adm.php";
+  require_once "../../../adm.php";
 
   if (isset($_GET['wyb_osoba'])) {
     $wszystko_ok = true;
     $wyb_osoba = $_GET['wyb_osoba'];
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-    $user_adm = new User_Adm($pdo);
+    $user_adm = new Adm($pdo);
 
     $u_upr = $user_adm->getUserById($wyb_osoba, "uprawnienia");
 
