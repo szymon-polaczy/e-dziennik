@@ -9,40 +9,10 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-  require_once "../../user-adm.php";
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-
-  $user_adm = new User_Adm($pdo);
-
-  function showMarkTable($who) {
-    if (count($who) === 0)
-      return NULL;
-
-    echo '<table class="table">';
-    echo '<thead class="thead-dark">';
-      echo '<tr>';
-
-        foreach($who[0] as $key => $val)
-          echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
-
-      echo '</tr>';
-    echo '</thead>';
-
-    echo '<tbody>';
-
-    foreach ($who as $per) {
-      echo '<tr>';
-
-        foreach($per as $key => $val)
-          echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
-
-      echo '</tr>';
-    }
-
-    echo '</tbody>';
-    echo '</table>';
-  }
+  $adm = new Adm($pdo);
 ?>
 <!doctype html>
 <html lang="pl">
@@ -59,12 +29,12 @@
       <h2>TWOJE OCENY</h2>
       <?php
         $id = $_SESSION['id'];
-        $oceny = $user_adm->getUserMark($id);
+        $oceny = $adm->getUserMark($id);
 
-        if (count($oceny) == 0)
-          echo '<p>Nie posiadasz żadnych ocen</p>';
+        if (count($oceny) > 0)
+          $adm->showDataTable($oceny);
         else
-          showMarkTable($oceny);
+          echo '<p>Nie posiadasz żadnych ocen</p>';
       ?>
     </section>
 

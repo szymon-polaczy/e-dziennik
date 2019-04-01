@@ -9,13 +9,16 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
   //------------------------------------------------WYCIĄGANIE PRZEDMIOTÓW DO OBEJRZENIA-----------------------------------------------//
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
+
   $sql = "SELECT * FROM przedmiot";
   $rezultat = $pdo->sql_table($sql);
-  $_SESSION['przedmioty'] = $rezultat;
+  $przedmioty = $rezultat;
 ?>
 
 <!doctype html>
@@ -70,33 +73,10 @@
           unset($_SESSION['usuwanie_przedmiotow']);
         }
 
-        if (count($_SESSION['przedmioty']) == 0) {
-          echo '<p class="form-text uzytk-blad">ŻADEN PRZEDMIOT NIE ISTNIEJE W BAZIE</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th class="tabela-tekst">NAZWA</th>';
-              echo '<th class="tabela-zadania">OPCJE</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          foreach($_SESSION['przedmioty'] as $przedmioty) {
-            echo '<tr>';
-              echo '<td class="tabela-tekst">'.$przedmioty['nazwa'].'</td>';
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_przedmiotow.php?wyb_przedmiot='.$przedmioty['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_przedmiotow.php?wyb_przedmiot='.$przedmioty['id'].'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
+        if (count($przedmioty) > 1)
+          $adm->showDataTable($przedmioty, true, 'edytowanie_przedmiotow.php?wyb_przedmiot', 'usuwanie_przedmiotow.php?wyb_przedmiot');
+        else
+          echo '<p>Nie ma żadnych przedmiotów</p>';
       ?>
     </section>
 

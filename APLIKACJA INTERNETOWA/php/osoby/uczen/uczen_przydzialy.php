@@ -9,8 +9,10 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
   //wyciąganie przydziałów do wyświetlania - powtórzenie jest nie widać tego na stronie ale na phpmyadmin
   $moje_id = $_SESSION['id'];
@@ -42,36 +44,10 @@
     <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
-        if (count($_SESSION['przydzialy']) <= 0) {
-          echo '<p>NIE MA ŻADNCH PRZYDZIAŁÓW, NAJPIERW DODAJ JAKIEŚ</p>';
-        } else {
-          echo '<table class="table">';
-
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th class="tabela-tekst">NAZWA PRZEDMIOTU</th>';
-              echo '<th class="tabela-tekst">NAZWA SALI</th>';
-              echo '<th class="tabela-tekst">NAZWA KLASY</th>';
-              echo '<th class="tabela-tekst">IMIE NAUCZYCIELA</th>';
-              echo '<th class="tabela-tekst">NAZWISKO NAUCZYCIELA</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          foreach ($_SESSION['przydzialy'] as $przydzial) {
-            echo '<tr>';
-              echo '<td class="tabela-tekst">'.$przydzial['przedmiot_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$przydzial['sala_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$przydzial['klasa_nazwa'].'</td>';
-              echo '<td class="tabela-tekst">'.$przydzial['imie'].'</td>';
-              echo '<td class="tabela-tekst">'.$przydzial['nazwisko'].'</td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
+        if (count($_SESSION['przydzialy']) > 0)
+          $adm->showDataTable($_SESSION['przydzialy']);
+        else
+          echo '<p>Nie ma żadnych przydziałów</p>';
       ?>
     </section>
 

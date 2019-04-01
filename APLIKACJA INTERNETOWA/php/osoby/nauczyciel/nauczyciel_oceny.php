@@ -17,8 +17,10 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
   //pobieranie uczniów do wyświetlenia w selecie przy dodawaniu ocen
   $sql = "SELECT osoba.imie, osoba.nazwisko, osoba.id FROM osoba, uczen, przydzial
@@ -113,6 +115,9 @@
           echo '<p style="color: red">'.$_SESSION['usuwanie_ocen'].'</p>';
           unset($_SESSION['usuwanie_ocen']);
         }
+
+        if (count($_SESSION['oceny']) > 0) 
+          $adm->showDataTable($_SESSION['oceny'], true, 'edytowanie_ocen.php?wyb_ocena', 'usuwanie_ocen.php?wyb_ocena');
 
         if (count($_SESSION['oceny']) == 0) {
           echo '<p>Nie ma żadnych ocen do wyświetlania</p>';

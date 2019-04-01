@@ -13,12 +13,10 @@
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
-  //Wyciąganie wybranej klasy
-  $wyb_klasa = $_GET['wyb_klasa'];
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
+  $wyb_klasa = $_GET['wyb_klasa'];
   $sql = "SELECT * FROM klasa WHERE id='$wyb_klasa'";
-
   $rezultat = $pdo->sql_record($sql);
 ?>
 <!doctype html>

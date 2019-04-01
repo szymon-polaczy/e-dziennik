@@ -9,14 +9,14 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
   //------------------------------------------------WYCIĄGANIE KLAS DO OBEJRZENIA-----------------------------------------------//
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
   $sql = "SELECT * FROM klasa";
-
   $rezultat = $pdo->sql_table($sql);
-
   $classes = $rezultat;
 ?>
 
@@ -74,41 +74,10 @@
           unset($_SESSION['edytowanie_klas']);
         }
 
-        if (count($classes) == 0) {
-          echo '<p>Żadna klasa nie istnieje.</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-
-              foreach($classes[0] as $key => $val)
-                if ($key != "id")
-                  echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
-
-              echo '<th class="tabela-zadania">opcje</th>'; 
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          foreach ($classes as $class) {
-            echo '<tr>';
-              foreach($class as $key => $val) 
-                if ($key != "id")
-                  echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
-
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_klas.php?wyb_klasa='.$class['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_klas.php?wyb_klasa='.$class['id'].'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
+        if (count($classes) > 0)
+          $adm->showDataTable($classes, true, 'edytowanie_klas.php?wyb_klasa', 'usuwanie_klas.php?wyb_klasa');
+        else
+          '<p>Nie ma żadnych klas</p>';
       ?>
     </section>
 

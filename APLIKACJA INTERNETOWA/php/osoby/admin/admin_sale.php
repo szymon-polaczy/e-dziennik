@@ -9,10 +9,10 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
-
-  //------------------------------------------------WYCIĄGANIE SAL DO OBEJRZENIA-----------------------------------------------//
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
   $sql = "SELECT * FROM sala";
   $rezultat = $pdo->sql_table($sql);
@@ -68,33 +68,10 @@
           unset($_SESSION['edytowanie_sal']);
         }
 
-        if (count($_SESSION['sale']) == 0) {
-          echo '<p class="form-text uzytk-blad">ŻADNA SALA NIE ISTNIEJE W BAZIE</p>';
-        } else {
-          echo '<table class="table">';
-          echo '<thead class="thead-dark">';
-            echo '<tr>';
-              echo '<th class="tabela-tekst">NAZWA</th>';
-              echo '<th class="tabela-zadania">OPCJE</th>';
-            echo '</tr>';
-          echo '</thead>';
-
-          echo '<tbody>';
-
-          foreach ($_SESSION['sale'] as $sala) {
-            echo '<tr>';
-              echo '<td class="tabela-tekst">'.$sala['nazwa'].'</td>';
-              echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_sal.php?wyb_sala='.$sala['id'].'">Edytuj</a>';
-                echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_sal.php?wyb_sala='.$sala['id'].'\':\'\')" href="#">Usuń</a>';
-              echo '</td>';
-            echo '</tr>';
-          }
-
-          echo '</tbody>';
-          echo '</table>';
-        }
+        if (count($_SESSION['sale']) > 0)
+          $adm->showDataTable($_SESSION['sale'], true, 'edytowanie_sal.php?wyb_sala', 'usuwanie_sal.php?wyb_sala');
+        else
+          echo '<p>Nie ma żadnych sal</p>';
       ?>
     </section>
 
