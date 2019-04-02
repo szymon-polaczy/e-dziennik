@@ -14,11 +14,10 @@
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
-  //Wyciągam przydziały
-  $sql = "SELECT przydzial.*, klasa.nazwa AS klasa_nazwa, przedmiot.nazwa AS przedmiot_nazwa, nauczyciel.id_osoba, osoba.imie, osoba.nazwisko
-            FROM przydzial, klasa, przedmiot, nauczyciel, osoba
-            WHERE przydzial.id_przedmiot=przedmiot.id AND przydzial.id_klasa=klasa.id
-            AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
+$sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `przedmiot nazwa`, osoba.imie, osoba.nazwisko
+        FROM przydzial, klasa, przedmiot, nauczyciel, osoba
+        WHERE przydzial.id_przedmiot=przedmiot.id AND przydzial.id_klasa=klasa.id
+        AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
 
   $rezultat = $pdo->sql_table($sql);
   $_SESSION['przydzialy'] = $rezultat;
@@ -38,7 +37,6 @@
   $rezultat = $pdo->sql_table($sql);
   $_SESSION['klasy'] = $rezultat;
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
