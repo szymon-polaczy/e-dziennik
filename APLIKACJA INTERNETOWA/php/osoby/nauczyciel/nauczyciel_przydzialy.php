@@ -16,7 +16,7 @@
 
   //Wyciąganie przydziały do wyświetlenia
   $moje_id = $_SESSION['id'];
-  $sql = "SELECT klasa.nazwa AS klasa_nazwa, przedmiot.nazwa AS przedmiot_nazwa, przydzial.id
+  $sql = "SELECT klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `przedmiot nazwa`, przydzial.id
           FROM przydzial, klasa, przedmiot
           WHERE przydzial.id_nauczyciel='$moje_id'
           AND przydzial.id_klasa=klasa.id

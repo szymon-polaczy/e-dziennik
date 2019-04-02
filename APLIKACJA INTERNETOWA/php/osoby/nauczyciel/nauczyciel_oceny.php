@@ -116,8 +116,7 @@
           unset($_SESSION['usuwanie_ocen']);
         }
 
-        if (count($_SESSION['oceny']) > 0) 
-          $adm->showDataTable($_SESSION['oceny'], true, 'edytowanie_ocen.php?wyb_ocena', 'usuwanie_ocen.php?wyb_ocena');
+        echo '<h1>Nie działa showDataTable dla tego</h1>';
 
         if (count($_SESSION['oceny']) == 0) {
           echo '<p>Nie ma żadnych ocen do wyświetlania</p>';

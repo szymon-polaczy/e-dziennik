@@ -16,14 +16,11 @@
 
   //wyciąganie przydziałów do wyświetlania - powtórzenie jest nie widać tego na stronie ale na phpmyadmin
   $moje_id = $_SESSION['id'];
-  $sql = "SELECT przydzial.id, przedmiot.nazwa AS przedmiot_nazwa, osoba.imie, osoba.nazwisko, klasa.nazwa AS klasa_nazwa, sala.nazwa AS sala_nazwa
+  $sql = "SELECT przydzial.id, przedmiot.nazwa AS `przedmiot nazwa`, osoba.imie, osoba.nazwisko, klasa.nazwa AS `klasa nazwa`, sala.nazwa AS `sala nazwa`
           FROM osoba, nauczyciel, przydzial, przedmiot, klasa, uczen, sala
-          WHERE przydzial.id_nauczyciel=nauczyciel.id_osoba
-          AND nauczyciel.id_osoba=osoba.id
-          AND nauczyciel.id_sala=sala.id
-          AND przydzial.id_przedmiot=przedmiot.id
-          AND przydzial.id_klasa=klasa.id
-          AND uczen.id_klasa=klasa.id
+          WHERE przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id
+          AND nauczyciel.id_sala=sala.id AND przydzial.id_przedmiot=przedmiot.id
+          AND przydzial.id_klasa=klasa.id AND uczen.id_klasa=klasa.id
           AND uczen.id_osoba='$moje_id'";
 
   $rezultat = $pdo->sql_table($sql);
