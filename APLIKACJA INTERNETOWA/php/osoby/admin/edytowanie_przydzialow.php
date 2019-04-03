@@ -12,13 +12,12 @@
 
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
-  //Wyciągam osoby
-  $sql = "SELECT * FROM osoba, nauczyciel WHERE uprawnienia='n' AND osoba.id=nauczyciel.id_osoba";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['osoba'] = $rezultat;
+  $osoby = $adm->getUserByCategory("nauczyciel");
 
   //Wyciągam przedmioty
   $sql = "SELECT * FROM przedmiot";
@@ -53,8 +52,8 @@
           <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
           <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela" required>
             <?php
-              foreach ($_SESSION['osoba'] as $per)
-                echo '<option '.($per['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$per['id_osoba'].'">Nauczyciel '.$per['imie'].' '.$per['nazwisko'].'</option>';
+              foreach ($osoby as $osoba)
+                echo '<option '.($osoba['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$osoba['id'].'">Nauczyciel '.$osoba['imie'].' '.$osoba  ['nazwisko'].'</option>';
             ?>
           </select>
         </div>
