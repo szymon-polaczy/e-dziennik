@@ -12,22 +12,14 @@
   require_once "../../adm.php";
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-
   $adm = new Adm($pdo);
 
   $u_adm = $adm->getUserByCategory("administrator");
   $u_nau = $adm->getUserByCategory("nauczyciel");
   $u_ucz = $adm->getUserByCategory("uczen");
-  
-  //------------------------------------------------WYCIĄGANIE KLAS-----------------------------------------------//
-  $sql = "SELECT * FROM klasa";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['klasy'] = $rezultat;
 
-  //------------------------------------------------WYCIĄGANIE SAL-----------------------------------------------//
-  $sql = "SELECT * FROM sala";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['sale'] = $rezultat;
+  $klasy = $adm->getAllFrom("klasa");
+  $sale = $adm->getAllFrom("sala");
 ?>
 <!doctype html>
 <html lang="en">
@@ -76,7 +68,7 @@
             </div>
             <div class="niewidoczne" id="nauczyciel-uzu">
               <?php
-                if (count($_SESSION['sale']) == 0) {
+                if (count($sale) == 0) {
                   echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</span>';
                 } else {
                   echo '<div class="form-group">';
@@ -84,7 +76,7 @@
                     echo '<select class="form-control" id="wybierzSale" name="wyb_sala">';
                       echo '<option></option>';
 
-                    foreach($_SESSION['sale'] as $sala)
+                    foreach($sale as $sala)
                       echo '<option value="'.$sala['id'].'">'.$sala['nazwa'].'</option>';
 
                     echo '</select>';
@@ -94,7 +86,7 @@
             </div>
             <div class="niewidoczne" id="uczen-uzu">
               <?php
-                if (count($_SESSION['klasy']) == 0) {
+                if (count($klasy) == 0) {
                   echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</span>';
                 } else {
                   echo '<div class="form-group">';
@@ -107,7 +99,7 @@
                     echo '<select class="form-control" id="wybierzKlase" name="wyb_klasa">';
                      echo '<option></option>';
 
-                    foreach($_SESSION['klasy'] as $klasa)
+                    foreach($klasy as $klasa)
                       echo '<option value="'.$klasa['id'].'">'.$klasa['nazwa'].'</option>';
 
                     echo '</select>';

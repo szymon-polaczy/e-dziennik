@@ -14,7 +14,7 @@
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
-$sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `przedmiot nazwa`, osoba.imie, osoba.nazwisko
+  $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `przedmiot nazwa`, osoba.imie, osoba.nazwisko
         FROM przydzial, klasa, przedmiot, nauczyciel, osoba
         WHERE przydzial.id_przedmiot=przedmiot.id AND przydzial.id_klasa=klasa.id
         AND przydzial.id_nauczyciel=nauczyciel.id_osoba AND nauczyciel.id_osoba=osoba.id";
@@ -22,20 +22,9 @@ $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `p
   $rezultat = $pdo->sql_table($sql);
   $_SESSION['przydzialy'] = $rezultat;
 
-  //Wyciągam nauczycieli
-  $sql = "SELECT nauczyciel.*, osoba.imie, osoba.nazwisko FROM nauczyciel, osoba WHERE nauczyciel.id_osoba=osoba.id";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['nauczyciele'] = $rezultat;
-
-  //Wyciągam przedmioty
-  $sql = "SELECT przedmiot.* FROM przedmiot";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['przedmioty'] = $rezultat;
-
-  //Wyciągam klasy
-  $sql = "SELECT klasa.* FROM klasa";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['klasy'] = $rezultat;
+  $nauczyciele = $adm->getUserByCategory("nauczyciel");
+  $przedmioty = $adm->getAllFrom("przedmiot");
+  $klasy = $adm->getAllFrom("klasa");
 ?>
 <!doctype html>
 <html lang="pl">
@@ -58,7 +47,7 @@ $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `p
         <div class="collapse" id="collapseExample">
           <form method="post" action="zadania/dodawanie_przydzialow.php">
             <?php
-              if (count($_SESSION['nauczyciele']) == 0 || count($_SESSION['przedmioty']) <= 0 || count($_SESSION['klasy']) <= 0) {
+              if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
                 echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
               } else {
                 echo '<div class="form-group">';
@@ -66,7 +55,7 @@ $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `p
                   echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control" required>';
                     echo '<option></option>';
 
-                    foreach ($_SESSION['nauczyciele'] as $nauczyciel)
+                    foreach ($nauczyciele as $nauczyciel)
                       echo '<option value="'.$nauczyciel['id_osoba'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
 
                   echo '</select>';
@@ -77,7 +66,7 @@ $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `p
                   echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control" required>';
                     echo '<option></option>';
 
-                    foreach ($_SESSION['przedmioty'] as $przedmiot)
+                    foreach ($przedmioty as $przedmiot)
                       echo '<option value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
 
                   echo '</select>';
@@ -88,7 +77,7 @@ $sql = "SELECT przydzial.id, klasa.nazwa AS `klasa nazwa`, przedmiot.nazwa AS `p
                   echo '<select name="wyb_klasa" id="wyb_klase" class="form-control" required>';
                     echo '<option></option>';
 
-                    foreach ($_SESSION['klasy'] as $klasa)
+                    foreach ($klasy as $klasa)
                       echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
 
                   echo '</select>';

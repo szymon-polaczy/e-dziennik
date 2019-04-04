@@ -14,9 +14,7 @@
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
-  $sql = "SELECT * FROM sala";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['sale'] = $rezultat;
+  $sale = $adm->getAllFrom("sala");
 ?>
 
 <!doctype html>
@@ -68,8 +66,8 @@
           unset($_SESSION['edytowanie_sal']);
         }
 
-        if (count($_SESSION['sale']) > 0)
-          $adm->showDataTable($_SESSION['sale'], true, 'edytowanie_sal.php?wyb_sala', 'usuwanie_sal.php?wyb_sala');
+        if (count($sale) > 0)
+          $adm->showDataTable($sale, true, 'edytowanie_sal.php?wyb_sala', 'usuwanie_sal.php?wyb_sala');
         else
           echo '<p>Nie ma żadnych sal</p>';
       ?>

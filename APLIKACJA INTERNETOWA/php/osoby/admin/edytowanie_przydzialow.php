@@ -18,16 +18,8 @@
   $adm = new Adm($pdo);
 
   $osoby = $adm->getUserByCategory("nauczyciel");
-
-  //Wyciągam przedmioty
-  $sql = "SELECT * FROM przedmiot";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['przedmiot'] = $rezultat;
-
-  //Wyciągam klasy
-  $sql = "SELECT * FROM klasa";
-  $rezultat = $pdo->sql_table($sql);
-  $_SESSION['klasa'] = $rezultat;
+  $przedmioty = $adm->getAllFrom("przedmiot");
+  $klasy = $adm->getAllFrom("klasa");
 
   //Wyciąganie edytowanego przydziału
   $przydzial_id = $_GET['wyb_przydzial'];
@@ -61,7 +53,7 @@
           <label for="wybor_przedmiotu">Wybierz przedmiot</label>
           <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu" required>
             <?php
-              foreach ($_SESSION['przedmiot'] as $sub)
+              foreach ($przedmioty as $sub)
                 echo '<option '.($sub['id'] == $edi['id_przedmiot']? 'selected' : '').' value="'.$sub['id'].'">Przedmiot '.$sub['nazwa'].'</option>';
             ?>
           </select>
@@ -70,7 +62,7 @@
           <label for="wybor_klasy">Wybierz klasę</label>
           <select name="wyb_klasa" class="form-control" id="wybor_klasy" required>
             <?php
-              foreach ($_SESSION['klasa'] as $cla)
+              foreach ($klasy as $cla)
                 echo '<option '.($cla['id'] == $edi['id_klasa']? 'selected' : '').' value="'.$cla['id'].'">Klasa '.$cla['nazwa'].' | '.$cla['opis'].'</option>';
             ?>
           </select>

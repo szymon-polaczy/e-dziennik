@@ -11,16 +11,11 @@
   require_once "../../wg_pdo_mysql.php";
   require_once "../../adm.php";
 
-  //------------------------------------------------WYCIĄGANIE PRZEDMIOTÓW DO OBEJRZENIA-----------------------------------------------//
-
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
-  $sql = "SELECT * FROM przedmiot";
-  $rezultat = $pdo->sql_table($sql);
-  $przedmioty = $rezultat;
+  $przedmioty = $adm->getAllFrom("przedmiot");
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>

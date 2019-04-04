@@ -13,6 +13,9 @@
 
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
+
+  $id = $_SESSION['id'];
+  $oceny = $adm->getUserMark($id);
 ?>
 <!doctype html>
 <html lang="pl">
@@ -28,9 +31,6 @@
     <section>
       <h2>TWOJE OCENY</h2>
       <?php
-        $id = $_SESSION['id'];
-        $oceny = $adm->getUserMark($id);
-
         if (count($oceny) > 0)
           $adm->showDataTable($oceny);
         else

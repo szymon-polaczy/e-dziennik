@@ -15,9 +15,7 @@
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
-  $sql = "SELECT * FROM klasa";
-  $rezultat = $pdo->sql_table($sql);
-  $classes = $rezultat;
+  $klasy = $adm->getAllFrom("klasa");
 ?>
 
 <!doctype html>
@@ -74,8 +72,8 @@
           unset($_SESSION['edytowanie_klas']);
         }
 
-        if (count($classes) > 0)
-          $adm->showDataTable($classes, true, 'edytowanie_klas.php?wyb_klasa', 'usuwanie_klas.php?wyb_klasa');
+        if (count($klasy) > 0)
+          $adm->showDataTable($klasy, true, 'edytowanie_klas.php?wyb_klasa', 'usuwanie_klas.php?wyb_klasa');
         else
           '<p>Nie ma żadnych klas</p>';
       ?>
