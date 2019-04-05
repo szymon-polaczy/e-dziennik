@@ -4,6 +4,7 @@
 
   require_once "../../../polacz.php";
   require_once "../../../wg_pdo_mysql.php";
+  require_once "../../../adm.php";
 
   //------------------------------------------------DODAWANIE OSÓB-----------------------------------------------//
   if (isset($_POST['imie']) || isset($_POST['nazwisko'])) {
@@ -21,6 +22,7 @@
     }
 
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+    $adm = new Adm($pdo);
 
     //TESTY
     $wszystko_ok = true;
@@ -71,9 +73,11 @@
     //TESTY DLA UCZNIA I NAUCZYCIELA DODATKOWO
     if ($uprawnienia == "n") {
       //--CZY wyb_sala JEST W BAZIE
+      $sale = $adm->getAllFrom("sala");
+
       $wyb_salaBaz = false;
-      for ($i = 0; $i < $_SESSION['ilosc_sal']; $i++) {
-        if ($wyb_sala == $_SESSION['sala'.$i]['id']) {
+      foreach ($sale as $sala) {
+        if ($wyb_sala == $sala['id']) {
           $wyb_salaBaz = true;
           break;
         }
@@ -85,9 +89,11 @@
       }
     } else if ($uprawnienia == "u") {
       //--CZY wyb_klasa JEST W BAZIE
+      $klasy = $adm->getAllFrom("klasa");
+
       $wyb_klasaBaz = false;
-      for ($i = 0; $i < $_SESSION['ilosc_klas']; $i++) {
-        if ($wyb_klasa == $_SESSION['klasa'.$i]['id']) {
+      foreach ($klasy as $klasa) {
+        if ($wyb_klasa == $klasa['id']) {
           $wyb_klasaBaz = true;
           break;
         }
@@ -98,9 +104,6 @@
         $wszystko_ok = false;
       }
     }
-
-
-
 
     //WKŁADANIE DO BAZY
     if ($wszystko_ok) {

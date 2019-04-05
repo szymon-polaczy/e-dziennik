@@ -48,7 +48,7 @@
     if ($u_upr == "u") {
       $sql = "SELECT * FROM ocena WHERE id_uczen='$wyb_osoba'";
 
-      $rezultat = $pdo->sql_record($sql);
+      $rezultat = $pdo->sql_table($sql);
 
       if (count($rezultat) > 0) {
         $_SESSION['usuwanie_osob'] = "Uczeń posiada oceny, nie można go usunąć!";
