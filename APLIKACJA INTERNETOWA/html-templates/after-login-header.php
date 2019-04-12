@@ -21,6 +21,8 @@
             echo '<li class="nav-item"><a href="../uczen/uczen_przydzialy.php" class="nav-link">PRZYDZIAŁY</a></li>';
           }
         ?>
+        <li class="nav-item"><a href="../wszyscy/profil.php" class="nav-link">PROFIL</a></li>
+        <!--
         <li class="nav-item">
           <div class="dropdown">
             <a href="#" class="nav-item btn btn-dark dropdown-toggle" role="button" id="dropdownProfil"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,7 +44,7 @@
               <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
             </div>
           </div>
-        </li>
+        </li>-->
       </ul>
     </div>
   </nav>
