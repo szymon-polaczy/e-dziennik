@@ -20,6 +20,18 @@
   <main>
     <a class="dropdown-item" href="../wszyscy/zmien_dane.php">ZMIEŃ DANE</a>
     <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
+
+    <div>
+      <br /><br />Imie: <span class="wartosc"><?php echo $_SESSION['imie']; ?></span><br />
+      Nazwisko: <span class="wartosc"><?php echo $_SESSION['nazwisko']; ?></span><br />
+      Email: <span class="wartosc"><?php echo $_SESSION['email']; ?></span><br />
+      <?php
+        if ($_SESSION['uprawnienia'] == "n")
+          echo 'Sala: <span class="wartosc">'.$_SESSION['sala_nazwa'].'</span><br />';
+        else if ($_SESSION['uprawnienia'] == "u")
+          echo 'Klasa: <span class="wartosc">'.$_SESSION['klasa_nazwa'].'</span><br />';
+      ?>
+    </div>
   </main>
 
   <!--FOOTER INCLUDE-->
