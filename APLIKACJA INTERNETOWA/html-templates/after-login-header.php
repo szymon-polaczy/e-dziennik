@@ -22,29 +22,6 @@
           }
         ?>
         <li class="nav-item"><a href="../wszyscy/profil.php" class="nav-link">PROFIL</a></li>
-        <!--
-        <li class="nav-item">
-          <div class="dropdown">
-            <a href="#" class="nav-item btn btn-dark dropdown-toggle" role="button" id="dropdownProfil"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              PROFIL
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item disabled" href="#">Imie: <span class="wartosc"><?php echo $_SESSION['imie']; ?></span></a>
-              <a class="dropdown-item disabled" href="#">Nazwisko: <span class="wartosc"><?php echo $_SESSION['nazwisko']; ?></span></a>
-              <a class="dropdown-item disabled" href="#">Email: <span class="wartosc"><?php echo $_SESSION['email']; ?></span></a>
-              <?php
-                if ($_SESSION['uprawnienia'] == "n")
-                  echo '<a class="dropdown-item disabled" href="#">Sala: <span class="wartosc">'.$_SESSION['sala_nazwa'].'</span></a>';
-                else if ($_SESSION['uprawnienia'] == "u")
-                  echo '<a class="dropdown-item disabled" href="#">Klasa: <span class="wartosc">'.$_SESSION['klasa_nazwa'].'</span></a>';
-              ?>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../wszyscy/zmien_dane.php">ZMIEŃ DANE</a>
-              <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
-            </div>
-          </div>
-        </li>-->
       </ul>
     </div>
   </nav>
