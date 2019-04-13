@@ -44,4 +44,4 @@
     }
   }
 
-  header('Location: ../zmien_dane.php');
+  header('Location: ../zmien_haslo.php');

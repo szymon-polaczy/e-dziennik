@@ -18,7 +18,8 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <a class="dropdown-item" href="../wszyscy/zmien_dane.php">ZMIEŃ DANE</a>
+    <a class="dropdown-item" href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a>
+    <a class="dropdown-item" href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a>
     <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
 
     <div class="container">
