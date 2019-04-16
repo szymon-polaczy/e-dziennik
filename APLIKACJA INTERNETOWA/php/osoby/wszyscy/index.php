@@ -21,33 +21,21 @@
   </header>
 
   <main>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <form action="zadania/logowanie.php" method="post">
-            <h2>Zaloguj Się</h2>
-            <div class="form-group">
-              <label for="logowanieEmail">Wpisz Email</label>
-              <input id="logowanieEmail" class="form-control" type="email" placeholder="Email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="logowanieHaslo">Wpisz Hasło</label>
-              <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo" required>
-            </div>
-            <div class="form-group form-inf">
-              <small class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
-              <?php
-              if (isset($_SESSION['login_blad'])) {
-                echo '<small  class="form-text uzytk-blad">' . $_SESSION['login_blad'] . '</small>';
-                unset($_SESSION['login_blad']);
-              }
-              ?>
-              <button class="btn btn-dark" type="submit">Zaloguj Się</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <form action="zadania/logowanie.php" method="post">
+      <h2>Zaloguj Się</h2>
+      <label for="logowanieEmail">Wpisz Email</label>
+      <input id="logowanieEmail" class="form-control" type="email" placeholder="Email" name="email" required>
+      <label for="logowanieHaslo">Wpisz Hasło</label>
+      <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo" required>
+      <small class="form-text text-muted">Nie udostępniamy nikomu twojego emailu a wszystkie twoje hasła są zaszyfrowane.</small>
+      <?php
+        if (isset($_SESSION['login_blad'])) {
+          echo '<small  class="form-text uzytk-blad">' . $_SESSION['login_blad'] . '</small>';
+          unset($_SESSION['login_blad']);
+        }
+      ?>
+      <button class="btn btn-dark" type="submit">Zaloguj Się</button>
+    </form>
   </main>
 
   <!--FOOTER INCLUDE-->

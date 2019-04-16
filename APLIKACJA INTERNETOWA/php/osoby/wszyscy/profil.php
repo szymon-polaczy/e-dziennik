@@ -18,21 +18,19 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <a class="dropdown-item" href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a>
-    <a class="dropdown-item" href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a>
-    <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a>
+    <a class="dropdown-item" href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a><br>
+    <a class="dropdown-item" href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a><br>
+    <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a><br><br>
 
-    <div class="container">
-      <div class="row">Imie: <?php echo $_SESSION['imie']; ?></div>
-      <div class="row">Nazwisko: <?php echo $_SESSION['nazwisko']; ?></div>
-      <div class="row">Email: <?php echo $_SESSION['email']; ?></div>
+      Imie: <?php echo $_SESSION['imie']; ?><br>
+      Nazwisko: <?php echo $_SESSION['nazwisko']; ?><br>
+      Email: <?php echo $_SESSION['email']; ?><br>
       <?php
         if ($_SESSION['uprawnienia'] == "n")
-          echo '<div class="row">Sala: '.$_SESSION['sala_nazwa'].'</div>';
+          echo 'Sala: '.$_SESSION['sala_nazwa'].'<br>';
         else if ($_SESSION['uprawnienia'] == "u")
-          echo '<div class="row">Klasa: '.$_SESSION['klasa_nazwa'].'</div>';
+          echo 'Klasa: '.$_SESSION['klasa_nazwa'].'<br>';
       ?>
-    </div>
   </main>
 
   <!--FOOTER INCLUDE-->
