@@ -20,7 +20,7 @@
 
   $id_osoba = $_GET['wyb_osoba'];
 
-  if (($edi = $user_adm->getUserById($id_osoba)) == NULL) {
+  if (($_SESSION['edytowana'] = $user_adm->getUserById($id_osoba)) == NULL) {
     $_SESSION['edytowanie_osob'] = "Osoba o takim ID nie istnieje!";
     header('Location: admin_osoby.php');
     exit();
@@ -40,13 +40,13 @@
     <form action="zadania/edytowanie_osob.php" method="post">
       <h2>EDYTUJ OSOBĘ</h2>
       <label for="zmianaImienia">Edytuj Imię</label>
-      <input id="zmianaImienia" type="text" value="<?php echo $edi['imie']; ?>" name="imie" required/>
+      <input id="zmianaImienia" type="text" value="<?php echo $_SESSION['edytowana']['imie']; ?>" name="imie" required/>
       <label for="zmianaNazwiska">Edytuj Nazwisko</label>
-      <input id="zmianaNazwiska" type="text" value="<?php echo $edi['nazwisko']; ?>" name="nazwisko" required/>
+      <input id="zmianaNazwiska" type="text" value="<?php echo $_SESSION['edytowana']['nazwisko']; ?>" name="nazwisko" required/>
       <label for="zmianaEmailu">Edytuj Email</label>
-      <input id="zmianaEmailu" type="email" value="<?php echo $edi['email']; ?>" name="email" required/>
+      <input id="zmianaEmailu" type="email" value="<?php echo $_SESSION['edytowana']['email']; ?>" name="email" required/>
       <label for="zmianHasla">Edytuj Haslo</label>
-      <input id="zmianHasla" type="password" value="<?php echo $edi['haslo']; ?>" name="haslo" required/>
+      <input id="zmianHasla" type="password" value="<?php echo $_SESSION['edytowana']['haslo']; ?>" name="haslo" required/>
       <button type="submit">Zmień</button>
     </form>
     <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
