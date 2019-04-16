@@ -1,35 +1,33 @@
 <?php
-session_start();
-mysqli_report(MYSQLI_REPORT_STRICT);
+  session_start();
+  mysqli_report(MYSQLI_REPORT_STRICT);
 
-if (!isset($_SESSION['zalogowany']) || !($_SESSION['uprawnienia'] == 'a')) {
-  header('Location: ../wszyscy/index.php');
-  exit();
-}
+  if (!isset($_SESSION['zalogowany']) || !($_SESSION['uprawnienia'] == 'a')) {
+    header('Location: ../wszyscy/index.php');
+    exit();
+  }
 
-require_once "../../polacz.php";
-require_once "../../wg_pdo_mysql.php";
-require_once "../../adm.php";
+  require_once "../../polacz.php";
+  require_once "../../wg_pdo_mysql.php";
+  require_once "../../adm.php";
 
-$pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-$adm = new Adm($pdo);
+  $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
+  $adm = new Adm($pdo);
 
-$u_adm = $adm->getUserByCategory("administrator");
-$u_nau = $adm->getUserByCategory("nauczyciel");
-$u_ucz = $adm->getUserByCategory("uczen");
+  $u_adm = $adm->getUserByCategory("administrator");
+  $u_nau = $adm->getUserByCategory("nauczyciel");
+  $u_ucz = $adm->getUserByCategory("uczen");
 
-$klasy = $adm->getAllFrom("klasa");
-$sale = $adm->getAllFrom("sala");
+  $klasy = $adm->getAllFrom("klasa");
+  $sale = $adm->getAllFrom("sala");
 ?>
 <!doctype html>
 <html lang="en">
-
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
   <?php $title = "Osoby";
   include("../../../html-templates/inside-head.php"); ?>
 </head>
-
 <body>
   <!--HEADER INCLUDE-->
   <?php include("../../../html-templates/after-login-header.php"); ?>
@@ -132,5 +130,4 @@ $sale = $adm->getAllFrom("sala");
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="../../../js/script.js" type="text/javascript"></script>
 </body>
-
 </html>

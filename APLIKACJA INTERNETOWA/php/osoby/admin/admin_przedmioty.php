@@ -28,43 +28,29 @@
 
   <main>
     <section>
-      <div class="container p-0">
-        <p>
-          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Dodaj przedmiot
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <form method="post" action="zadania/dodawanie_przedmiotow.php">
-            <div class="form-group">
-              <div class="form-group">
-                <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
-                <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" class="form-control" required>
-              </div>
-            </div>
-            <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['dodawanie_przedmiotow'])) {
-                  echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
-                  unset($_SESSION['dodawanie_przedmiotow']);
-                }
-              ?>
-              <button class="btn btn-dark" type="submit">Dodaj</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <button>Dodaj przedmiot</button>
+      <form action="zadania/dodawanie_przedmiotow.php" method="post">
+        <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
+        <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" required>
+        <?php
+          if (isset($_SESSION['dodawanie_przedmiotow'])) {
+            echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
+            unset($_SESSION['dodawanie_przedmiotow']);
+          }
+        ?>
+        <button class="btn btn-dark" type="submit">Dodaj</button>
+      </form>
     </section>
     <section>
       <h2>ZOBACZ PRZEDMIOT</h2>
       <?php
         if (isset($_SESSION['edytowanie_przedmiotow'])) {
-          echo '<small class="form-text uzytk-blad">'.$_SESSION['edytowanie_przedmiotow'].'</small>';
+          echo '<small>'.$_SESSION['edytowanie_przedmiotow'].'</small>';
           unset($_SESSION['edytowanie_przedmiotow']);
         }
 
         if (isset($_SESSION['usuwanie_przedmiotow'])) {
-          echo '<small class="form-text uzytk-blad">'.$_SESSION['usuwanie_przedmiotow'].'</small>';
+          echo '<small>'.$_SESSION['usuwanie_przedmiotow'].'</small>';
           unset($_SESSION['usuwanie_przedmiotow']);
         }
 
