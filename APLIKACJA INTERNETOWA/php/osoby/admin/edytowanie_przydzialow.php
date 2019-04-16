@@ -59,6 +59,7 @@
             echo '<option '.($cla['id'] == $edi['id_klasa']? 'selected' : '').' value="'.$cla['id'].'">Klasa '.$cla['nazwa'].' | '.$cla['opis'].'</option>';
         ?>
       </select>
+      <input type="hidden" name="edytowany_id" value="<?php echo $edi['id']; ?>">
       <button type="submit">Zmień</button>
     </form>
 

@@ -11,6 +11,7 @@
     $wyb_nauczyciel = $_POST['wyb_nauczyciel'];
     $wyb_przedmiot = $_POST['wyb_przedmiot'];
     $wyb_klasa = $_POST['wyb_klasa'];
+    $edytowany_id = $_POST['edytowany_id'];
 
     $wszystko_ok = true;
 
@@ -26,7 +27,6 @@
 
     //Jeśli wszystko poszło ok to edytuję przydział
     if ($wszystko_ok) {
-      $edytowany_id = $_SESSION['edytowany_id'];
       $sql = "UPDATE przydzial SET id_nauczyciel='$wyb_nauczyciel', id_klasa='$wyb_klasa', id_przedmiot='$wyb_przedmiot' WHERE id='$edytowany_id'";
 
       if ($rezultat = $pdo->sql_query($sql) > 0)

@@ -48,7 +48,7 @@
           echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" required>';
             echo '<option></option>';
             foreach ($nauczyciele as $nauczyciel)
-              echo '<option value="'.$nauczyciel['id_osoba'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
+              echo '<option value="'.$nauczyciel['id'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
           echo '</select>';
 
           echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
