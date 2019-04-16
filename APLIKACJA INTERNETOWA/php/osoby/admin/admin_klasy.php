@@ -11,13 +11,11 @@
   require_once "../../wg_pdo_mysql.php";
   require_once "../../adm.php";
 
-  //------------------------------------------------WYCIĄGANIE KLAS DO OBEJRZENIA-----------------------------------------------//
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
   $adm = new Adm($pdo);
 
   $klasy = $adm->getAllFrom("klasa");
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
@@ -30,45 +28,31 @@
 
   <main>
     <section>
-      <div class="container p-0">
-        <p>
-          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Dodaj klasę
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <form method="post" action="zadania/dodawanie_klas.php">
-            <div class="form-group">
-              <label for="dodanieNazwa">Wpisz Nazwę</label>
-              <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa" required/>
-            </div>
-            <div class="form-group">
-              <label for="dodanieOpis">Wpisz Opis</label>
-              <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis" required/>
-            </div>
-            <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['dodawanie_klas'])) {
-                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['dodawanie_klas'].'</small>';
-                  unset($_SESSION['dodawanie_klas']);
-                }
-              ?>
-              <button class="btn btn-dark" type="submit">Dodaj</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <button>Dodaj klasę</button>
+      <form action="zadania/dodawanie_klas.php" method="post">
+        <label for="dodanieNazwa">Wpisz Nazwę</label>
+        <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa" required/>
+        <label for="dodanieOpis">Wpisz Opis</label>
+        <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis" required/>
+        <?php
+          if (isset($_SESSION['dodawanie_klas'])) {
+            echo '<small>'.$_SESSION['dodawanie_klas'].'</small>';
+            unset($_SESSION['dodawanie_klas']);
+          }
+        ?>
+        <button class="btn btn-dark" type="submit">Dodaj</button>
+      </form>
     </section>
     <section>
       <h2>KLASY</h2>
       <?php
         if (isset($_SESSION['usuwanie_klas'])) {
-          echo '<small  class="form-text uzytk-blad">'.$_SESSION['usuwanie_klas'].'</small>';
+          echo '<small>'.$_SESSION['usuwanie_klas'].'</small>';
           unset($_SESSION['usuwanie_klas']);
         }
 
         if (isset($_SESSION['edytowanie_klas'])) {
-          echo '<small  class="form-text uzytk-blad">'.$_SESSION['edytowanie_klas'].'</small>';
+          echo '<small>'.$_SESSION['edytowanie_klas'].'</small>';
           unset($_SESSION['edytowanie_klas']);
         }
 
