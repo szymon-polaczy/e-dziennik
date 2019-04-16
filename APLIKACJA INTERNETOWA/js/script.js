@@ -20,6 +20,7 @@ $('#nadajUprawnienia').on("change", function() {
   }
 });
 
+//NIE MAM ZIELONEGO POJĘCIA GDZIE JEST #wyb_ocena_uzu WIĘC GDZIEŚ MOŻE SIĘ ZEPSUC
 function pokazOdpOcene() {
   $('#wyb_ocena_uzu').on("change", function() {
     let war_select_ocena = this.children[this.selectedIndex].text.trim();
