@@ -18,9 +18,9 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <a class="dropdown-item" href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a><br>
-    <a class="dropdown-item" href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a><br>
-    <a class="dropdown-item" href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a><br><br>
+    <a href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a><br>
+    <a href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a><br>
+    <a href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a><br><br>
 
       Imie: <?php echo $_SESSION['imie']; ?><br>
       Nazwisko: <?php echo $_SESSION['nazwisko']; ?><br>

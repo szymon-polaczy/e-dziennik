@@ -31,16 +31,16 @@
       <button>Dodaj klasę</button>
       <form action="zadania/dodawanie_klas.php" method="post">
         <label for="dodanieNazwa">Wpisz Nazwę</label>
-        <input id="dodanieNazwa" class="form-control" type="text" placeholder="Nazwa" name="nazwa" required/>
+        <input id="dodanieNazwa" type="text" placeholder="Nazwa" name="nazwa" required/>
         <label for="dodanieOpis">Wpisz Opis</label>
-        <input id="dodanieOpis" class="form-control" type="text" placeholder="Opis" name="opis" required/>
+        <input id="dodanieOpis" type="text" placeholder="Opis" name="opis" required/>
         <?php
           if (isset($_SESSION['dodawanie_klas'])) {
             echo '<small>'.$_SESSION['dodawanie_klas'].'</small>';
             unset($_SESSION['dodawanie_klas']);
           }
         ?>
-        <button class="btn btn-dark" type="submit">Dodaj</button>
+        <button type="submit">Dodaj</button>
       </form>
     </section>
     <section>
@@ -63,7 +63,7 @@
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

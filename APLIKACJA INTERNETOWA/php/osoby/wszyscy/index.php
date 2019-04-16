@@ -30,11 +30,11 @@
       <small class="form-text text-muted">Nie udostępniamy nikomu twojego emailu a wszystkie twoje hasła są zaszyfrowane.</small>
       <?php
         if (isset($_SESSION['login_blad'])) {
-          echo '<small  class="form-text uzytk-blad">' . $_SESSION['login_blad'] . '</small>';
+          echo '<small>'.$_SESSION['login_blad'].'</small>';
           unset($_SESSION['login_blad']);
         }
       ?>
-      <button class="btn btn-dark" type="submit">Zaloguj Się</button>
+      <button type="submit">Zaloguj Się</button>
     </form>
   </main>
 
