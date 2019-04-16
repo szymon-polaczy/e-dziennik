@@ -1,25 +1,23 @@
 <?php
-  session_start();
-  mysqli_report(MYSQLI_REPORT_STRICT);
+session_start();
+mysqli_report(MYSQLI_REPORT_STRICT);
 
-  if(isset($_SESSION['zalogowany'])) {
-    header('Location: dziennik.php');
-    exit();
-  }
+if (isset($_SESSION['zalogowany'])) {
+  header('Location: dziennik.php');
+  exit();
+}
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Zaloguj się"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Zaloguj się";
+  include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-dark bg-dark">
-      <a href="#" class="navbar-brand">E-DZIENNIK</a>
-      <span class="navbar-text">Twój następny e-dziennik.</span>
-    </nav>
+  <header class="navigation-header">
+    <h2 class="logo"><a href="../wszyscy/index.php">e-dziennik</a></h2>
+    <p>Twój następny e-dziennik</p>
   </header>
 
   <main>
@@ -37,12 +35,12 @@
               <input id="logowanieHaslo" class="form-control" type="password" placeholder="Hasło" name="haslo" required>
             </div>
             <div class="form-group form-inf">
-              <small  class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
+              <small class="form-text text-muted">Nie udostępniamy nikomu twojego emailu oraz wszystkie twoje hasła są zaszyfrowane.</small>
               <?php
-                if (isset($_SESSION['login_blad'])) {
-                  echo '<small  class="form-text uzytk-blad">'.$_SESSION['login_blad'].'</small>';
-                  unset($_SESSION['login_blad']);
-                }
+              if (isset($_SESSION['login_blad'])) {
+                echo '<small  class="form-text uzytk-blad">' . $_SESSION['login_blad'] . '</small>';
+                unset($_SESSION['login_blad']);
+              }
               ?>
               <button class="btn btn-dark" type="submit">Zaloguj Się</button>
             </div>
