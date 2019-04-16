@@ -175,10 +175,13 @@ body {
   justify-content: space-between;
 }
 
+.navigation-header h2 {
+	font-size: 1.35rem;
+}
+
 .navigation-header h2 a {
 	text-decoration: none;
-  font-size: 1.35rem;
-  color: #fff;
+	color: #fff;
 }
 
 .navigation-header p {
@@ -214,8 +217,8 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-  .navigation-header h2 {
-    font-size: 1rem;
+	.navigation-header h2 {
+		font-size: 1rem;
   }
 
   .navigation-header .menu {
@@ -255,3 +258,39 @@ body {
 }
 
 /*--HERE ENDS THE RESPONSIVE MENU NAVIGATION CSS--*/
+
+
+/*TEMPORARY*/
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+button {
+	padding: 1vmin;
+}
+
+a {
+	text-decoration: none;
+	color: #444;
+}
+
+a:hover {
+	color: #000000;
+}
+
+input, select {
+	width: 100%;
+}
+
+table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+table thead {
+	background-color: #333;
+	color: #fff;
+}
