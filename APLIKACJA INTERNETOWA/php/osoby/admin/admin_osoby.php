@@ -55,13 +55,13 @@
         <div class="niewidoczne" id="nauczyciel-uzu">
           <?php
           if (count($sale) == 0) {
-            echo '<span style="color: red;">Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</span>';
+            echo '<small>Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</small>';
           } else {
             echo '<label for="wybierzSale">Wybierz Salę</label>';
             echo '<select id="wybierzSale" name="wyb_sala">';
-            echo '<option></option>';
-            foreach ($sale as $sala)
-              echo '<option value="' . $sala['id'] . '">' . $sala['nazwa'] . '</option>';
+              echo '<option></option>';
+              foreach ($sale as $sala)
+                echo '<option value="'.$sala['id'].'">'.$sala['nazwa'].'</option>';
             echo '</select>';
           }
           ?>
@@ -69,23 +69,23 @@
         <div class="niewidoczne" id="uczen-uzu">
           <?php
           if (count($klasy) == 0) {
-            echo '<span style="color: red;">Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</span>';
+            echo '<small>Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</small>';
           } else {
             echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
             echo '<input id="dataUrodzenia" type="date" name="data_urodzenia"/>';
 
             echo '<label for="wybierzKlase">Wybierz Klasę</label>';
             echo '<select id="wybierzKlase" name="wyb_klasa">';
-            echo '<option></option>';
-            foreach ($klasy as $klasa)
-              echo '<option value="' . $klasa['id'] . '">' . $klasa['nazwa'] . '</option>';
+              echo '<option></option>';
+              foreach ($klasy as $klasa)
+                echo '<option value="'.$klasa['id'].'">'.$klasa['nazwa'].'</option>';
             echo '</select>';
           }
           ?>
         </div>
         <?php
         if (isset($_SESSION['dodawanie_osob'])) {
-          echo '<small>' . $_SESSION['dodawanie_osob'] . '</small>';
+          echo '<small>'.$_SESSION['dodawanie_osob'].'</small>';
           unset($_SESSION['dodawanie_osob']);
         }
         ?>
@@ -96,12 +96,12 @@
       <h2>ZOBACZ OSOBY</h2>
       <?php
       if (isset($_SESSION['usuwanie_osob'])) {
-        echo '<small>' . $_SESSION['usuwanie_osob'] . '</small>';
+        echo '<small>'.$_SESSION['usuwanie_osob'].'</small>';
         unset($_SESSION['usuwanie_osob']);
       }
 
       if (isset($_SESSION['edytowanie_osob'])) {
-        echo '<small>' . $_SESSION['edytowanie_osob'] . '</small>';
+        echo '<small>'.$_SESSION['edytowanie_osob'].'</small>';
         unset($_SESSION['edytowanie_osob']);
       }
 

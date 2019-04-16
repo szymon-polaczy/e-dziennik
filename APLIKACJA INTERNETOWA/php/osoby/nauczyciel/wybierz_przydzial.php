@@ -38,37 +38,28 @@
 
   <main>
     <h2>WYBIERZ PRZYDZIAŁ</h2>
-    <section>
-      <div class="container p-0">
-        <form action="nauczyciel_oceny.php" method="get">
-          <?php
-            if (count($_SESSION['przydzialy']) == 0) {
-              echo 'Nie ma żadnych przydziałów, musisz jakieś utworzyć, aby dodać do nich oceny';
-            } else {
-              echo '<div class="form-group">';
-                echo '<label for="wyb_przydzial">Wybierz Przydział</label>';
-                echo '<select name="wyb_przydzial" id="wyb_przydzial" class="form-control" required>';
-                  echo '<option></option>';
+    <form action="nauczyciel_oceny.php" method="get">
+      <?php
+        if (count($_SESSION['przydzialy']) == 0) {
+          echo 'Nie ma żadnych przydziałów, musisz jakieś utworzyć, aby dodać do nich oceny';
+        } else {
+          echo '<label for="wyb_przydzial">Wybierz Przydział</label>';
+          echo '<select name="wyb_przydzial" id="wyb_przydzial" required>';
+            echo '<option></option>';
 
-                foreach ($_SESSION['przydzialy'] as $przydzial)
-                  echo '<option value="'.$przydzial['id'].'">'.$przydzial['imie']
-                    .' '.$przydzial['nazwisko']
-                    .' | '.$przydzial['przedmiot_nazwa']
-                    .' | '.$przydzial['klasa_nazwa'].'</option>';
+            foreach ($_SESSION['przydzialy'] as $przydzial)
+              echo '<option value="'.$przydzial['id'].'">'.$przydzial['imie']
+              .' '.$przydzial['nazwisko']
+              .' | '.$przydzial['przedmiot_nazwa']
+              .' | '.$przydzial['klasa_nazwa'].'</option>';
 
-                echo '</select>';
-              echo '</div>';
+          echo '</select>';
+          echo '<button type="submit">Wybierz</button>';
+        }
+      ?>
+    </form>
 
-              echo '<div class="form-group form-inf">';
-                echo '<button type="submit" class="btn btn-dark">Wybierz</button>';
-              echo '</div>';
-            }
-          ?>
-        </form>
-      </div>
-    </section>
-
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

@@ -19,34 +19,24 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <div class="container p-0">
-      <div class="row">
-        <div class="col-md-10">
-          <form action="zadania/zmiana_emailu.php" method="post">
-            <h2>Zmień Email</h2>
-            <div class="form-group">
-              <label for="zmianaEmailuStary">Wpisz Stary Email</label>
-              <input id="zmianaEmailuStary" class="form-control" type="email" placeholder="Stary email" name="semail" required>
-            </div>
-            <div class="form-group">
-              <label for="zmianaEmailuNowy">Wpisz Nowy Email</label>
-              <input id="zmianaEmailuNowy" class="form-control" type="email" placeholder="Nowy email" name="nemail" required>
-            </div>
-            <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['zmiana_emailu'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['zmiana_emailu'].'</small>';
-                  unset($_SESSION['zmiana_emailu']);
-                }
-              ?>
-              <button class="btn btn-dark" type="submit">Zmień Email</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <form action="zadania/zmiana_emailu.php" method="post">
+      <h2>Zmień Email</h2>
+      <label for="zmianaEmailuStary">Wpisz Stary Email</label>
+      <input id="zmianaEmailuStary" type="email" placeholder="Stary email" name="semail" required>
 
-    <a href="dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+      <label for="zmianaEmailuNowy">Wpisz Nowy Email</label>
+      <input id="zmianaEmailuNowy" type="email" placeholder="Nowy email" name="nemail" required>
+
+      <?php
+        if (isset($_SESSION['zmiana_emailu'])) {
+          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['zmiana_emailu'].'</small>';
+          unset($_SESSION['zmiana_emailu']);
+        }
+      ?>
+      <button type="submit">Zmień Email</button>
+    </form>
+
+    <a href="dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

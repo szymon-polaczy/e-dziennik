@@ -21,7 +21,6 @@
   $przedmioty = $adm->getAllFrom("przedmiot");
   $klasy = $adm->getAllFrom("klasa");
 
-  //Wyciąganie edytowanego przydziału
   $przydzial_id = $_GET['wyb_przydzial'];
   $sql = "SELECT * FROM przydzial WHERE id='$przydzial_id'";
   $edi = $pdo->sql_record($sql);
@@ -37,43 +36,33 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <div class="container p-0">
-      <form method="post" action="zadania/edytowanie_przydzialow.php">
-        <h2>Edytuj Przydział</h2>
-        <div class="form-group">
-          <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
-          <select name="wyb_nauczyciel" class="form-control" id="wybor_nauczyciela" required>
-            <?php
-              foreach ($osoby as $osoba)
-                echo '<option '.($osoba['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$osoba['id'].'">Nauczyciel '.$osoba['imie'].' '.$osoba  ['nazwisko'].'</option>';
-            ?>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="wybor_przedmiotu">Wybierz przedmiot</label>
-          <select name="wyb_przedmiot" class="form-control" id="wybor_przedmiotu" required>
-            <?php
-              foreach ($przedmioty as $sub)
-                echo '<option '.($sub['id'] == $edi['id_przedmiot']? 'selected' : '').' value="'.$sub['id'].'">Przedmiot '.$sub['nazwa'].'</option>';
-            ?>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="wybor_klasy">Wybierz klasę</label>
-          <select name="wyb_klasa" class="form-control" id="wybor_klasy" required>
-            <?php
-              foreach ($klasy as $cla)
-                echo '<option '.($cla['id'] == $edi['id_klasa']? 'selected' : '').' value="'.$cla['id'].'">Klasa '.$cla['nazwa'].' | '.$cla['opis'].'</option>';
-            ?>
-          </select>
-        </div>
-        <div class="form-group form-inf">
-          <button type="submit" class="btn btn-dark">Zmień</button>
-        </div>
-      </form>
-    </div>
+    <form method="post" action="zadania/edytowanie_przydzialow.php">
+      <h2>Edytuj Przydział</h2>
+      <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
+      <select name="wyb_nauczyciel" id="wybor_nauczyciela" required>
+        <?php
+          foreach ($osoby as $osoba)
+            echo '<option '.($osoba['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$osoba['id'].'">Nauczyciel '.$osoba['imie'].' '.$osoba  ['nazwisko'].'</option>';
+        ?>
+      </select>
+      <label for="wybor_przedmiotu">Wybierz przedmiot</label>
+      <select name="wyb_przedmiot" id="wybor_przedmiotu" required>
+        <?php
+          foreach ($przedmioty as $sub)
+            echo '<option '.($sub['id'] == $edi['id_przedmiot']? 'selected' : '').' value="'.$sub['id'].'">Przedmiot '.$sub['nazwa'].'</option>';
+        ?>
+      </select>
+      <label for="wybor_klasy">Wybierz klasę</label>
+      <select name="wyb_klasa" id="wybor_klasy" required>
+        <?php
+          foreach ($klasy as $cla)
+            echo '<option '.($cla['id'] == $edi['id_klasa']? 'selected' : '').' value="'.$cla['id'].'">Klasa '.$cla['nazwa'].' | '.$cla['opis'].'</option>';
+        ?>
+      </select>
+      <button type="submit">Zmień</button>
+    </form>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

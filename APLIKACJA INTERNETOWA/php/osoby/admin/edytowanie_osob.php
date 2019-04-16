@@ -37,35 +37,19 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <div class="container p-0">
-      <div class="row">
-        <div class="col-md-12">
-          <form action="zadania/edytowanie_osob.php" method="post">
-            <h2>EDYTUJ OSOBĘ</h2>
-            <div class="form-group">
-              <label for="zmianaImienia">Edytuj Imię</label>
-              <input id="zmianaImienia" class="form-control" type="text" value="<?php echo $edi['imie']; ?>" name="imie" required/>
-            </div>
-            <div class="form-group">
-              <label for="zmianaNazwiska">Edytuj Nazwisko</label>
-              <input id="zmianaNazwiska" class="form-control" type="text" value="<?php echo $edi['nazwisko']; ?>" name="nazwisko" required/>
-            </div>
-            <div class="form-group">
-              <label for="zmianaEmailu">Edytuj Email</label>
-              <input id="zmianaEmailu" class="form-control" type="email" value="<?php echo $edi['email']; ?>" name="email" required/>
-            </div>
-            <div class="form-group">
-              <label for="zmianHasla">Edytuj Haslo</label>
-              <input id="zmianHasla" class="form-control" type="password" value="<?php echo $edi['haslo']; ?>" name="haslo" required/>
-            </div>
-            <div class="form-group form-inf">
-              <button class="btn btn-dark" type="submit">Zmień</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <form action="zadania/edytowanie_osob.php" method="post">
+      <h2>EDYTUJ OSOBĘ</h2>
+      <label for="zmianaImienia">Edytuj Imię</label>
+      <input id="zmianaImienia" type="text" value="<?php echo $edi['imie']; ?>" name="imie" required/>
+      <label for="zmianaNazwiska">Edytuj Nazwisko</label>
+      <input id="zmianaNazwiska" type="text" value="<?php echo $edi['nazwisko']; ?>" name="nazwisko" required/>
+      <label for="zmianaEmailu">Edytuj Email</label>
+      <input id="zmianaEmailu" type="email" value="<?php echo $edi['email']; ?>" name="email" required/>
+      <label for="zmianHasla">Edytuj Haslo</label>
+      <input id="zmianHasla" type="password" value="<?php echo $edi['haslo']; ?>" name="haslo" required/>
+      <button type="submit">Zmień</button>
+    </form>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

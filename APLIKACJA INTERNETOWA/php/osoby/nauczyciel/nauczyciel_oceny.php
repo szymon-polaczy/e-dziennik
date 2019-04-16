@@ -52,56 +52,42 @@
 
   <main>
     <section>
-      <div class="container p-0">
-        <p>
-          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Dodaj ocenę
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <form method="post" action="zadania/dodawanie_ocen.php">
-            <?php
-              if (count($_SESSION['uczniowie']) == 0) {
-                echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
-              } else {
-                echo '<div class="form-group">';
-                  echo '<label for="wyb_ucznia">Wybierz Ucznia</label>';
-                  echo '<select name="wyb_uczen" id="wyb_ucznia" class="form-control" required>';
-                    echo '<option></option>';
+      <button>Dodaj ocenę</button>
+      <form method="post" action="zadania/dodawanie_ocen.php">
+        <?php
+          if (count($_SESSION['uczniowie']) == 0) {
+            echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
+          } else {
+            echo '<label for="wyb_ucznia">Wybierz Ucznia</label>';
+            echo '<select name="wyb_uczen" id="wyb_ucznia" required>';
+              echo '<option></option>';
 
-                    foreach ($_SESSION['uczniowie'] as $uczen)
-                      echo '<option value="'.$uczen['id'].'">'.$uczen['imie'].' '.$uczen['nazwisko'].'</option>';
+            foreach ($_SESSION['uczniowie'] as $uczen)
+              echo '<option value="'.$uczen['id'].'">'.$uczen['imie'].' '.$uczen['nazwisko'].'</option>';
 
-                  echo '</select>';
-                echo '</div>';
+            echo '</select>';
 
-                echo '<div class="form-group">';
-                  $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
+            $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-                  echo '<label for="wyb_wartosc">Wybierz Ocenę</label>';
-                  echo '<select name="wyb_wartosc" id="wyb_wartosc" class="form-control" required>';
-                    echo '<option></option>';
+            echo '<label for="wyb_wartosc">Wybierz Ocenę</label>';
+            echo '<select name="wyb_wartosc" id="wyb_wartosc" required>';
+            echo '<option></option>';
 
-                    foreach ($oceny as $ocena)
-                      echo '<option value="'.$ocena.'">'.$ocena.'</option>';
+            foreach ($oceny as $ocena)
+              echo '<option value="'.$ocena.'">'.$ocena.'</option>';
 
-                  echo '</select>';
-                echo '</div>';
+            echo '</select>';
+                    
+            echo '<button type="submit">Dodaj ocenę</button>';
+            echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
 
-                echo '<div class="form-grou form-inf">';
-                  echo '<button type="submit" class="btn btn-dark">Dodaj ocenę</button>';
-                  echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
-
-                  if (isset($_SESSION['dodawanie_ocen'])) {
-                    echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
-                    unset($_SESSION['dodawanie_ocen']);
-                  }
-                echo '</div>';
-              }
-            ?>
-          </form>
-        </div>
-      </div>
+            if (isset($_SESSION['dodawanie_ocen'])) {
+              echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
+              unset($_SESSION['dodawanie_ocen']);
+            }
+          }
+        ?>
+      </form>
     </section>
     <section>
       <h2>ZOBACZ OCENY</h2>
@@ -154,7 +140,7 @@
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

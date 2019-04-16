@@ -18,34 +18,22 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <div class="container p-0">
-      <div class="row">
-        <div class="col-md-10">
-          <form action="zadania/zmiana_hasla.php" method="post">
-            <h2>Zmień Hasło</h2>
-            <div class="form-group">
-              <label for="zmianaHaslaStary">Wpisz Stare Hasło</label>
-              <input id="zmianaHaslaStary" class="form-control" type="password" placeholder="Stare hasło" name="shaslo" required>
-            </div>
-            <div class="form-group">
-              <label for="zmianaHaslaNowe">Wpisz Nowe Hasło</label>
-              <input id="zmianaHaslaNowe" class="form-control" type="password" placeholder="Nowe hasło" name="nhaslo" required>
-            </div>
-            <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['zmiana_hasla'])) {
-                  echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['zmiana_hasla'].'</small>';
-                  unset($_SESSION['zmiana_hasla']);
-                }
-              ?>
-              <button class="btn btn-dark" type="submit">Zmień Hasło</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <form action="zadania/zmiana_hasla.php" method="post">
+      <h2>Zmień Hasło</h2>
+      <label for="zmianaHaslaStary">Wpisz Stare Hasło</label>
+      <input id="zmianaHaslaStary" type="password" placeholder="Stare hasło" name="shaslo" required>
+      <label for="zmianaHaslaNowe">Wpisz Nowe Hasło</label>
+      <input id="zmianaHaslaNowe" type="password" placeholder="Nowe hasło" name="nhaslo" required>
+      <?php
+        if (isset($_SESSION['zmiana_hasla'])) {
+          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['zmiana_hasla'].'</small>';
+          unset($_SESSION['zmiana_hasla']);
+        }
+      ?>
+      <button type="submit">Zmień Hasło</button>
+    </form>
 
-    <a href="dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

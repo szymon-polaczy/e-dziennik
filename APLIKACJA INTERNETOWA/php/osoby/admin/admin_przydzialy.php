@@ -38,76 +38,52 @@
 
   <main>
     <section>
-      <div class="container p-0">
-        <p>
-          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Dodaj przydziały
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <form method="post" action="zadania/dodawanie_przydzialow.php">
-            <?php
-              if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
-                echo '<div class="przydzial-wiersz" style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
-              } else {
-                echo '<div class="form-group">';
-                  echo '<label for="wyb_nauczyciela">Wybierz Nauczyciela</label>';
-                  echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" class="form-control" required>';
-                    echo '<option></option>';
+      <button>Dodaj przydziały</button>
+      <form action="zadania/dodawanie_przydzialow.php" method="post">
+      <?php
+        if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
+          echo '<div style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
+        } else {
+          echo '<label for="wyb_nauczyciela">Wybierz Nauczyciela</label>';
+          echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" required>';
+            echo '<option></option>';
+            foreach ($nauczyciele as $nauczyciel)
+              echo '<option value="'.$nauczyciel['id_osoba'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
+          echo '</select>';
 
-                    foreach ($nauczyciele as $nauczyciel)
-                      echo '<option value="'.$nauczyciel['id_osoba'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
+          echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
+          echo '<select name="wyb_przedmiot" id="wyb_przedmiot" required>';
+            echo '<option></option>';
+            foreach ($przedmioty as $przedmiot)
+              echo '<option value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
+          echo '</select>';
 
-                  echo '</select>';
-                echo '</div>';
+          echo '<label for="wyb_klase">Wybierz Klasę</label>';
+          echo '<select name="wyb_klasa" id="wyb_klase" required>';
+            echo '<option></option>';
+            foreach ($klasy as $klasa)
+              echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
+          echo '</select>';
 
-                echo '<div class="form-group">';
-                  echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
-                  echo '<select name="wyb_przedmiot" id="wyb_przedmiot" class="form-control" required>';
-                    echo '<option></option>';
-
-                    foreach ($przedmioty as $przedmiot)
-                      echo '<option value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
-
-                  echo '</select>';
-                echo '</div>';
-
-                echo '<div class="form-group">';
-                echo '<label for="wyb_klase">Wybierz Klasę</label>';
-                  echo '<select name="wyb_klasa" id="wyb_klase" class="form-control" required>';
-                    echo '<option></option>';
-
-                    foreach ($klasy as $klasa)
-                      echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
-
-                  echo '</select>';
-                echo '</div>';
-
-                echo '<div class="form-group form-inf">';
-                  echo '<button type="submit" class="btn btn-dark">DODAJ</button>';
-
-                  if (isset($_SESSION['dodawanie_przydzialow'])) {
-                    echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
-                    unset($_SESSION['dodawanie_przydzialow']);
-                  }
-
-                echo '</div>';
-              }
-            ?>
-          </form>
-        </div>
-      </div>
+          if (isset($_SESSION['dodawanie_przydzialow'])) {
+            echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
+            unset($_SESSION['dodawanie_przydzialow']);
+          }
+          echo '<button type="submit">DODAJ</button>';
+        }
+      ?>
+      </form>
     </section>
     <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
         if (isset($_SESSION['edytowanie_przydzialow'])) {
-          echo '<small class="form-text uzytk-blad">'.$_SESSION['edytowanie_przydzialow'].'</small>';
+          echo '<small>'.$_SESSION['edytowanie_przydzialow'].'</small>';
           unset($_SESSION['edytowanie_przydzialow']);
         }
 
         if (isset($_SESSION['usuwanie_przydzialow'])) {
-          echo '<small class="form-text uzytk-blad">'.$_SESSION['usuwanie_przydzialow'].'</small>';
+          echo '<small>'.$_SESSION['usuwanie_przydzialow'].'</small>';
           unset($_SESSION['usuwanie_przydzialow']);
         }
 
@@ -118,7 +94,7 @@
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

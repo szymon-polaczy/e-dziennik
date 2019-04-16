@@ -16,7 +16,6 @@
 
   $sale = $adm->getAllFrom("sala");
 ?>
-
 <!doctype html>
 <html lang="pl">
 <head>
@@ -29,30 +28,18 @@
 
   <main>
     <section>
-      <div class="container p-0">
-        <p>
-          <button class="dodawanie-collapse-btn btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Dodaj salę
-          </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <form method="post" action="zadania/dodawanie_sal.php">
-            <div class="form-group">
-              <label for="nazwa_sali">Wpisz nazwę sali</label>
-              <input class="form-control" id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
-            </div>
-            <div class="form-group form-inf">
-              <?php
-                if (isset($_SESSION['dodawanie_sal'])) {
-                  echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
-                  unset($_SESSION['dodawanie_sal']);
-                }
-              ?>
-              <button class="btn btn-dark" type="submit">Dodaj</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <button>Dodaj salę</button>
+      <form action="zadania/dodawanie_sal.php" method="post">
+        <label for="nazwa_sali">Wpisz nazwę sali</label>
+        <input id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
+        <?php
+          if (isset($_SESSION['dodawanie_sal'])) {
+            echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
+            unset($_SESSION['dodawanie_sal']);
+          }
+        ?>
+        <button type="submit">Dodaj</button>
+      </form>
     </section>
     <section>
       <h2>ZOBACZ SALE</h2>
@@ -73,7 +60,7 @@
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

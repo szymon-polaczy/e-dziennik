@@ -13,12 +13,9 @@
   require_once "../../polacz.php";
   require_once "../../wg_pdo_mysql.php";
 
-  //Wyciąganie wybranej klasy
   $wyb_sala = $_GET['wyb_sala'];
   $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
-
   $sql = "SELECT * FROM sala WHERE id='$wyb_sala'";
-
   $rezultat = $pdo->sql_record($sql);
 ?>
 <!doctype html>
@@ -32,27 +29,15 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <section>
-      <div class="container p-0">
-        <div class="row">
-          <div class="col-12">
-            <form method="post" action="zadania/edytowanie_sal.php">
-              <h2>EDYTUJ SALE</h2>
-              <div class="form-group">
-                <label for="nazwa_sali">Edytuj nazwę sali</label>
-                <input class="form-control" id="nazwa_sali" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
-              </div>
-              <div class="form-group form-inf">
-                <input type="hidden" name="wyb_sala" value="<?php echo $rezultat['id']; ?>">
-                <button class="btn btn-dark" type="submit">Zmień</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <form method="post" action="zadania/edytowanie_sal.php">
+      <h2>EDYTUJ SALE</h2>
+      <label for="nazwa_sali">Edytuj nazwę sali</label>
+      <input id="nazwa_sali" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
+      <input type="hidden" name="wyb_sala" value="<?php echo $rezultat['id']; ?>">
+      <button type="submit">Zmień</button>
+    </form>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

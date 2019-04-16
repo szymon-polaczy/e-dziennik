@@ -34,35 +34,23 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <section>
-      <div class="container p-0">
-        <div class="row">
-          <div class="col-12">
-            <form method="post" action="zadania/edytowanie_ocen.php">
-              <h2>ZMIEŃ OCENĘ</h2>
-              <div class="form-group">
-                <label for="wyb_ocene">Zmień wartość oceny</label>
-                <select name="wyb_wartosc" class="form-control" id="wyb_ocene" required>
-                  <?php
-                    $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
+    <form method="post" action="zadania/edytowanie_ocen.php">
+      <h2>ZMIEŃ OCENĘ</h2>
+      <label for="wyb_ocene">Zmień wartość oceny</label>
+      <select name="wyb_wartosc" id="wyb_ocene" required>
+        <?php
+          $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-                    foreach ($oceny as $oc) 
-                      echo '<option '.($oc == $rezultat? 'selected' : '').' value="'.$oc.'">'.$oc.'</option>';
-                  ?>
-                </select>
-              </div>
-              <div class="form-group form-inf">
-                <input type="hidden" name="wyb_przydzial" value="<?php echo $_GET['wyb_przydzial']; ?>">
-                <input type="hidden" name="wyb_ocena" value="<?php echo $wyb_ocena; ?>">
-                <button class="btn btn-dark" type="submit">Zmień</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+          foreach ($oceny as $oc) 
+            echo '<option '.($oc == $rezultat? 'selected' : '').' value="'.$oc.'">'.$oc.'</option>';
+        ?>
+      </select>
+      <input type="hidden" name="wyb_przydzial" value="<?php echo $_GET['wyb_przydzial']; ?>">
+      <input type="hidden" name="wyb_ocena" value="<?php echo $wyb_ocena; ?>">
+      <button type="submit">Zmień</button>
+    </form>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

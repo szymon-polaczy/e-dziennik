@@ -30,29 +30,17 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <div class="container p-0">
-      <div class="row">
-        <div class="col-md-12">
-          <form action="zadania/edytowanie_klas.php" method="post">
-            <h2>EDYTUJ KLASĘ</h2>
-            <div class="form-group">
-              <label for="zmianaNazwy">Zmień Nazwę</label>
-              <input id="zmianaNazwy" class="form-control" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
-            </div>
-            <div class="form-group">
-              <label for="zmianaOpisu">Zmień Opis</label>
-              <input id="zmianaOpisu" class="form-control" type="text" value="<?php echo $rezultat['opis']; ?>" name="opis" required/>
-            </div>
-            <div class="form-group form-inf">
-              <input type="hidden" value="<?php echo $wyb_klasa; ?>" name="wyb_klasa"/>
-              <button class="btn btn-dark" type="submit">Zmień</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <form action="zadania/edytowanie_klas.php" method="post">
+      <h2>EDYTUJ KLASĘ</h2>
+      <label for="zmianaNazwy">Zmień Nazwę</label>
+      <input id="zmianaNazwy"small type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
+      <label for="zmianaOpisu">Zmień Opis</label>
+      <input id="zmianaOpisu"small type="text" value="<?php echo $rezultat['opis']; ?>" name="opis" required/>
+      <input type="hidden" value="<?php echo $wyb_klasa; ?>" name="wyb_klasa"/>
+      <button type="submit">Zmień</button>
+    </form>
 
-    <a href="../wszyscy/dziennik.php"><button class="btn btn-dark">Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->
