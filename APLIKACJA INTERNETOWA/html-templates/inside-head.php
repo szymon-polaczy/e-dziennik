@@ -6,4 +6,5 @@
 <meta name="description" content="Projekt dziennika elektronicznego tworzony przez ucznia dla uczniów do nauki budowania aplikacji internetowych.">
 <meta name="author" content="Szymon Polaczy">
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css ">
 <link rel="stylesheet" href="../../../css/style.css">
