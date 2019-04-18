@@ -36,7 +36,7 @@
     if ($u_upr == "n") {
       $sql = "SELECT * FROM przydzial WHERE id_nauczyciel='$wyb_osoba'";
 
-      $rezultat = $pdo->sql_record($sql);
+      $rezultat = $pdo->sql_table($sql);
 
       if (count($rezultat) > 0) {
         $_SESSION['usuwanie_osob'] = "Ten nauczyciel jest przypisany do przydziałów, nie można go usunąć!";

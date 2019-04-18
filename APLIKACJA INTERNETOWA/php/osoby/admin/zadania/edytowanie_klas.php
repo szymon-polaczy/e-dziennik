@@ -13,15 +13,15 @@
     $wszystko_ok = true;
     $pdo = new WG_PDO_Mysql($bd_uzytk, $bd_haslo, $bd_nazwa, $host);
 
-    //Sprawdzam czy cokolwiek się zmieniło
-    if ($opis != $orginalne['opis'] || $nazwa != $orginalne['nazwa']) {
-      $wszystko_ok = false;
-      $_SESSION['edytowanie_klas'] = "Nie nastąpiła żadna zmiana, klasa nie została zedytowana!";
-    }
-
     //Wyciągam oryginalne wartości z bazy danych
     $sql = "SELECT nazwa, opis FROM klasa WHERE id='$wyb_klasa'";
     $orginalne = $pdo->sql_record($sql);
+
+    //Sprawdzam czy cokolwiek się zmieniło
+    if ($opis == $orginalne['opis'] && $nazwa == $orginalne['nazwa']) {
+      $wszystko_ok = false;
+      $_SESSION['edytowanie_klas'] = "Nie nastąpiła żadna zmiana, klasa nie została zedytowana!";
+    }
 
     if ($nazwa != $orginalne['nazwa']) {
       //Sprawdzam długośc nazwy
