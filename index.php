@@ -1,2 +1,2 @@
 <?php
-  header('Location: APLIKACJA INTERNETOWA/php/osoby/wszyscy/index.php');
+  header('Location: build/php/osoby/wszyscy/index.php');
