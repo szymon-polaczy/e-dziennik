@@ -7,4 +7,4 @@
 <meta name="author" content="Szymon Polaczy">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css ">
-<link rel="stylesheet" href="../../../css/style.css">
+<link rel="stylesheet" href="../../../css/app.css">
