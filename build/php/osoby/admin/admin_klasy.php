@@ -28,20 +28,36 @@
 
   <main>
     <section>
-      <button>Dodaj klasę</button>
+      <form action="zadania/dodawanie_klas.php" method="post">
+        <h2>Dodaj klasę</h2>
+        <label for="dodawanie_nazwy">Dodaj nazwę</label>
+        <input id="dodawanie_nazwy" name="nazwa" type="text" placeholder="nazwa" required>
+        <label for="dodawanie_opisu">Dodaj opis</label>
+        <input id="dodawanie_opisu" name="opis" type="text" placeholder="opis" required>
+        <button type="submit">Dodaj</button>
+        <?php
+          if (isset($_SESSION['dodawanie_klas'])) {
+            echo '<small class="user_info">'.$_SESSION['dodawanie_klas'].'</small>';
+            unset($_SESSION['dodawanie_klas']);
+          }
+        ?>
+      </form>
+
+<!--
       <form action="zadania/dodawanie_klas.php" method="post">
         <label for="dodanieNazwa">Wpisz Nazwę</label>
         <input id="dodanieNazwa" type="text" placeholder="Nazwa" name="nazwa" required/>
         <label for="dodanieOpis">Wpisz Opis</label>
         <input id="dodanieOpis" type="text" placeholder="Opis" name="opis" required/>
         <?php
+        /*
           if (isset($_SESSION['dodawanie_klas'])) {
             echo '<small>'.$_SESSION['dodawanie_klas'].'</small>';
             unset($_SESSION['dodawanie_klas']);
-          }
+          }*/
         ?>
         <button type="submit">Dodaj</button>
-      </form>
+      </form>-->
     </section>
     <section>
       <h2>KLASY</h2>
