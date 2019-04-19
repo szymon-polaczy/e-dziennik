@@ -20,7 +20,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Sale"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Klasy"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
@@ -42,22 +42,6 @@
           }
         ?>
       </form>
-
-<!--
-      <form action="zadania/dodawanie_klas.php" method="post">
-        <label for="dodanieNazwa">Wpisz Nazwę</label>
-        <input id="dodanieNazwa" type="text" placeholder="Nazwa" name="nazwa" required/>
-        <label for="dodanieOpis">Wpisz Opis</label>
-        <input id="dodanieOpis" type="text" placeholder="Opis" name="opis" required/>
-        <?php
-        /*
-          if (isset($_SESSION['dodawanie_klas'])) {
-            echo '<small>'.$_SESSION['dodawanie_klas'].'</small>';
-            unset($_SESSION['dodawanie_klas']);
-          }*/
-        ?>
-        <button type="submit">Dodaj</button>
-      </form>-->
     </section>
     <section>
       <h2>KLASY</h2>
