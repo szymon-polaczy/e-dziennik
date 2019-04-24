@@ -64,6 +64,38 @@ a:hover {
   color: #aaa;
 }
 
+table {
+  width: 100%;
+  text-align: center;
+  margin: 1vh 0;
+  font-size: 1vh;
+}
+table .num, table .txt {
+  text-align: left;
+}
+table .task {
+  text-align: right;
+}
+table thead {
+  background-color: #424348;
+  color: #fff;
+}
+table thead th {
+  padding: 0.5vmin;
+}
+table tbody td {
+  padding: 0.5vmin;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+}
+form input,
+form select {
+  width: 100%;
+}
+
 .main-footer {
   position: fixed;
   bottom: 0;

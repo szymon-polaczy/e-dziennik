@@ -28,8 +28,8 @@
 
   <main>
     <section>
+      <button>Dodaj klasę</button>
       <form action="zadania/dodawanie_klas.php" method="post">
-        <h2>Dodaj klasę</h2>
         <label for="dodawanie_nazwy">Dodaj nazwę</label>
         <input id="dodawanie_nazwy" name="nazwa" type="text" placeholder="nazwa" required>
         <label for="dodawanie_opisu">Dodaj opis</label>

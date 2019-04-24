@@ -63,10 +63,10 @@
 
           foreach($what[0] as $key => $val)
             if ($key != "id")
-              echo '<th class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$key.'</th>';
+              echo '<th class="'.(is_numeric($val)? "num" : is_string($val)? "txt" : '').'">'.$key.'</th>';
 
           if ($task != NULL)
-            echo '<th class="tabela-zadania">opcje</th>'; 
+            echo '<th class="task">opcje</th>'; 
         echo '</tr>';
       echo '</thead>';
 
@@ -76,10 +76,10 @@
         echo '<tr>';
           foreach($ele as $key => $val)
             if ($key != "id")
-              echo '<td class="'.(is_numeric($val)? "tabela-liczby" : is_string($val)? "tabela-tekst" : '').'">'.$val.'</td>';
+              echo '<td class="'.(is_numeric($val)? "num" : is_string($val)? "txt" : '').'">'.$val.'</td>';
 
           if ($task === true) {
-            echo '<td class="tabela-zadania">';
+            echo '<td class="task">';
               echo '<a href="'.$edit_file.'='.$ele['id'].'">Edytuj</a>';
               echo '<span>|</span>';
               echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/'.$delete_file.'='.$ele['id'].'\':\'\')" href="#">Usuń</a>';
