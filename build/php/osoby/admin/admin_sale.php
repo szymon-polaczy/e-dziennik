@@ -28,8 +28,8 @@
 
   <main>
     <section>
-      <button>Dodaj salę</button>
-      <form action="zadania/dodawanie_sal.php" method="post">
+      <button class="show-form-btn">Dodaj salę</button>
+      <form class="dis-form" action="zadania/dodawanie_sal.php" method="post">
         <label for="nazwa_sali">Wpisz nazwę sali</label>
         <input id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
         <?php

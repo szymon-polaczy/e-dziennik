@@ -28,8 +28,8 @@
 
   <main>
     <section>
-      <button>Dodaj przedmiot</button>
-      <form action="zadania/dodawanie_przedmiotow.php" method="post">
+      <button class="show-form-btn">Dodaj przedmiot</button>
+      <form class="dis-form" action="zadania/dodawanie_przedmiotow.php" method="post">
         <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
         <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" required>
         <?php

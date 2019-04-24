@@ -38,8 +38,8 @@
 
   <main>
     <section>
-      <button>Dodaj przydziały</button>
-      <form action="zadania/dodawanie_przydzialow.php" method="post">
+      <button class="show-form-btn">Dodaj przydziały</button>
+      <form class="dis-form" action="zadania/dodawanie_przydzialow.php" method="post">
       <?php
         if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
           echo '<div style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';

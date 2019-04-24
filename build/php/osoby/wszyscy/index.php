@@ -27,7 +27,7 @@
       <input id="logowanieEmail" type="email" placeholder="Email" name="email" required>
       <label for="logowanieHaslo">Wpisz Hasło</label>
       <input id="logowanieHaslo" type="password" placeholder="Hasło" name="haslo" required>
-      <small class="form-text text-muted">Nie udostępniamy nikomu twojego emailu a wszystkie twoje hasła są zaszyfrowane.</small>
+      <small>Nie udostępniamy nikomu twojego emailu a wszystkie twoje hasła są zaszyfrowane.</small>
       <?php
         if (isset($_SESSION['login_blad'])) {
           echo '<small>'.$_SESSION['login_blad'].'</small>';

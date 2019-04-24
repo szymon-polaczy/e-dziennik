@@ -52,8 +52,8 @@
 
   <main>
     <section>
-      <button>Dodaj ocenę</button>
-      <form method="post" action="zadania/dodawanie_ocen.php">
+      <button class="show-form-btn">Dodaj ocenę</button>
+      <form class="dis-from" method="post" action="zadania/dodawanie_ocen.php">
         <?php
           if (count($_SESSION['uczniowie']) == 0) {
             echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
