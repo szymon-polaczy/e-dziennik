@@ -80,9 +80,9 @@
 
           if ($task === true) {
             echo '<td class="task">';
-              echo '<a href="'.$edit_file.'='.$ele['id'].'">Edytuj</a>';
+              echo '<a href="'.$edit_file.'='.$ele['id'].'"><i class="fas fa-pen"></i></a>';
               echo '<span>|</span>';
-              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/'.$delete_file.'='.$ele['id'].'\':\'\')" href="#">Usuń</a>';
+              echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/'.$delete_file.'='.$ele['id'].'\':\'\')" href="#"><i class="fas fa-trash-alt"></i></a>';
             echo '</td>';
           }
         echo '</tr>';
