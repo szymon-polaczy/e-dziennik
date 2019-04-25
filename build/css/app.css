@@ -54,6 +54,7 @@ table {
 body {
   font-family: Monsterrat, sans-serif;
   padding-bottom: 10vh;
+  text-align: center;
 }
 
 a {
@@ -152,6 +153,7 @@ table thead th {
 }
 table tbody td {
   padding: 0.5vmin;
+  border-bottom: 1px solid #eee;
 }
 table tbody td span {
   padding: 0 0.3vw;
