@@ -100,9 +100,10 @@ form input, form select {
   background: #fff;
   padding: 0.5vmin;
   border-radius: 0.5vh;
+  font-size: 1.5vh;
 }
 form label {
-  font-size: 2.2vh;
+  font-size: 1.8vh;
 }
 
 .dis-form {
@@ -114,7 +115,7 @@ form label {
   padding: 1vmin;
   border: 2px solid #222;
   background: #fff;
-  box-shadow: 0 0 1vmin #999;
+  box-shadow: 0 0 1vmin #444;
 }
 
 .show-form-btn {
