@@ -12,7 +12,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Zmień email"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Change Email"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>  
   <!--HEADER INCLUDE-->
@@ -20,23 +20,23 @@
 
   <main>
     <form action="zadania/zmiana_emailu.php" method="post">
-      <h2>Zmień Email</h2>
-      <label for="zmianaEmailuStary">Wpisz Stary Email</label>
-      <input id="zmianaEmailuStary" type="email" placeholder="Stary email" name="semail" required>
+      <h2>Change Email</h2>
+      <label for="zmianaEmailuStary">Your Old Email</label>
+      <input id="zmianaEmailuStary" type="email" placeholder="Old Email" name="semail" required>
 
-      <label for="zmianaEmailuNowy">Wpisz Nowy Email</label>
-      <input id="zmianaEmailuNowy" type="email" placeholder="Nowy email" name="nemail" required>
+      <label for="zmianaEmailuNowy">Your New Email</label>
+      <input id="zmianaEmailuNowy" type="email" placeholder="New Email" name="nemail" required>
 
       <?php
         if (isset($_SESSION['zmiana_emailu'])) {
-          echo '<small id="logowaniePomoc" class="form-text uzytk-blad">'.$_SESSION['zmiana_emailu'].'</small>';
+          echo '<small>'.$_SESSION['zmiana_emailu'].'</small>';
           unset($_SESSION['zmiana_emailu']);
         }
       ?>
-      <button type="submit">Zmień Email</button>
+      <button type="submit">Change Email</button>
     </form>
 
-    <a href="dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

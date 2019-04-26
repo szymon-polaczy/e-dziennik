@@ -11,7 +11,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Strona główna"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Home Page"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->

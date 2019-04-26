@@ -11,25 +11,25 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Strona główna"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Profile"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <a href="../wszyscy/zmien_email.php">ZMIEŃ EMAIL</a><br>
-    <a href="../wszyscy/zmien_haslo.php">ZMIEŃ HASŁO</a><br>
-    <a href="../wszyscy/zadania/wyloguj.php">WYLOGUJ</a><br><br>
+    <a href="../wszyscy/zmien_email.php">Change Email</a><br>
+    <a href="../wszyscy/zmien_haslo.php">Change Password</a><br>
+    <a href="../wszyscy/zadania/wyloguj.php">Sign Out</a><br><br>
 
-      Imie: <?php echo $_SESSION['imie']; ?><br>
-      Nazwisko: <?php echo $_SESSION['nazwisko']; ?><br>
+      Name: <?php echo $_SESSION['imie']; ?><br>
+      Surname: <?php echo $_SESSION['nazwisko']; ?><br>
       Email: <?php echo $_SESSION['email']; ?><br>
       <?php
         if ($_SESSION['uprawnienia'] == "n")
-          echo 'Sala: '.$_SESSION['sala_nazwa'].'<br>';
+          echo 'Room: '.$_SESSION['sala_nazwa'].'<br>';
         else if ($_SESSION['uprawnienia'] == "u")
-          echo 'Klasa: '.$_SESSION['klasa_nazwa'].'<br>';
+          echo 'Class: '.$_SESSION['klasa_nazwa'].'<br>';
       ?>
   </main>
 
