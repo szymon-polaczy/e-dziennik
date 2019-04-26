@@ -21,7 +21,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Oceny"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Grades"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->

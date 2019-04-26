@@ -30,7 +30,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Przydziały"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Assignments"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -38,16 +38,16 @@
 
   <main>
     <section>
-      <h2>ZOBACZ PRZYDZIAŁY</h2>
+      <h2>See Assignments</h2>
       <?php
         if (count($_SESSION['przydzialy']) > 0)
           $adm->showDataTable($_SESSION['przydzialy']);
         else
-          echo '<p>Nie ma żadnych przydziałów</p>';
+          echo '<p>There are no assignments</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

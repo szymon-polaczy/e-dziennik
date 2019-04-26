@@ -44,7 +44,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Oceny"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Grades"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
@@ -56,9 +56,9 @@
       <form class="dis-form" method="post" action="zadania/dodawanie_ocen.php">
         <?php
           if (count($_SESSION['uczniowie']) == 0) {
-            echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
+            echo '<p>There are no learners';
           } else {
-            echo '<label for="wyb_ucznia">Wybierz Ucznia</label>';
+            echo '<label for="wyb_ucznia">Learner</label>';
             echo '<select name="wyb_uczen" id="wyb_ucznia" required>';
               echo '<option></option>';
 
@@ -69,7 +69,7 @@
 
             $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
 
-            echo '<label for="wyb_wartosc">Wybierz Ocenę</label>';
+            echo '<label for="wyb_wartosc">Grade</label>';
             echo '<select name="wyb_wartosc" id="wyb_wartosc" required>';
             echo '<option></option>';
 
@@ -78,14 +78,14 @@
 
             echo '</select>';
                     
-            echo '<button type="submit">Dodaj</button>';
+            echo '<button type="submit">Add</button>';
             echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
           }
         ?>
       </form>
     </section>
     <section>
-      <h2>ZOBACZ OCENY</h2>
+      <h2>See Grades</h2>
       <?php
         if (isset($_SESSION['dodawanie_ocen'])) {
           echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
@@ -110,11 +110,11 @@
           echo '<table class="table">';
           echo '<thead class="thead-dark">';
             echo '<tr>';
-              echo '<th class="tabela-tekst">IMIE UCZNIA</th>';
-              echo '<th class="tabela-tekst">NAZWISKO UCZNIA</th>';
-              echo '<th class="tabela-liczby">DATA I GODZINA</th>';
-              echo '<th class="tabela-liczby">WARTOŚĆ</th>';
-              echo '<th class="tabela-zadania">OPCJE</th>';
+              echo '<th class="tabela-tekst">Name</th>';
+              echo '<th class="tabela-tekst">Surname</th>';
+              echo '<th class="tabela-liczby">Time</th>';
+              echo '<th class="tabela-liczby">Value</th>';
+              echo '<th class="tabela-zadania">Options</th>';
             echo '</tr>';
           echo '</thead>';
 
@@ -140,7 +140,7 @@
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

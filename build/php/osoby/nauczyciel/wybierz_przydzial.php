@@ -37,13 +37,13 @@
   <?php include("../../../html-templates/after-login-header.php"); ?>
 
   <main>
-    <h2>WYBIERZ PRZYDZIAŁ</h2>
+    <h2>Which Assigmnents</h2>
     <form action="nauczyciel_oceny.php" method="get">
       <?php
         if (count($_SESSION['przydzialy']) == 0) {
-          echo 'Nie ma żadnych przydziałów, musisz jakieś utworzyć, aby dodać do nich oceny';
+          echo 'There are no assignments for you';
         } else {
-          echo '<label for="wyb_przydzial">Wybierz Przydział</label>';
+          echo '<label for="wyb_przydzial">Which Assignments</label>';
           echo '<select name="wyb_przydzial" id="wyb_przydzial" required>';
             echo '<option></option>';
 
@@ -54,12 +54,12 @@
               .' | '.$przydzial['klasa_nazwa'].'</option>';
 
           echo '</select>';
-          echo '<button type="submit">Wybierz</button>';
+          echo '<button type="submit">Next</button>';
         }
       ?>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

@@ -27,7 +27,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj ocenę"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Change Grades"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -35,8 +35,8 @@
 
   <main>
     <form method="post" action="zadania/edytowanie_ocen.php">
-      <h2>ZMIEŃ OCENĘ</h2>
-      <label for="wyb_ocene">Zmień wartość oceny</label>
+      <h2>Change Grade</h2>
+      <label for="wyb_ocene">Grade Value</label>
       <select name="wyb_wartosc" id="wyb_ocene" required>
         <?php
           $oceny = ['6', '6-', '5+', '5', '5-', '4+', '4', '4-', '3+', '3', '3-', '2+', '2', '2-', '1+', '1', '0'];
@@ -47,10 +47,10 @@
       </select>
       <input type="hidden" name="wyb_przydzial" value="<?php echo $_GET['wyb_przydzial']; ?>">
       <input type="hidden" name="wyb_ocena" value="<?php echo $wyb_ocena; ?>">
-      <button type="submit">Zmień</button>
+      <button type="submit">Change Grade</button>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->
