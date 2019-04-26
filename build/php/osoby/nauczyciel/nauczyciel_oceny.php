@@ -80,11 +80,6 @@
                     
             echo '<button type="submit">Dodaj</button>';
             echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
-
-            if (isset($_SESSION['dodawanie_ocen'])) {
-              echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
-              unset($_SESSION['dodawanie_ocen']);
-            }
           }
         ?>
       </form>
@@ -92,6 +87,11 @@
     <section>
       <h2>ZOBACZ OCENY</h2>
       <?php
+        if (isset($_SESSION['dodawanie_ocen'])) {
+          echo '<p style="color: red">'.$_SESSION['dodawanie_ocen'].'</p>';
+          unset($_SESSION['dodawanie_ocen']);
+        }
+
         if (isset($_SESSION['edytowanie_ocen'])) {
           echo '<p style="color: red">'.$_SESSION['edytowanie_ocen'].'</p>';
           unset($_SESSION['edytowanie_ocen']);

@@ -35,17 +35,16 @@
         <label for="dodawanie_opisu">Dodaj opis</label>
         <input id="dodawanie_opisu" name="opis" type="text" placeholder="opis" required>
         <button type="submit">Dodaj</button>
-        <?php
-          if (isset($_SESSION['dodawanie_klas'])) {
-            echo '<small class="user_info">'.$_SESSION['dodawanie_klas'].'</small>';
-            unset($_SESSION['dodawanie_klas']);
-          }
-        ?>
       </form>
     </section>
     <section>
       <h2>KLASY</h2>
       <?php
+        if (isset($_SESSION['dodawanie_klas'])) {
+          echo '<small class="user_info">'.$_SESSION['dodawanie_klas'].'</small>';
+          unset($_SESSION['dodawanie_klas']);
+        }
+
         if (isset($_SESSION['usuwanie_klas'])) {
           echo '<small>'.$_SESSION['usuwanie_klas'].'</small>';
           unset($_SESSION['usuwanie_klas']);

@@ -32,18 +32,17 @@
       <form class="dis-form" action="zadania/dodawanie_sal.php" method="post">
         <label for="nazwa_sali">Wpisz nazwę sali</label>
         <input id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
-        <?php
-          if (isset($_SESSION['dodawanie_sal'])) {
-            echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
-            unset($_SESSION['dodawanie_sal']);
-          }
-        ?>
         <button type="submit">Dodaj</button>
       </form>
     </section>
     <section>
       <h2>ZOBACZ SALE</h2>
       <?php
+        if (isset($_SESSION['dodawanie_sal'])) {
+          echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
+          unset($_SESSION['dodawanie_sal']);
+        }
+
         if (isset($_SESSION['usuwanie_sal'])) {
           echo '<p class="form-text uzytk-blad">'.$_SESSION['usuwanie_sal'].'</p>';
           unset($_SESSION['usuwanie_sal']);

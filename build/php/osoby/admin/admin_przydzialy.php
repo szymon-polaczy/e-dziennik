@@ -65,10 +65,6 @@
               echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
           echo '</select>';
 
-          if (isset($_SESSION['dodawanie_przydzialow'])) {
-            echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
-            unset($_SESSION['dodawanie_przydzialow']);
-          }
           echo '<button type="submit">DODAJ</button>';
         }
       ?>
@@ -77,6 +73,11 @@
     <section>
       <h2>ZOBACZ PRZYDZIAŁY</h2>
       <?php
+        if (isset($_SESSION['dodawanie_przydzialow'])) {
+          echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
+          unset($_SESSION['dodawanie_przydzialow']);
+        }
+        
         if (isset($_SESSION['edytowanie_przydzialow'])) {
           echo '<small>'.$_SESSION['edytowanie_przydzialow'].'</small>';
           unset($_SESSION['edytowanie_przydzialow']);

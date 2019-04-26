@@ -83,40 +83,39 @@
           }
           ?>
         </div>
-        <?php
-        if (isset($_SESSION['dodawanie_osob'])) {
-          echo '<small>'.$_SESSION['dodawanie_osob'].'</small>';
-          unset($_SESSION['dodawanie_osob']);
-        }
-        ?>
         <button type="submit">Dodaj</button>
       </form>
     </section>
     <section>
       <h2>ZOBACZ OSOBY</h2>
       <?php
-      if (isset($_SESSION['usuwanie_osob'])) {
-        echo '<small>'.$_SESSION['usuwanie_osob'].'</small>';
-        unset($_SESSION['usuwanie_osob']);
-      }
+        if (isset($_SESSION['dodawanie_osob'])) {
+          echo '<small>'.$_SESSION['dodawanie_osob'].'</small>';
+          unset($_SESSION['dodawanie_osob']);
+        }
+        
+        if (isset($_SESSION['usuwanie_osob'])) {
+          echo '<small>'.$_SESSION['usuwanie_osob'].'</small>';
+          unset($_SESSION['usuwanie_osob']);
+        }
 
-      if (isset($_SESSION['edytowanie_osob'])) {
-        echo '<small>'.$_SESSION['edytowanie_osob'].'</small>';
-        unset($_SESSION['edytowanie_osob']);
-      }
+        if (isset($_SESSION['edytowanie_osob'])) {
+          echo '<small>'.$_SESSION['edytowanie_osob'].'</small>';
+          unset($_SESSION['edytowanie_osob']);
+        }
 
-      echo '<h3>Administratorzy</h3>';
-      $adm->showDataTable($u_adm, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
+        echo '<h3>Administratorzy</h3>';
+        $adm->showDataTable($u_adm, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
 
-      if (count($u_nau) > 1) {
-        echo '<h3>Nauczyciele</h3>';
-        $adm->showDataTable($u_nau, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
-      }
+        if (count($u_nau) > 1) {
+          echo '<h3>Nauczyciele</h3>';
+          $adm->showDataTable($u_nau, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
+        }
 
-      if (count($u_ucz) > 1) {
-        echo '<h3>Uczniowie</h3>';
-        $adm->showDataTable($u_ucz, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
-      }
+        if (count($u_ucz) > 1) {
+          echo '<h3>Uczniowie</h3>';
+          $adm->showDataTable($u_ucz, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
+        }
       ?>
     </section>
 

@@ -32,18 +32,17 @@
       <form class="dis-form" action="zadania/dodawanie_przedmiotow.php" method="post">
         <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
         <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" required>
-        <?php
-          if (isset($_SESSION['dodawanie_przedmiotow'])) {
-            echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
-            unset($_SESSION['dodawanie_przedmiotow']);
-          }
-        ?>
         <button type="submit">Dodaj</button>
       </form>
     </section>
     <section>
       <h2>ZOBACZ PRZEDMIOT</h2>
       <?php
+        if (isset($_SESSION['dodawanie_przedmiotow'])) {
+          echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
+          unset($_SESSION['dodawanie_przedmiotow']);
+        }
+
         if (isset($_SESSION['edytowanie_przedmiotow'])) {
           echo '<small>'.$_SESSION['edytowanie_przedmiotow'].'</small>';
           unset($_SESSION['edytowanie_przedmiotow']);
