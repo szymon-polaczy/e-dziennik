@@ -29,16 +29,16 @@
 
   <main>
     <section>
-      <h2>TWOJE OCENY</h2>
+      <h2>Your Grades</h2>
       <?php
         if (count($oceny) > 0)
           $adm->showDataTable($oceny);
         else
-          echo '<p>Nie posiadasz żadnych ocen</p>';
+          echo '<p>There are no grades</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->
