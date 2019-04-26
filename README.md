@@ -1,7 +1,9 @@
-# E-DZIENNIK
-Stworzenie fajnego i przyjemnego dziennika elektronicznego, który będzie posiadał wszystkie niezbędne funkcje oraz z którego inne osoby mogłyby się uczyć, dalej go rozwijać i w przyszłości używać.
+# school journal
+Creating a nice and pleasant school electronic journal, which will have all the necessary functions and from which other people could learn, further develop it and use it in the future.
 
-# JAKIE UMIEJĘTNOŚCI ROZWIJAŁEM
- - PHP [PDO]
+# what skills I am developing
+ - PHP *[PDO]*
  - MySQL
- - HTML, CSS [jak na razie z Bootstrap] & JS 
+ - HTML *[BEFORE r0.1 BOOTSTRAP]*
+ - CSS *[AFTER r0.1 SASS]*
+ - JS
