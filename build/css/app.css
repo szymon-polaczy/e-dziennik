@@ -140,6 +140,13 @@ h2 {
   display: none;
 }
 
+small {
+  display: block;
+  margin: 0.5vmin 0;
+  font-size: 1.5vh;
+  color: #666;
+}
+
 table {
   width: 100%;
   text-align: center;
