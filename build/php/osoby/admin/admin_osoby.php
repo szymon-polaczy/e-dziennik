@@ -52,7 +52,7 @@
           <option value="u">Uczeń</option>
         </select>
 
-        <div class="niewidoczne" id="nauczyciel-uzu">
+        <div class="invisible" id="nauczyciel-uzu">
           <?php
           if (count($sale) == 0) {
             echo '<small>Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</small>';
@@ -66,7 +66,7 @@
           }
           ?>
         </div>
-        <div class="niewidoczne" id="uczen-uzu">
+        <div class="invisible" id="uczen-uzu">
           <?php
           if (count($klasy) == 0) {
             echo '<small>Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</small>';

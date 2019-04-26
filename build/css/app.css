@@ -85,83 +85,57 @@ button:focus {
 }
 
 form {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  text-align: left;
 }
 form * {
   box-sizing: border-box;
 }
-form div {
+form input, form select {
   width: 100%;
-}
-form small {
-  display: block;
-  font-size: 1.8vh;
-  text-align: center;
-  padding: 1vh 0;
-  color: #444;
-}
-form input,
-form select {
-  width: 100%;
-  margin: 0.5vh 0 1.25vh 0;
-  border: 2px solid #424348;
+  margin: 0.5vh 0 1.5vh 0;
   outline: none;
+  border: 2px solid #444;
   background: #fff;
-  padding: 0.5vh;
+  padding: 0.5vmin;
   border-radius: 0.5vh;
+}
+form label {
+  font-size: 2.2vh;
 }
 
 .dis-form {
   display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1vmin;
+  border: 2px solid #222;
+  background: #fff;
+  box-shadow: 0 0 1vmin #999;
+}
+
+.show-form-btn {
+  position: fixed;
+  bottom: 6vh;
+  right: 6vh;
 }
 
 .show-form-btn:focus ~ .dis-form,
 .dis-form:focus-within,
 .dis-form:hover {
   display: block;
-  position: fixed;
-  height: auto;
-  width: 90%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  background: #fff;
-  box-sizing: border-box;
-  padding: 3vmin;
-  border: 2px solid #222;
-  box-shadow: 0 0 1vmin #999;
-}
-.show-form-btn:focus ~ .dis-form input, .show-form-btn:focus ~ .dis-form select,
-.dis-form:focus-within input,
-.dis-form:focus-within select,
-.dis-form:hover input,
-.dis-form:hover select {
-  width: 80%;
-}
-.show-form-btn:focus ~ .dis-form label,
-.dis-form:focus-within label,
-.dis-form:hover label {
-  display: block;
-  font-size: 2vh;
-  margin-bottom: 1vh;
-  color: #222;
-}
-
-.show-form-btn {
-  position: fixed;
-  bottom: 5vh;
-  right: 5vh;
-  margin-top: 2vh;
 }
 
 h2 {
   font-size: 3vh;
   margin: 1.75vh 0;
+}
+
+.invisible {
+  display: none;
 }
 
 table {
