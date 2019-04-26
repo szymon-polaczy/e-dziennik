@@ -92,6 +92,9 @@ form {
   align-items: flex-start;
   justify-content: space-between;
 }
+form * {
+  box-sizing: border-box;
+}
 form div {
   width: 100%;
 }
@@ -108,7 +111,7 @@ form select {
   margin: 0.5vh 0 1.25vh 0;
   border: 2px solid #424348;
   outline: none;
-  background: #ddd;
+  background: #fff;
   padding: 0.5vh;
   border-radius: 0.5vh;
 }
@@ -121,9 +124,38 @@ form select {
 .dis-form:focus-within,
 .dis-form:hover {
   display: block;
+  position: fixed;
+  height: auto;
+  width: 90%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 3vmin;
+  border: 2px solid #222;
+  box-shadow: 0 0 1vmin #999;
+}
+.show-form-btn:focus ~ .dis-form input, .show-form-btn:focus ~ .dis-form select,
+.dis-form:focus-within input,
+.dis-form:focus-within select,
+.dis-form:hover input,
+.dis-form:hover select {
+  width: 80%;
+}
+.show-form-btn:focus ~ .dis-form label,
+.dis-form:focus-within label,
+.dis-form:hover label {
+  display: block;
+  font-size: 2vh;
+  margin-bottom: 1vh;
+  color: #222;
 }
 
 .show-form-btn {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vh;
   margin-top: 2vh;
 }
 

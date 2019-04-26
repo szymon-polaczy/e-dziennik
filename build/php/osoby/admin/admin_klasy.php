@@ -28,7 +28,7 @@
 
   <main>
     <section>
-      <button class="show-form-btn">Dodaj klasę</button>
+      <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_klas.php" method="post">
         <label for="dodawanie_nazwy">Dodaj nazwę</label>
         <input id="dodawanie_nazwy" name="nazwa" type="text" placeholder="nazwa" required>

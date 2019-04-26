@@ -34,7 +34,7 @@
 
   <main>
     <section>
-      <button class="show-form-btn">Dodaj osobę</button>
+      <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_osob.php" method="post">
         <label for="dodajImie">Wpisz Imię</label>
         <input id="dodajImie" type="text" placeholder="Imię" name="imie" required />

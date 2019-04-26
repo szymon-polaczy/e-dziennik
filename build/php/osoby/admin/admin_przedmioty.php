@@ -28,7 +28,7 @@
 
   <main>
     <section>
-      <button class="show-form-btn">Dodaj przedmiot</button>
+      <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_przedmiotow.php" method="post">
         <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
         <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" required>

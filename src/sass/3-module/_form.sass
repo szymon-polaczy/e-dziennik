@@ -6,6 +6,9 @@ form
   align-items: flex-start
   justify-content: space-between
 
+  *
+    box-sizing: border-box
+
   div
     width: 100%
 
@@ -22,7 +25,7 @@ form
     margin: .5vh 0 1.25vh 0
     border: 2px solid #424348
     outline: none
-    background: #ddd
+    background: #fff
     padding: .5vh
     border-radius: .5vh
 
@@ -33,6 +36,29 @@ form
 .dis-form:focus-within,
 .dis-form:hover
   display: block
+  position: fixed
+  height: auto
+  width: 90%
+  top: 50%
+  transform: translate(-50%, -50%)
+  left: 50%
+  background: #fff
+  box-sizing: border-box
+  padding: 3vmin
+  border: 2px solid #222
+  box-shadow: 0 0 1vmin #999
+
+  input, select
+    width: 80%
+
+  label
+    display: block
+    font-size: 2vh
+    margin-bottom: 1vh
+    color: #222
 
 .show-form-btn
+  position: fixed
+  bottom: 5vh
+  right: 5vh
   margin-top: 2vh

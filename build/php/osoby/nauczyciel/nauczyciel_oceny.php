@@ -52,8 +52,8 @@
 
   <main>
     <section>
-      <button class="show-form-btn">Dodaj ocenę</button>
-      <form class="dis-from" method="post" action="zadania/dodawanie_ocen.php">
+      <button class="show-form-btn"><i class="fas fa-plus"></i></button>
+      <form class="dis-form" method="post" action="zadania/dodawanie_ocen.php">
         <?php
           if (count($_SESSION['uczniowie']) == 0) {
             echo 'Nie ma żadnych uczniów, którym mógłbyś dodać ocenę';
@@ -78,7 +78,7 @@
 
             echo '</select>';
                     
-            echo '<button type="submit">Dodaj ocenę</button>';
+            echo '<button type="submit">Dodaj</button>';
             echo '<input type="hidden" name="wyb_przydzial" value="'.$_SESSION['wyb_przydzial'].'">';
 
             if (isset($_SESSION['dodawanie_ocen'])) {
@@ -127,9 +127,9 @@
               echo '<td class="tabela-liczby">'.$ocena['data'].'</td>';
               echo '<td class="tabela-liczby">'.$ocena['wartosc'].'</td>';
               echo '<td class="tabela-zadania">';
-                echo '<a href="edytowanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'">Edytuj</a>';
+                echo '<a href="edytowanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'"><i class="fas fa-pen"></i></a>';
                 echo '<span>|</span>';
-                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'\':\'\')" href="#">Usuń</a>';
+                echo '<a onclick="javascript:(confirm(\'Czy jesteś tego pewny?\')? window.location=\'zadania/usuwanie_ocen.php?wyb_ocena='.$ocena['id'].'&wyb_przydzial='.$_SESSION['wyb_przydzial'].'\':\'\')" href="#"><i class="fas fa-trash-alt"></i></a>';
               echo '</td>';
             echo '</tr>';
           }

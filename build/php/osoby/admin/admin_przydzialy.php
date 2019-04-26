@@ -38,7 +38,7 @@
 
   <main>
     <section>
-      <button class="show-form-btn">Dodaj przydziały</button>
+      <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_przydzialow.php" method="post">
       <?php
         if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
