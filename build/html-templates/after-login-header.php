@@ -1,5 +1,5 @@
 <header class="navigation-header">
-  <h2 class="logo"><a href="../wszyscy/dziennik.php">e-dziennik</a></h2>
+  <h2 class="logo"><a href="../wszyscy/dziennik.php">school journal</a></h2>
   <input type="checkbox" id="chk">
   <label for="chk" class="show-menu-btn"><i class="fas fa-bars"></i></label>
 

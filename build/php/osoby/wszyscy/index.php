@@ -16,7 +16,7 @@
 </head>
 <body>
   <header class="navigation-header">
-    <h2 class="logo"><a href="../wszyscy/index.php">e-dziennik</a></h2>
+    <h2 class="logo"><a href="../wszyscy/index.php">school journal</a></h2>
     <p>Twój następny e-dziennik</p>
   </header>
 
