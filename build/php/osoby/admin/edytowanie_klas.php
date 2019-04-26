@@ -23,7 +23,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj klasę"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Edit Class"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -31,16 +31,16 @@
 
   <main>
     <form action="zadania/edytowanie_klas.php" method="post">
-      <h2>EDYTUJ KLASĘ</h2>
-      <label for="zmianaNazwy">Zmień Nazwę</label>
+      <h2>Edit Class</h2>
+      <label for="zmianaNazwy">Name</label>
       <input id="zmianaNazwy"small type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
-      <label for="zmianaOpisu">Zmień Opis</label>
+      <label for="zmianaOpisu">Description</label>
       <input id="zmianaOpisu"small type="text" value="<?php echo $rezultat['opis']; ?>" name="opis" required/>
       <input type="hidden" value="<?php echo $wyb_klasa; ?>" name="wyb_klasa"/>
-      <button type="submit">Zmień</button>
+      <button type="submit">Change</button>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

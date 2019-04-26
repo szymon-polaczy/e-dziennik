@@ -9,11 +9,11 @@ $('#nadajUprawnienia').on("change", function() {
   document.getElementById("wybierzSale").required = false;
   document.getElementById("dataUrodzenia").required = false;
 
-  if (war_select_upr == "Nauczyciel") {
+  if (war_select_upr == "Teachers") {
     $('#nauczyciel-uzu').css({"display": "block"}); 
     document.getElementById("wybierzSale").required = true;
   }
-  else if (war_select_upr == "Uczeń") {
+  else if (war_select_upr == "Learners") {
     $('#uczen-uzu').css({"display": "block"});
     document.getElementById("wybierzKlase").required = true;
     document.getElementById("dataUrodzenia").required = true;

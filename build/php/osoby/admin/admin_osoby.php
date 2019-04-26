@@ -25,7 +25,7 @@
 <html lang="en">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Osoby";
+  <?php $title = "People";
   include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
@@ -36,28 +36,28 @@
     <section>
       <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_osob.php" method="post">
-        <label for="dodajImie">Wpisz Imię</label>
-        <input id="dodajImie" type="text" placeholder="Imię" name="imie" required />
-        <label for="dodajImie">Wpisz Nazwisko</label>
-        <input id="dodajImie" type="text" placeholder="Nazwisko" name="nazwisko" required />
-        <label for="dodajImie">Wpisz Email</label>
+        <label for="dodajImie">Name</label>
+        <input id="dodajImie" type="text" placeholder="Name" name="imie" required />
+        <label for="dodajImie">Surname</label>
+        <input id="dodajImie" type="text" placeholder="Surname" name="nazwisko" required />
+        <label for="dodajImie">Email</label>
         <input id="dodajImie" type="email" placeholder="Email" name="email" required />
-        <label for="dodajImie">Wpisz Hasło</label>
-        <input id="dodajImie" type="password" placeholder="Hasło" name="haslo" required />
-        <label for="nadajUprawnienia">Nadaj Uprawnienia</label>
+        <label for="dodajImie">Password</label>
+        <input id="dodajImie" type="password" placeholder="Password" name="haslo" required />
+        <label for="nadajUprawnienia">Who are they</label>
         <select id="nadajUprawnienia" name="uprawnienia" required>
           <option></option>
-          <option value="a">Administrator</option>
-          <option value="n">Nauczyciel</option>
-          <option value="u">Uczeń</option>
+          <option value="a">Administrators</option>
+          <option value="n">Teachers</option>
+          <option value="u">Learners</option>
         </select>
 
         <div class="invisible" id="nauczyciel-uzu">
           <?php
           if (count($sale) == 0) {
-            echo '<small>Nie ma żadnej sali z którą można połączyć nauczyciela. Dodaj pierw sale!</small>';
+            echo '<small>There are no rooms</small>';
           } else {
-            echo '<label for="wybierzSale">Wybierz Salę</label>';
+            echo '<label for="wybierzSale">Rooms</label>';
             echo '<select id="wybierzSale" name="wyb_sala">';
               echo '<option></option>';
               foreach ($sale as $sala)
@@ -69,12 +69,12 @@
         <div class="invisible" id="uczen-uzu">
           <?php
           if (count($klasy) == 0) {
-            echo '<small>Nie ma żadnej klasy z którą można połączyć ucznia. Dodaj pierw klasy!</small>';
+            echo '<small>There are no classes</small>';
           } else {
-            echo '<label for="dataUrodzenia">Wybierz Datę Urodzenia</label>';
+            echo '<label for="dataUrodzenia">Birthdate</label>';
             echo '<input id="dataUrodzenia" type="date" name="data_urodzenia"/>';
 
-            echo '<label for="wybierzKlase">Wybierz Klasę</label>';
+            echo '<label for="wybierzKlase">Classes</label>';
             echo '<select id="wybierzKlase" name="wyb_klasa">';
               echo '<option></option>';
               foreach ($klasy as $klasa)
@@ -83,11 +83,11 @@
           }
           ?>
         </div>
-        <button type="submit">Dodaj</button>
+        <button type="submit">Add</button>
       </form>
     </section>
     <section>
-      <h2>ZOBACZ OSOBY</h2>
+      <h2>See People</h2>
       <?php
         if (isset($_SESSION['dodawanie_osob'])) {
           echo '<small>'.$_SESSION['dodawanie_osob'].'</small>';
@@ -104,22 +104,22 @@
           unset($_SESSION['edytowanie_osob']);
         }
 
-        echo '<h3>Administratorzy</h3>';
+        echo '<h3>Administrators</h3>';
         $adm->showDataTable($u_adm, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
 
         if (count($u_nau) > 1) {
-          echo '<h3>Nauczyciele</h3>';
+          echo '<h3>Teachers</h3>';
           $adm->showDataTable($u_nau, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
         }
 
         if (count($u_ucz) > 1) {
-          echo '<h3>Uczniowie</h3>';
+          echo '<h3>Learners</h3>';
           $adm->showDataTable($u_ucz, true, 'edytowanie_osob.php?wyb_osoba', 'usuwanie_osob.php?wyb_osoba');
         }
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

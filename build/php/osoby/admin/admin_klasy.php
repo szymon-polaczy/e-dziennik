@@ -20,7 +20,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Klasy"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Classes"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
@@ -30,15 +30,15 @@
     <section>
       <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_klas.php" method="post">
-        <label for="dodawanie_nazwy">Dodaj nazwę</label>
-        <input id="dodawanie_nazwy" name="nazwa" type="text" placeholder="nazwa" required>
-        <label for="dodawanie_opisu">Dodaj opis</label>
-        <input id="dodawanie_opisu" name="opis" type="text" placeholder="opis" required>
-        <button type="submit">Dodaj</button>
+        <label for="dodawanie_nazwy">Add name</label>
+        <input id="dodawanie_nazwy" name="nazwa" type="text" placeholder="name" required>
+        <label for="dodawanie_opisu">Add description</label>
+        <input id="dodawanie_opisu" name="opis" type="text" placeholder="description" required>
+        <button type="submit">Add</button>
       </form>
     </section>
     <section>
-      <h2>KLASY</h2>
+      <h2>Classes</h2>
       <?php
         if (isset($_SESSION['dodawanie_klas'])) {
           echo '<small class="user_info">'.$_SESSION['dodawanie_klas'].'</small>';
@@ -58,11 +58,11 @@
         if (count($klasy) > 0)
           $adm->showDataTable($klasy, true, 'edytowanie_klas.php?wyb_klasa', 'usuwanie_klas.php?wyb_klasa');
         else
-          '<p>Nie ma żadnych klas</p>';
+          '<p>There are no classes</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

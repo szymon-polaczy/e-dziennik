@@ -20,7 +20,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Sale"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Rooms"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
@@ -30,13 +30,13 @@
     <section>
       <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_sal.php" method="post">
-        <label for="nazwa_sali">Wpisz nazwę sali</label>
-        <input id="nazwa_sali" type="text" placeholder="Nazwa" name="nazwa" required/>
-        <button type="submit">Dodaj</button>
+        <label for="nazwa_sali">Name</label>
+        <input id="nazwa_sali" type="text" placeholder="name" name="nazwa" required/>
+        <button type="submit">Add</button>
       </form>
     </section>
     <section>
-      <h2>ZOBACZ SALE</h2>
+      <h2>See Rooms</h2>
       <?php
         if (isset($_SESSION['dodawanie_sal'])) {
           echo '<p>'.$_SESSION['dodawanie_sal'].'</p>';
@@ -55,11 +55,11 @@
         if (count($sale) > 0)
           $adm->showDataTable($sale, true, 'edytowanie_sal.php?wyb_sala', 'usuwanie_sal.php?wyb_sala');
         else
-          echo '<p>Nie ma żadnych sal</p>';
+          echo '<p>There are no rooms</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

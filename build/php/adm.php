@@ -66,7 +66,7 @@
               echo '<th class="'.(is_numeric($val)? "num" : is_string($val)? "txt" : '').'">'.$key.'</th>';
 
           if ($task != NULL)
-            echo '<th class="task">opcje</th>'; 
+            echo '<th class="task">options</th>'; 
         echo '</tr>';
       echo '</thead>';
 

@@ -22,7 +22,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj przedmiot"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Edit subject"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -30,14 +30,14 @@
 
   <main>
     <form method="post" action="zadania/edytowanie_przedmiotow.php">
-      <h2>Edytuj przedmiot</h2>
-      <label for="przedmiot-nazwa">Edytuj nazwę przedmiotu</label>
+      <h2>Edit Subject</h2>
+      <label for="przedmiot-nazwa">Name</label>
       <input name="nazwa" id="przedmiot-nazwa" value="<?php echo $rezultat['nazwa']; ?>" type="text" required>
       <input type="hidden" name="wyb_przedmiot" value="<?php echo $wyb_przedmiot?>">
-      <button type="submit">Zmień</button>
+      <button type="submit">Change</button>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

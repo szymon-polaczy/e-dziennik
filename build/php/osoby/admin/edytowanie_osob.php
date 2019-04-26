@@ -30,7 +30,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj osobę"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Edit person"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -38,18 +38,18 @@
 
   <main>
     <form action="zadania/edytowanie_osob.php" method="post">
-      <h2>EDYTUJ OSOBĘ</h2>
-      <label for="zmianaImienia">Edytuj Imię</label>
+      <h2>Edit Person</h2>
+      <label for="zmianaImienia">Name</label>
       <input id="zmianaImienia" type="text" value="<?php echo $_SESSION['edytowana']['imie']; ?>" name="imie" required/>
-      <label for="zmianaNazwiska">Edytuj Nazwisko</label>
+      <label for="zmianaNazwiska">Sunrname</label>
       <input id="zmianaNazwiska" type="text" value="<?php echo $_SESSION['edytowana']['nazwisko']; ?>" name="nazwisko" required/>
-      <label for="zmianaEmailu">Edytuj Email</label>
+      <label for="zmianaEmailu">Email</label>
       <input id="zmianaEmailu" type="email" value="<?php echo $_SESSION['edytowana']['email']; ?>" name="email" required/>
-      <label for="zmianHasla">Edytuj Haslo</label>
+      <label for="zmianHasla">Password</label>
       <input id="zmianHasla" type="password" value="<?php echo $_SESSION['edytowana']['haslo']; ?>" name="haslo" required/>
-      <button type="submit">Zmień</button>
+      <button type="submit">Change</button>
     </form>
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

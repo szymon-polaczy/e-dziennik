@@ -29,7 +29,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj przydział"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Edit Assigmnents"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -37,22 +37,22 @@
 
   <main>
     <form method="post" action="zadania/edytowanie_przydzialow.php">
-      <h2>Edytuj Przydział</h2>
-      <label for="wybor_nauczyciela">Wybierz nauczyciela</label>
+      <h2>Edit Assigmnents</h2>
+      <label for="wybor_nauczyciela">Teachers</label>
       <select name="wyb_nauczyciel" id="wybor_nauczyciela" required>
         <?php
           foreach ($osoby as $osoba)
             echo '<option '.($osoba['id'] == $edi['id_nauczyciel']? 'selected' : '').' value="'.$osoba['id'].'">Nauczyciel '.$osoba['imie'].' '.$osoba  ['nazwisko'].'</option>';
         ?>
       </select>
-      <label for="wybor_przedmiotu">Wybierz przedmiot</label>
+      <label for="wybor_przedmiotu">Subjects</label>
       <select name="wyb_przedmiot" id="wybor_przedmiotu" required>
         <?php
           foreach ($przedmioty as $sub)
             echo '<option '.($sub['id'] == $edi['id_przedmiot']? 'selected' : '').' value="'.$sub['id'].'">Przedmiot '.$sub['nazwa'].'</option>';
         ?>
       </select>
-      <label for="wybor_klasy">Wybierz klasę</label>
+      <label for="wybor_klasy">Classes</label>
       <select name="wyb_klasa" id="wybor_klasy" required>
         <?php
           foreach ($klasy as $cla)
@@ -60,10 +60,10 @@
         ?>
       </select>
       <input type="hidden" name="edytowany_id" value="<?php echo $edi['id']; ?>">
-      <button type="submit">Zmień</button>
+      <button type="submit">Change</button>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

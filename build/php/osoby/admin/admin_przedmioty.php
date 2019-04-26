@@ -20,7 +20,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Przedmioty"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Subjects"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body>
   <!--HEADER INCLUDE-->
@@ -30,13 +30,13 @@
     <section>
       <button class="show-form-btn"><i class="fas fa-plus"></i></button>
       <form class="dis-form" action="zadania/dodawanie_przedmiotow.php" method="post">
-        <label for="przedmiot-nazwa">Wpisz nazwę przedmiotu</label>
-        <input name="nazwa" id="przedmiot-nazwa" placeholder="Nazwa" type="text" required>
-        <button type="submit">Dodaj</button>
+        <label for="przedmiot-nazwa">Name</label>
+        <input name="nazwa" id="przedmiot-nazwa" placeholder="name" type="text" required>
+        <button type="submit">Add</button>
       </form>
     </section>
     <section>
-      <h2>ZOBACZ PRZEDMIOT</h2>
+      <h2>See Subjects</h2>
       <?php
         if (isset($_SESSION['dodawanie_przedmiotow'])) {
           echo '<p>'.$_SESSION['dodawanie_przedmiotow'].'</p>';
@@ -56,11 +56,11 @@
         if (count($przedmioty) > 1)
           $adm->showDataTable($przedmioty, true, 'edytowanie_przedmiotow.php?wyb_przedmiot', 'usuwanie_przedmiotow.php?wyb_przedmiot');
         else
-          echo '<p>Nie ma żadnych przedmiotów</p>';
+          echo '<p>There are no subjects</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

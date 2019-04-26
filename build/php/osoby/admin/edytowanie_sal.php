@@ -22,7 +22,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Edytuj salę"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Edit Rooms"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -30,14 +30,14 @@
 
   <main>
     <form method="post" action="zadania/edytowanie_sal.php">
-      <h2>EDYTUJ SALE</h2>
-      <label for="nazwa_sali">Edytuj nazwę sali</label>
+      <h2>Edit Rooms</h2>
+      <label for="nazwa_sali">Name</label>
       <input id="nazwa_sali" type="text" value="<?php echo $rezultat['nazwa']; ?>" name="nazwa" required/>
       <input type="hidden" name="wyb_sala" value="<?php echo $rezultat['id']; ?>">
-      <button type="submit">Zmień</button>
+      <button type="submit">Change</button>
     </form>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->

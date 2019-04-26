@@ -30,7 +30,7 @@
 <html lang="pl">
 <head>
   <!--INSIDE OF HEAD INCLUDE-->
-  <?php $title = "Przydziały"; include("../../../html-templates/inside-head.php"); ?>
+  <?php $title = "Assignments"; include("../../../html-templates/inside-head.php"); ?>
 </head>
 <body class="index-body">
   <!--HEADER INCLUDE-->
@@ -42,36 +42,36 @@
       <form class="dis-form" action="zadania/dodawanie_przydzialow.php" method="post">
       <?php
         if (count($nauczyciele) == 0 || count($przedmioty) <= 0 || count($klasy) <= 0) {
-          echo '<div style="color: #f33">NIE MA NAUCZYCIELI LUB PRZEDMIOTÓW LUB KLAS. DODAJ PIERW WSZYSTKIE ELEMENTY!</div>';
+          echo '<div style="color: #f33">There are no teachers or subjects or classes</div>';
         } else {
-          echo '<label for="wyb_nauczyciela">Wybierz Nauczyciela</label>';
+          echo '<label for="wyb_nauczyciela">Teachers</label>';
           echo '<select name="wyb_nauczyciel" id="wyb_nauczyciela" required>';
             echo '<option></option>';
             foreach ($nauczyciele as $nauczyciel)
               echo '<option value="'.$nauczyciel['id'].'">Nauczyciel '.$nauczyciel['imie'].' '.$nauczyciel['nazwisko'].'</option>';
           echo '</select>';
 
-          echo '<label for="wyb_przedmiot">Wybierz Przedmiot</label>';
+          echo '<label for="wyb_przedmiot">Subjects</label>';
           echo '<select name="wyb_przedmiot" id="wyb_przedmiot" required>';
             echo '<option></option>';
             foreach ($przedmioty as $przedmiot)
               echo '<option value="'.$przedmiot['id'].'">Przedmiot '.$przedmiot['nazwa'].'</option>';
           echo '</select>';
 
-          echo '<label for="wyb_klase">Wybierz Klasę</label>';
+          echo '<label for="wyb_klase">Classes</label>';
           echo '<select name="wyb_klasa" id="wyb_klase" required>';
             echo '<option></option>';
             foreach ($klasy as $klasa)
               echo '<option value="'.$klasa['id'].'">Klasa '.$klasa['nazwa'].' | '.$klasa['opis'].'</option>';
           echo '</select>';
 
-          echo '<button type="submit">DODAJ</button>';
+          echo '<button type="submit">Add</button>';
         }
       ?>
       </form>
     </section>
     <section>
-      <h2>ZOBACZ PRZYDZIAŁY</h2>
+      <h2>See Assignments</h2>
       <?php
         if (isset($_SESSION['dodawanie_przydzialow'])) {
           echo '<p>'.$_SESSION['dodawanie_przydzialow'].'</p>';
@@ -91,11 +91,11 @@
         if (count($_SESSION['przydzialy']) > 0)
           $adm->showDataTable($_SESSION['przydzialy'], true, 'edytowanie_przydzialow.php?wyb_przydzial', 'usuwanie_przydzialow.php?wyb_przydzial');
         else
-          echo '<p>Nie ma żadnych przydziałów</p>';
+          echo '<p>There are no assignments</p>';
       ?>
     </section>
 
-    <a href="../wszyscy/dziennik.php"><button>Powrót do strony głównej</button></a>
+    <a href="../wszyscy/dziennik.php"><button>Home Page</button></a>
   </main>
 
   <!--FOOTER INCLUDE-->
