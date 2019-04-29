@@ -1,18 +1,27 @@
+<?php
+  session_start();
+?>
 <!doctype html>
 <head>
-  <?php $site_title = "Sign In"; include("templates/head-tag-inside.php"); ?>
+  <?php $site_title = "Sign In"; include("templates/head_tag_inside.php"); ?>
 </head>
 <body>
-  <head class="navigation-header">
+  <header class="navigation-header">
     <h1>school journal</h1>
-  </head>
+  </header>
   <main>
-    <form action="sign-in.php" method="post">
+    <form action="../php-tasks/sign_in.php" method="post">
       <label for="email-input">Email</label>
       <input id="email-input" name="email" type="email" placeholder="Email">
       <label for="password-input">Password</label>
       <input id="password-input" name="password" type="password" placeholder="Password">
       <button type="submit">Sign In</button>
+      <?php
+        if(isset($_SESSION['sign_in_message'])) {
+          echo $_SESSION['sign_in_message'];
+          unset($_SESSION['sign_in_message']);
+        }
+      ?>
     </form>
   </main>
   <footer>
