@@ -7,3 +7,5 @@
 <meta name="keywords" content="opensource, electronic, school, journal, system, teachers, students">
 <meta name="description" content="">
 <meta name="author" content="Szymon Polaczy">
+
+<link rel="stylesheet" href="styles/css/app.css">
