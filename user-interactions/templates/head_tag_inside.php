@@ -4,6 +4,6 @@
 
 <title>School Journal - <?php echo $site_title; ?></title>
 
-<meta name="keywords" content="">
+<meta name="keywords" content="opensource, electronic, school, journal, system, teachers, students">
 <meta name="description" content="">
 <meta name="author" content="Szymon Polaczy">
