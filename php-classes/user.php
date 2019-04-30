@@ -1,17 +1,16 @@
 <?php
   
   class User {
-    private $signed_in;
-
-    function __construct() {
-      $signed_in = false;
-    }
-
     public function sign_in() {
-      return "Logowanie...";
+      return "Sign in...";
     }
 
     public function sign_out() {
-      return "Wylogowanie...";
+      return "Sign out...";
+    }
+
+    #this function return true or false depends on if the user is actually signed in
+    public function is_signed_in() {
+      return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
   }
