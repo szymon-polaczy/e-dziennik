@@ -1,6 +1,6 @@
 <?php
   
-  class User {
+  class USER {
     public function sign_in() {
       return "Sign in...";
     }

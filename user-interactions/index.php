@@ -16,12 +16,6 @@
       <label for="password-input">Password</label>
       <input id="password-input" name="password" type="password" placeholder="Password">
       <button type="submit">Sign In</button>
-      <?php
-        if(isset($_SESSION['sign_in_message'])) {
-          echo $_SESSION['sign_in_message'];
-          unset($_SESSION['sign_in_message']);
-        }
-      ?>
     </form>
   </main>
   <footer>
