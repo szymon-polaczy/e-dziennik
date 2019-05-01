@@ -18,7 +18,8 @@
     <h1>school journal</h1>
   </header>
   <main>
-    You are signed in
+    You are signed in <br>
+    <a href="../php-tasks/sign_out.php">Sign Out</a>
   </main>
   <footer>
     <h6>Author: <a href="https://szymonpolaczy.pl">Szymon Polaczy</a></h6>

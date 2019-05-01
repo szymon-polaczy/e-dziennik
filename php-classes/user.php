@@ -1,6 +1,8 @@
 <?php
   
   class USER {
+    /* this functions signs_in the user. If something goes wrong it return value in 
+     * range 1-100 and if everything is right it returns 0*/
     public function sign_in($pdo, $email, $password) {
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');
@@ -63,11 +65,7 @@
       }
     }
 
-    public function sign_out() {
-      return "Sign out...";
-    }
-
-    #this function return true or false depends on if the user is actually signed in
+    /*this function return true or false depends on if the user is actually signed in*/
     public function is_signed_in() {
       return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
