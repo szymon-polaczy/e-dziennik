@@ -1,5 +1,13 @@
 <?php
   session_start();
+
+  require_once "../php-classes/user.php";
+
+  $class_user = new USER();
+
+  if (!$class_user->is_signed_in()) {
+    header('Location: index.php');
+  }
 ?>
 <!doctype html>
 <head>

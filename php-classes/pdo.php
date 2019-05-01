@@ -1,6 +1,6 @@
 <?php
 
-  class PDO
+  class PDO_DB
   {
     private $user, $database, $host, $pdo;
 
@@ -22,7 +22,7 @@
       $affected_rows = $this->pdo->exec($sql);
       return $affected_rows;
     }
-    
+
     public function sql_value($sql, $field = null)
     {
       $statement = $this->pdo->query($sql);
