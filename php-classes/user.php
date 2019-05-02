@@ -1,20 +1,19 @@
 <?php
   
   class USER {
-    /* this functions signs_in the user. If something goes wrong it return value in 
-     * range 1-100 and if everything is right it returns 0*/
+    /* sign in the user*/
     public function sign_in($pdo, $email, $password) {
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');
 
       if (empty($email))
-        return 3;
+        return "Email is required but it's empty.";
 
       if (empty($password))
-        return 4;
+        return "Password is required but it's empty.";
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        return 5;
+        return "Email format invalid.";
 
       $sql = "SELECT * FROM user WHERE email='$email'";
       $response = $pdo->sql_table($sql);
@@ -38,7 +37,7 @@
             $response = $pdo->sql_value($sql);
 
             if (empty($response) || is_null($response))
-              return 2;
+              return "Additional resources were failed to retrieve.";
 
             $_SESSION['room_name'] = $response;
           } else if ($_SESSION['permissions'] == 's') {
@@ -48,7 +47,7 @@
             $response = $pdo->sql_record($sql);
 
             if (empty($response) || is_null($response))
-              return 2;
+              return "Additional resources were failed to retrieve.";
 
             $_SESSION['birthdate'] = $response['birthdate'];
             $_SESSION['class_name'] = $response['class_name'];
@@ -58,10 +57,10 @@
           $_SESSION['signed_in'] = true;
           return 0;
         } else {
-          return 1;
+          return "Signing in failed, email or password is incorrect.";
         }
       } else {
-        return 1;
+        return "Signing in failed, email or password is incorrect.";
       }
     }
 

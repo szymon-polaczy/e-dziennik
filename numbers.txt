@@ -1,6 +1,0 @@
-0: signed in successfully
-1: signing in failed, email or password is incorrect
-2: additional resources were failed to retrieve
-3: email is required but it's empty
-4: password is required but it's empty
-5: invalid email format
