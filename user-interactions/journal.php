@@ -15,11 +15,17 @@
 </head>
 <body>
   <header class="navigation-header">
-    <h1>school journal</h1>
+    <a href="journal.php"><h2>school journal</h2></a>
+    <input type="checkbox" id="chk">
+    <label for="chk" class="show-menu-btn"><i class="fas fa-bars"></i></label>
+
+    <nav class="menu">
+      <a href="../php-tasks/sign_out.php">sign out</a>
+      <label for="chk" class="hide-menu-btn"><i class="fas fa-times"></i></label>
+    </nav>
   </header>
   <main>
     You are signed in <br>
-    <a href="../php-tasks/sign_out.php">Sign Out</a>
   </main>
   <footer>
     <h6>Author: <a href="https://szymonpolaczy.pl">Szymon Polaczy</a></h6>

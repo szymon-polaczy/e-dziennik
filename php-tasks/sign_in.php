@@ -16,13 +16,13 @@
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $_SESSION['sign_in_message'] = $class_user->sign_in($class_pdo_db, $email, $password);
+  $sign_in_info = $class_user->sign_in($class_pdo_db, $email, $password);
 
-  if ($_SESSION['sign_in_message'] == 0) {
-    unset($_SESSION['sign_in_message']);
+  if ($sign_in_info == 0) {
     header('Location: ../user-interactions/journal.php');
   }
   else {
+    $_SESSION['sign_in_message'] = $sign_in_info;
     header('Location: ../user-interactions/index.php');
   }
   

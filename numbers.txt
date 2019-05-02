@@ -4,5 +4,3 @@
 3: email is required but it's empty
 4: password is required but it's empty
 5: invalid email format
-
-100: signed out successfully

@@ -8,4 +8,6 @@
 <meta name="description" content="">
 <meta name="author" content="Szymon Polaczy">
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css ">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <link rel="stylesheet" href="styles/css/app.css">

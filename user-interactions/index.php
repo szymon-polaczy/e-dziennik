@@ -15,7 +15,7 @@
 </head>
 <body>
   <header class="navigation-header">
-    <h1>school journal</h1>
+    <a href="index.php"><h2>school journal</h2></a>
   </header>
   <main>
     <form action="../php-tasks/sign_in.php" method="post">
