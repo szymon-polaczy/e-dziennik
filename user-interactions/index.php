@@ -10,15 +10,15 @@
   }
 ?>
 <!doctype html>
-<head>
-  <?php $site_title = "Sign In"; include("templates/head_tag_inside.php"); ?>
-</head>
+<?php $site_title = "Sign In"; include("templates/head_tag.php"); ?>
 <body>
   <header class="navigation-header">
     <a href="index.php"><h2>school journal</h2></a>
   </header>
+
   <main>
     <form action="../php-tasks/sign_in.php" method="post">
+      <h3>Sign In</h3>
       <label for="email-input">Email</label>
       <input id="email-input" name="email" type="email" placeholder="Email" required>
       <label for="password-input">Password</label>
@@ -32,8 +32,7 @@
       ?>
     </form>
   </main>
-  <footer>
-    <h6>Author: <a href="https://szymonpolaczy.pl">Szymon Polaczy</a></h6>
-  </footer>
+
+  <?php include("templates/main_footer.php"); ?>
 </body>
 </html>
