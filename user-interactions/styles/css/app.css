@@ -70,13 +70,114 @@ a:hover {
   transition: transform 0.1s ease-in-out;
 }
 
+button {
+  outline: none;
+  border: 1px solid #222;
+  background-color: #fff;
+  padding: 0.5vmin;
+  border-radius: 0.5vh;
+  transition: transform 0.05s ease-in-out;
+  margin-top: 1.5vh;
+}
+button:hover {
+  opacity: 0.7;
+  transform: scale(1.05);
+  transition: transform 0.1s ease-in-out;
+}
+button:active {
+  opacity: 0.5;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+form button {
+  border: 2px solid #222;
+}
+form h3 {
+  font-size: 2.5vh;
+}
+form label {
+  width: 90%;
+  text-align: left;
+}
+form input {
+  margin: 0.5vh 0 1vh;
+  width: 90%;
+  border: 2px solid #ddd;
+  padding: 0.5vmin;
+  box-sizing: border-box;
+  border-radius: 0.5vh;
+  outline: none;
+  color: #666;
+}
+form input:focus {
+  border: 2px solid #222;
+  color: #222;
+}
+
+#btn-show-add-form {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vh;
+  font-size: 2vh;
+  border: 2px solid #222;
+}
+
+#btn-hide-add-form {
+  margin: 0;
+  border: 2px solid #222;
+}
+
+.add-form {
+  display: none;
+}
+
+.show-add-form {
+  display: flex;
+}
+
+.add-form {
+  align-items: flex-end;
+  width: 90%;
+  padding: 2vmin;
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border: 2px solid #222;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 0.5vh;
+}
+.add-form .form-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding-bottom: 1vh;
+  border-bottom: 0.1vh solid #ddd;
+}
+.add-form .form-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 1vh;
+}
+
 .main-footer {
   text-align: center;
   padding: 1vw;
   border-top: 0.1vh solid #ddd;
 }
 .main-footer h6 {
-  font-size: 1.5vh;
+  font-size: 1.75vh;
 }
 
 .navigation-header {

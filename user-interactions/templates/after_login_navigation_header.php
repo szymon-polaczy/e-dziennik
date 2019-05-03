@@ -4,6 +4,11 @@
   <label for="chk" class="show-menu-btn"><i class="fas fa-bars"></i></label>
 
   <nav class="menu">
+    <?php 
+      if ($_SESSION['permissions']) {
+        echo '<a href="classes.php">Classes</a>';
+      }
+    ?>
     <a href="../php-tasks/sign_out.php">sign out</a>
     <label for="chk" class="hide-menu-btn"><i class="fas fa-times"></i></label>
   </nav>
