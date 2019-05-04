@@ -20,9 +20,9 @@
     <form action="../php-tasks/sign_in.php" method="post">
       <h3>Sign In</h3>
       <label for="email-input">Email</label>
-      <input id="email-input" name="email" type="email" placeholder="Email" required>
+      <input id="email-input" name="email" type="email" placeholder="Enter your email here" required>
       <label for="password-input">Password</label>
-      <input id="password-input" name="password" type="password" placeholder="Password" required>
+      <input id="password-input" name="password" type="password" placeholder="Enter your password here" required>
       <button type="submit">Sign In</button>
       <?php
         if (isset($_SESSION['sign_in_message'])) {

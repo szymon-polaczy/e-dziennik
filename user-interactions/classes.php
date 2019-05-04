@@ -23,10 +23,10 @@
           <button id="btn-hide-add-form" type="button"><i class="fas fa-times"></i></button>
         </div>
         <div class="form-wrapper">
-          <label for="add-form-name">Class Name</label>
-          <input id="add-form-name" name="name" placeholder="name" type="text">
-          <label for="add-form-description">Class Description</label>
-          <input id="add-form-description" name="description" placeholder="description" type="text">
+          <label for="add-form-name">Name</label>
+          <input id="add-form-name" name="name" placeholder="Add your class name" type="text">
+          <label for="add-form-description">Description</label>
+          <input id="add-form-description" name="description" placeholder="Add your class description" type="text">
           <button type="submit">Add</button>
         </div>
       </form>
