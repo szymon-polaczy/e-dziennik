@@ -97,16 +97,16 @@ form {
 form button {
   border: 2px solid #222;
 }
-form h3 {
-  font-size: 2.5vh;
-}
 form label {
   width: 90%;
   text-align: left;
 }
 form input {
-  margin: 0.5vh 0 1vh;
   width: 90%;
+}
+
+input {
+  margin: 0.5vh 0 1vh;
   border: none;
   border-bottom: 2px solid #ddd;
   padding: 0.5vmin;
@@ -114,7 +114,7 @@ form input {
   outline: none;
   color: #666;
 }
-form input:focus {
+input:focus {
   border-bottom: 2px solid #222;
   color: #222;
 }
