@@ -1,7 +1,7 @@
 <?php
   
-  class USER {
-    /* sign in the user*/
+  class USERS {
+    /*sign in the user*/
     public function sign_in($pdo, $email, $password) {
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');

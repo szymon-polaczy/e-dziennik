@@ -1,11 +1,21 @@
 <?php
   session_start();
 
+  require_once "../php-classes/pdo.php";
+  require_once "../php-tasks/files-needed/connect.php";
   require_once "../php-classes/user.php";
+  require_once "../php-classes/class.php";
 
-  $class_user = new USER();
+  $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
+  $class_users = new USERS();
+  $class_classes = new CLASSES();
 
-  if (!$class_user->is_signed_in()) {
+  if ($res = $class_classes->add($class_pdo_db, 'nazwa', 'opis') != 0)
+    echo $res;
+  else
+    echo 'ok, zmień nazwy plików od klas';
+
+  if (!$class_users->is_signed_in()) {
     header('Location: index.php');
   }
 ?>

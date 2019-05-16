@@ -3,9 +3,9 @@
 
   require_once "../php-classes/user.php";
 
-  $class_user = new USER();
+  $class_users = new USERS();
 
-  if (!$class_user->is_signed_in()) {
+  if (!$class_users->is_signed_in()) {
     header('Location: index.php');
   }
 ?>

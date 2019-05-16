@@ -10,13 +10,13 @@
     exit();
   }
 
-  $class_user = new USER();
+  $class_users = new USERS();
   $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
 
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $_SESSION['sign_in_message'] = $class_user->sign_in($class_pdo_db, $email, $password);
+  $_SESSION['sign_in_message'] = $class_users->sign_in($class_pdo_db, $email, $password);
 
   if ($_SESSION['sign_in_message'] === 0) {
     unset($_SESSION['sign_in_message']);
