@@ -10,10 +10,10 @@
   $class_users = new USERS();
   $class_classes = new CLASSES();
 
-  if ($res = $class_classes->add($class_pdo_db, 'nazwa', 'opis') != 0)
-    echo $res;
+  if ($res = $class_classes->add($class_pdo_db, 'nazwa', 'opis') == 0)
+    echo 'dobrze';
   else
-    echo 'ok, zmień nazwy plików od klas';
+    echo $res;
 
   if (!$class_users->is_signed_in()) {
     header('Location: index.php');
