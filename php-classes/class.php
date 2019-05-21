@@ -30,7 +30,7 @@
       $response = $pdo->sql_query($sql);
 
       if ($response > 0) {
-        return 0;
+        return "Good.";
       } else {
         return "Class failed to be added.";
       }

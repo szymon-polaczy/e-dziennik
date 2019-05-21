@@ -18,7 +18,7 @@
 
   $_SESSION['sign_in_message'] = $class_users->sign_in($class_pdo_db, $email, $password);
 
-  if ($_SESSION['sign_in_message'] === 0) {
+  if ($_SESSION['sign_in_message'] === "Good.") {
     unset($_SESSION['sign_in_message']);
     header('Location: ../user-interactions/journal.php');
   }

@@ -55,7 +55,7 @@
           }
           
           $_SESSION['signed_in'] = true;
-          return 0;
+          return "Good.";
         } else {
           return "Signing in failed, email or password is incorrect.";
         }
