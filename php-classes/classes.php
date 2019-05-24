@@ -18,7 +18,7 @@
       if (!is_string($description))
         return "Description is not a valid text.";
 
-      $class_valid_name = $this->getClassesByName($pdo, $name);
+      $class_valid_name = $this->getByName($pdo, $name);
 
       if (is_string($class_valid_name))
         return "Server Error: ".$class_valid_name.".";
@@ -36,8 +36,22 @@
       }
     }
 
+    /*this function return an class row that have certain id*/
+    public function getById($pdo, $id) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if(!is_numeric($id) || !is_int($id)) 
+        return "Id is not a valid number.";
+
+      $sql = "SELECT * FROM class WHERE id='$id'";
+      $response = $pdo->sql_record($sql);
+  
+      return $response;
+    }
+
     /*this function return an array of classes that have certain name*/
-    public function getClassesByName($pdo, $name) {
+    public function getByName($pdo, $name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
 
       if (empty($name))
@@ -47,7 +61,7 @@
         return "Name is not a valid text.";
 
       $sql = "SELECT * FROM class WHERE name='$name'";
-      $response = $pdo->sql_table($sql);
+      $response = $pdo->sql_record($sql);
 
       return $response;
     }
