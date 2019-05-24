@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  require_once "../php-classes/user.php";
+  require_once "../php-classes/users.php";
   require_once "../php-classes/pdo.php";
   require_once "files-needed/connect.php";
 

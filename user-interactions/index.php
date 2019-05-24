@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  require_once "../php-classes/user.php";
+  require_once "../php-classes/users.php";
 
   $class_users = new USERS();
 
