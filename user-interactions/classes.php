@@ -10,13 +10,11 @@
   $class_users = new USERS();
   $class_classes = new CLASSES();
 
-  /*Coś tu nie działa*/
-  $res = $class_classes->add($class_pdo_db, 'nazwa', 'opis');
+  $classes = $class_classes->getAll($class_pdo_db);
 
-  if ($res != "Good.")
-    echo $res;
-  else
-    echo 'dobrze';
+  echo '<pre>';
+  var_dump($classes);
+  echo '</pre>';
 
   if (!$class_users->is_signed_in()) {
     header('Location: index.php');
