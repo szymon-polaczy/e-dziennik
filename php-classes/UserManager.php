@@ -2,6 +2,12 @@
   
   class UserManager {
 
+    ########################################################
+    # it signs user in 
+    # $pdo -> class pdo that I need to interact with database [PdoManager]
+    # $email -> email user gives when he tries to sign in [string]
+    # $password -> password user gives when he tries to sign in [string]
+    ########################################################
     public function signIn($pdo, $email, $password) {
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');
@@ -11,6 +17,12 @@
 
       if (empty($password))
         return "Password is required but it's empty.";
+
+      if (!is_string($email))
+        return "Email is not a valid text.";
+
+      if (!is_string($password))
+        return "Password is not a valid text.";
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         return "Email format invalid.";
@@ -64,6 +76,9 @@
       }
     }
 
+    ########################################################
+    # checks if user is signed in and returns true or false
+    ########################################################
     public function isSignedIn() {
       return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
