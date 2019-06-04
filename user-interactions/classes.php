@@ -4,13 +4,13 @@
   require_once "../php-classes/pdo.php";
   require_once "../php-tasks/files-needed/connect.php";
   require_once "../php-classes/users.php";
-  require_once "../php-classes/classes.php";
+  require_once "../php-classes/class_manager.php";
 
   $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
   $class_users = new USERS();
-  $class_classes = new CLASSES($class_pdo_db); 
+  $class_manager = new ClassManager($class_pdo_db); 
 
-  $classes = $class_classes->getAll();
+  $classes = $class_manager->getAll();
 
   echo '<pre>';
   var_dump($classes);
