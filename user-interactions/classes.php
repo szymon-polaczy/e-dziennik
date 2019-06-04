@@ -8,9 +8,9 @@
 
   $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
   $class_users = new USERS();
-  $class_classes = new CLASSES();
+  $class_classes = new CLASSES($class_pdo_db); 
 
-  $classes = $class_classes->getAll($class_pdo_db);
+  $classes = $class_classes->getAll();
 
   echo '<pre>';
   var_dump($classes);
