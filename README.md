@@ -8,7 +8,7 @@ Creating a nice and pleasant school electronic journal, which will have all the 
 #### File Naming Conventions
  * class files need to have the same name as the class itself
 
-#### [Naming Conventions] (https://www.codementor.io/veenitchauhan/basics-of-naming-conventions-for-php-developers-eliexmew6)
+#### [Naming Conventions](https://www.codementor.io/veenitchauhan/basics-of-naming-conventions-for-php-developers-eliexmew6)
  * class name => PascalCase
  * function name => camelCase
  * variable name => with_underscore
