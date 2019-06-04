@@ -5,17 +5,17 @@
 
     ########################################################
     # just a constructor
-    # $pdo -> class pdo that I need to interact with database [PDO_DB]
+    # $pdo -> class pdo that I need to interact with database [PdoManager]
     ########################################################
     public function __construct($pdo) {
       $this->pdo = $pdo;
     }
 
-    #########################################################
+    ########################################################
     # adds new class to the database
     # $name -> name of the new class [string]
     # $description -> description of the new class [string]
-    #########################################################
+    ########################################################
     public function add($name, $description) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
       $description = htmlentities($description, ENT_QUOTES, 'utf-8');
