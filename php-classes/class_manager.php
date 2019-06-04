@@ -7,7 +7,11 @@
       $this->pdo = $pdo;
     }
 
-    /*this function adds the class*/
+    #########################################################
+    # adds new class to the database
+    # $name -> name of the new class [string]
+    # $description -> description of the new class [string]
+    #########################################################
     public function add($name, $description) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
       $description = htmlentities($description, ENT_QUOTES, 'utf-8');
@@ -42,7 +46,10 @@
       }
     }
 
-    /*this functions deletes the class*/
+    #########################################################
+    # deletes class in the database
+    # $id -> id of the class that you want to delete
+    #########################################################
     public function delete($id) {
       if (empty($id))
         return "Id is required but it's empty.";
@@ -60,7 +67,11 @@
       }
     }
 
-    /*this function edits just name of the element of that id*/
+    ########################################################
+    # edits name of the class in the database
+    # $id -> id of the class that you want to edit
+    # $name -> new name of the class
+    ########################################################
     public function editName($id, $name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
 
@@ -94,7 +105,11 @@
       }
     }
 
-    /*this function edits just description of the element of that id*/
+    ########################################################
+    # edits description of the class in the database
+    # $id -> id of the class that you want to edit
+    # $description -> new description of the class
+    ########################################################
     public function editDescription($id, $description) {
       $description = htmlentities($description, ENT_QUOTES, 'utf-8');
 
@@ -120,7 +135,10 @@
       }
     }
 
-    /*this function returns all classes as a array*/
+    ########################################################
+    # gets all classes from the database and
+    # returns them in an array of classes
+    ########################################################
     public function getAll() {
       $sql = "SELECT * FROM class";
       $response = $this->pdo->sql_table($sql);
@@ -128,7 +146,10 @@
       return $response;
     }
 
-    /*this function return an class row that have certain id*/
+    ########################################################
+    # gets one class from the database
+    # $id -> id of the class that you want to get
+    ########################################################
     public function getById($id) {
       if (empty($id))
         return "Id is required but it's empty.";
@@ -142,6 +163,14 @@
       return $response;
     }
 
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
+    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
     /*this function return an array of classes that have certain name it return an array pf classes*/
     public function getByName($name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
