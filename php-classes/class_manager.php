@@ -3,6 +3,10 @@
   class ClassManager {
     private $pdo;
 
+    ########################################################
+    # just a constructor
+    # $pdo -> class pdo that I need to interact with database [PDO_DB]
+    ########################################################
     public function __construct($pdo) {
       $this->pdo = $pdo;
     }
@@ -48,7 +52,7 @@
 
     #########################################################
     # deletes class in the database
-    # $id -> id of the class that you want to delete
+    # $id -> id of the class that you want to delete [number]
     #########################################################
     public function delete($id) {
       if (empty($id))
@@ -69,8 +73,8 @@
 
     ########################################################
     # edits name of the class in the database
-    # $id -> id of the class that you want to edit
-    # $name -> new name of the class
+    # $id -> id of the class that you want to edit [number]
+    # $name -> new name of the class [string]
     ########################################################
     public function editName($id, $name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
@@ -87,12 +91,10 @@
       if (!is_string($name))
         return "Name is not a valid text.";
 
-      $class_valid_name = $this->getByName($name);
-
-      if (is_string($class_valid_name))
-        return "Server Error: ".$class_valid_name.".";
+      $sql = "SELECT id FROM class WHERE name='$name'";
+      $valid_name_response = $this->pdo->sql_table($sql);
   
-      if (count($class_valid_name) != 0)
+      if (count($valid_name_response) != 0)
         return "Class with that name already exists.";
 
       $sql = "UPDATE class SET name='$name' WHERE id='$id'";
@@ -107,8 +109,8 @@
 
     ########################################################
     # edits description of the class in the database
-    # $id -> id of the class that you want to edit
-    # $description -> new description of the class
+    # $id -> id of the class that you want to edit [number]
+    # $description -> new description of the class [string]
     ########################################################
     public function editDescription($id, $description) {
       $description = htmlentities($description, ENT_QUOTES, 'utf-8');
@@ -148,7 +150,7 @@
 
     ########################################################
     # gets one class from the database
-    # $id -> id of the class that you want to get
+    # $id -> id of the class that you want to get [number]
     ########################################################
     public function getById($id) {
       if (empty($id))
@@ -162,16 +164,11 @@
   
       return $response;
     }
-
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    #!#!#!#!!#!#!#!#!##!#!#!#!!##!
-    /*this function return an array of classes that have certain name it return an array pf classes*/
+    
+    ########################################################
+    # gets one class from the database 
+    # $name -> name of the class that you want to get
+    ########################################################
     public function getByName($name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
 
@@ -182,7 +179,7 @@
         return "Name is not a valid text.";
 
       $sql = "SELECT * FROM class WHERE name='$name'";
-      $response = $this->pdo->sql_table($sql);
+      $response = $this->pdo->sql_record($sql);
 
       return $response;
     }
