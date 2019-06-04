@@ -1,11 +1,11 @@
 <?php
   session_start();
+  
+  require_once "../php-classes/UserManager.php";
 
-  require_once "../php-classes/users.php";
+  $user_manager = new UserManager();
 
-  $class_users = new USERS();
-
-  if (!$class_users->is_signed_in()) {
+  if (!$user_manager->isSignedIn()) {
     header('Location: index.php');
   }
 ?>

@@ -1,22 +1,22 @@
 <?php
   session_start();
 
-  require_once "../php-classes/users.php";
-  require_once "../php-classes/pdo.php";
   require_once "files-needed/connect.php";
+  require_once "../php-classes/UserManager.php";
+  require_once "../php-classes/PdoManager.php";
 
   if (!isset($_POST['email']) || !isset($_POST['password'])) {
     header('Location: ../user-interactions/index.php');
     exit();
   }
 
-  $class_users = new USERS();
-  $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
-
+  $pdo_manager = new PdoManager($db_user, $db_password, $db_name, $host);
+  $user_manager = new UserManager();
+  
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $_SESSION['sign_in_message'] = $class_users->sign_in($class_pdo_db, $email, $password);
+  $_SESSION['sign_in_message'] = $user_manager->signIn($pdo_manager, $email, $password);
 
   if ($_SESSION['sign_in_message'] === "Good.") {
     unset($_SESSION['sign_in_message']);

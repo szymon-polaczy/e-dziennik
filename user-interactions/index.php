@@ -1,11 +1,11 @@
 <?php
   session_start();
 
-  require_once "../php-classes/users.php";
+  require_once "../php-classes/UserManager.php";
 
-  $class_users = new USERS();
+  $user_manager = new UserManager();
 
-  if ($class_users->is_signed_in()) {
+  if ($user_manager->isSignedIn()) {
     header('Location: journal.php');
   }
 ?>

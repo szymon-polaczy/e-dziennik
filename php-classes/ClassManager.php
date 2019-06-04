@@ -32,16 +32,14 @@
       if (!is_string($description))
         return "Description is not a valid text.";
 
-      $class_valid_name = $this->getByName($name);
-
-      if (is_string($class_valid_name))
-        return "Server Error: ".$class_valid_name.".";
-
-      if (count($class_valid_name) != 0)
+      $sql = "SELECT id FROM class WHERE name='$name'";
+      $valid_name_response = $this->pdo->sqlTable($sql);
+  
+      if (count($valid_name_response) != 0)
         return "Class with that name already exists.";
 
       $sql = "INSERT INTO class VALUES (NULL, '$name', '$description')";
-      $response = $this->pdo->sql_query($sql);
+      $response = $this->pdo->sqlQuery($sql);
 
       if ($response > 0) {
         return "Good.";
@@ -62,7 +60,7 @@
         return "Id is not a valid number.";
 
       $sql = "DELETE FROM class WHERE id='$id'";
-      $response = $this->pdo->sql_query($sql);
+      $response = $this->pdo->sqlQuery($sql);
 
       if ($response > 0) {
         return "Good.";
@@ -92,13 +90,13 @@
         return "Name is not a valid text.";
 
       $sql = "SELECT id FROM class WHERE name='$name'";
-      $valid_name_response = $this->pdo->sql_table($sql);
+      $valid_name_response = $this->pdo->sqlTable($sql);
   
       if (count($valid_name_response) != 0)
         return "Class with that name already exists.";
 
       $sql = "UPDATE class SET name='$name' WHERE id='$id'";
-      $response = $this->pdo->sql_query($sql);
+      $response = $this->pdo->sqlQuery($sql);
 
       if ($response > 0) {
         return "Good.";
@@ -128,7 +126,7 @@
         return "Description is not a valid text.";
 
       $sql = "UPDATE class SET description='$description' WHERE id='$id'";
-      $response = $this->pdo->sql_query($sql);
+      $response = $this->pdo->sqlQuery($sql);
 
       if ($response > 0) {
         return "Good.";
@@ -143,7 +141,7 @@
     ########################################################
     public function getAll() {
       $sql = "SELECT * FROM class";
-      $response = $this->pdo->sql_table($sql);
+      $response = $this->pdo->sqlTable($sql);
 
       return $response;
     }
@@ -160,11 +158,11 @@
         return "Id is not a valid number.";
 
       $sql = "SELECT * FROM class WHERE id='$id'";
-      $response = $this->pdo->sql_record($sql);
+      $response = $this->pdo->sqlRecord($sql);
   
       return $response;
     }
-    
+
     ########################################################
     # gets one class from the database 
     # $name -> name of the class that you want to get
@@ -179,7 +177,7 @@
         return "Name is not a valid text.";
 
       $sql = "SELECT * FROM class WHERE name='$name'";
-      $response = $this->pdo->sql_record($sql);
+      $response = $this->pdo->sqlRecord($sql);
 
       return $response;
     }

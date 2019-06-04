@@ -1,14 +1,15 @@
 <?php
   session_start();
 
-  require_once "../php-classes/pdo.php";
   require_once "../php-tasks/files-needed/connect.php";
-  require_once "../php-classes/users.php";
-  require_once "../php-classes/class_manager.php";
 
-  $class_pdo_db = new PDO_DB($db_user, $db_password, $db_name, $host);
-  $class_users = new USERS();
-  $class_manager = new ClassManager($class_pdo_db); 
+  require_once "../php-classes/PdoManager.php";
+  require_once "../php-classes/UserManager.php";
+  require_once "../php-classes/ClassManager.php";
+
+  $pdo_manager = new PdoManager($db_user, $db_password, $db_name, $host);
+  $user_manager = new UserManager();
+  $class_manager = new ClassManager($pdo_manager); 
 
   $classes = $class_manager->getAll();
 
@@ -16,7 +17,7 @@
   var_dump($classes);
   echo '</pre>';
 
-  if (!$class_users->is_signed_in()) {
+  if (!$user_manager->isSignedIn()) {
     header('Location: index.php');
   }
 ?>

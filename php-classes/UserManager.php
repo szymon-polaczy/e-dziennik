@@ -1,8 +1,8 @@
 <?php
   
-  class USERS {
-    /*sign in the user*/
-    public function sign_in($pdo, $email, $password) {
+  class UserManager {
+
+    public function signIn($pdo, $email, $password) {
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');
 
@@ -16,7 +16,7 @@
         return "Email format invalid.";
 
       $sql = "SELECT * FROM user WHERE email='$email'";
-      $response = $pdo->sql_table($sql);
+      $response = $pdo->sqlTable($sql);
 
       if (count($response) == 1) {
         $row = $response[0];
@@ -34,7 +34,7 @@
             $sql = "SELECT room.name AS room_name FROM teacher, room
                     WHERE teacher.id_user='$user_id' AND room.id=teacher.id_room";
 
-            $response = $pdo->sql_value($sql);
+            $response = $pdo->sqlValue($sql);
 
             if (empty($response) || is_null($response))
               return "Additional resources were failed to retrieve.";
@@ -44,7 +44,7 @@
             $sql = "SELECT student.birthdate, class.name AS class_name, class.description AS class_description
                     FROM student, class WHERE student.id_user='$user_id' AND class.id=student.id_class";
 
-            $response = $pdo->sql_record($sql);
+            $response = $pdo->sqlRecord($sql);
 
             if (empty($response) || is_null($response))
               return "Additional resources were failed to retrieve.";
@@ -64,8 +64,7 @@
       }
     }
 
-    /*this function return true or false depends on if the user is actually signed in*/
-    public function is_signed_in() {
+    public function isSignedIn() {
       return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
   }

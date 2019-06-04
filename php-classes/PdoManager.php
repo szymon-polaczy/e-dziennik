@@ -1,6 +1,6 @@
 <?php
 
-  class PDO_DB
+  class PdoManager
   {
     private $user, $database, $host, $pdo;
 
@@ -17,13 +17,13 @@
       }
     }
 
-    public function sql_query($sql)
+    public function sqlQuery($sql)
     {
       $affected_rows = $this->pdo->exec($sql);
       return $affected_rows;
     }
 
-    public function sql_value($sql, $field = null)
+    public function sqlValue($sql, $field = null)
     {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
@@ -32,7 +32,7 @@
       return (isset($row[$field]) ? $row[$field] : null);
     }
 
-    public function sql_field($sql, $field = null)
+    public function sqlField($sql, $field = null)
     {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
@@ -44,7 +44,7 @@
       return $result;
     }
 
-    public function sql_record($sql)
+    public function sqlRecord($sql)
     {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
@@ -52,7 +52,7 @@
       return $result;
     }
 
-    public function sql_table($sql)
+    public function sqlTable($sql)
     {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
