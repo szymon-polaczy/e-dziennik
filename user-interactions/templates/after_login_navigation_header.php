@@ -7,6 +7,7 @@
     <?php 
       if ($_SESSION['permissions']) {
         echo '<a href="classes.php">Classes</a>';
+        echo '<a href="rooms.php">Rooms</a>';
       }
     ?>
     <a href="../php-tasks/sign_out.php">sign out</a>
