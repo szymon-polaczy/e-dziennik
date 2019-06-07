@@ -3,7 +3,7 @@
   class UserManager {
 
     ########################################################
-    # it signs user in 
+    # signs user in 
     # $pdo -> class pdo that I need to interact with database [PdoManager]
     # $email -> email user gives when he tries to sign in [string]
     # $password -> password user gives when he tries to sign in [string]
@@ -83,6 +83,12 @@
       return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
 
+    ########################################################
+    # checks user password
+    # $pdo -> class pdo that I need to interact with database [PdoManager]
+    # $id -> id of the user that adds or changes something [number]
+    # $password -> password user gives when he tries to change or add something [string]
+    ########################################################
     public function checkPassword($pdo, $id, $password) {
       if (empty($id))
         return "Id is required but it's empty.";
