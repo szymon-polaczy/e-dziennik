@@ -56,7 +56,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if (!is_int($id))
+      if (!is_numeric($id))
         return "Id is not a valid number.";
 
       $sql = "DELETE FROM class WHERE id='$id'";
@@ -80,7 +80,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if (!is_int($id))
+      if (!is_numeric($id))
         return "Id is not a valid number.";
 
       if (empty($name))
@@ -116,7 +116,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if (!is_int($id))
+      if (!is_numeric($id))
         return "Id is not a valid number.";
 
       if (empty($description))
@@ -154,7 +154,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if(!is_numeric($id) || !is_int($id)) 
+      if(!is_numeric($id)) 
         return "Id is not a valid number.";
 
       $sql = "SELECT * FROM class WHERE id='$id'";

@@ -48,7 +48,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if (!is_int($id))
+      if (!is_numeric($id))
         return "Id is not a valid number.";
 
       $sql = "DELETE FROM room WHERE id='$id'";
@@ -72,7 +72,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if (!is_int($id))
+      if (!is_numeric($id))
         return "Id is not a valid number.";
 
       if (empty($name))
@@ -116,7 +116,7 @@
       if (empty($id))
         return "Id is required but it's empty.";
 
-      if(!is_numeric($id) || !is_int($id)) 
+      if(!is_numeric($id)) 
         return "Id is not a valid number.";
 
       $sql = "SELECT * FROM room WHERE id='$id'";

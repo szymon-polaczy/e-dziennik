@@ -82,4 +82,23 @@
     public function isSignedIn() {
       return (isset($_SESSION['signed_in']) && $_SESSION['signed_in'] == true);
     }
+
+    public function checkPassword($pdo, $id, $password) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number.";
+
+      if (empty($password))
+        return "Password is required but it's empty.";
+
+      if (!is_string($password))
+        return "Password is not a valid text.";
+
+      $sql = "SELECT password FROM user WHERE id='$id'";
+      $response = $pdo->sqlValue($sql);
+      
+      return (password_verify($password, $response));
+    }
   }
