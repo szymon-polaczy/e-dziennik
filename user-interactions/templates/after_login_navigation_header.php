@@ -5,9 +5,11 @@
 
   <nav class="menu">
     <?php 
-      if ($_SESSION['permissions']) {
+      if ($_SESSION['permissions'] == "a") {
         echo '<a href="classes.php">Classes</a>';
         echo '<a href="rooms.php">Rooms</a>';
+        echo '<a href="subjects.php">Subjects</a>';
+        echo '<a href="users.php">Users</a>';
       }
     ?>
     <a href="../php-tasks/sign_out.php">sign out</a>
