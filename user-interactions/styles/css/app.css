@@ -104,6 +104,16 @@ form label {
 form input {
   width: 90%;
 }
+form select {
+  width: 90%;
+  background: #fff;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  outline: none;
+  padding: 0.5vmin;
+  margin: 0.5vh 0 1vh;
+  box-sizing: border-box;
+}
 
 input {
   margin: 0.5vh 0 1vh;
@@ -117,6 +127,16 @@ input {
 input:focus {
   border-bottom: 2px solid #222;
   color: #222;
+}
+
+select {
+  background: #fff;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  outline: none;
+  padding: 0.5vmin;
+  margin: 0.5vh 0 1vh;
+  box-sizing: border-box;
 }
 
 #btn-show-add-form {
@@ -169,6 +189,13 @@ input:focus {
   justify-content: center;
   flex-direction: column;
   padding-top: 1vh;
+}
+.add-form .form-wrapper div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .main-footer {
