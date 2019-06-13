@@ -90,5 +90,6 @@
   <?php include("templates/main_footer.php"); ?>
 
   <script src="scripts/show_form.js"></script>
+  <script src="scripts/show_permission_boxes.js"></script>
 </body>
 </html>

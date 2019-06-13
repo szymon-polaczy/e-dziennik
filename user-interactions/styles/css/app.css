@@ -106,13 +106,6 @@ form input {
 }
 form select {
   width: 90%;
-  background: #fff;
-  border: none;
-  border-bottom: 2px solid #ddd;
-  outline: none;
-  padding: 0.5vmin;
-  margin: 0.5vh 0 1vh;
-  box-sizing: border-box;
 }
 
 input {
@@ -196,6 +189,10 @@ select {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.add-form .form-wrapper #add-form-student-hide-box,
+.add-form .form-wrapper #add-form-teacher-hide-box {
+  display: none;
 }
 
 .main-footer {
