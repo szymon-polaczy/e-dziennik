@@ -30,7 +30,7 @@
         </div>
         <div class="form-wrapper">
           <label for="add-form-name">Name</label>
-          <input id="add-form-name" name="name" placeholder="Add your room name" type="text">
+          <input id="add-form-name" name="name" placeholder="Add your room name" type="text" required>
           <button type="submit">Add</button>
         </div>
       </form>

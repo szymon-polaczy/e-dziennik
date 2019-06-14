@@ -30,9 +30,9 @@
         </div>
         <div class="form-wrapper">
           <label for="add-form-name">Name</label>
-          <input id="add-form-name" name="name" placeholder="Add your class name" type="text">
+          <input id="add-form-name" name="name" placeholder="Add your class name" type="text" required>
           <label for="add-form-description">Description</label>
-          <input id="add-form-description" name="description" placeholder="Add your class description" type="text">
+          <input id="add-form-description" name="description" placeholder="Add your class description" type="text" required>
           <button type="submit">Add</button>
         </div>
       </form>

@@ -36,15 +36,15 @@
         </div>
         <div class="form-wrapper">
           <label for="add-form-name">Name</label>
-          <input id="add-form-name" name="name" placeholder="Add your user name" type="text">
+          <input id="add-form-name" name="name" placeholder="Add your user name" type="text" required>
           <label for="add-form-surname">Name</label>
-          <input id="add-form-surname" name="surname" placeholder="Add your user surname" type="text">
+          <input id="add-form-surname" name="surname" placeholder="Add your user surname" type="text" required>
           <label for="add-form-email">Email</label>
-          <input id="add-form-email" name="email" placeholder="Add your user email" type="text">
+          <input id="add-form-email" name="email" placeholder="Add your user email" type="text" required>
           <label for="add-form-password">Password</label>
-          <input id="add-form-password" name="password" placeholder="Add your user password" type="text">
+          <input id="add-form-password" name="password" placeholder="Add your user password" type="text" required>
           <label for="add-form-permission">Permission</label>
-          <select id="add-form-permission" name="permission">
+          <select id="add-form-permission" name="permission" required>
             <option></option>
             <option value="a">Administrator</option>
             <option value="t">Teacher</option>
