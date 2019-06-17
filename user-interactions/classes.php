@@ -1,8 +1,12 @@
 <?php
   session_start();
 
-  require_once "../php-tasks/files-needed/connect.php";
+  if ($_SESSION['permissions'] != "a") {
+    header('Location: journal.php');
+    exit();
+  }
 
+  require_once "../php-tasks/files-needed/connect.php";
   require_once "../php-classes/PdoManager.php";
   require_once "../php-classes/UserManager.php";
   require_once "../php-classes/ClassManager.php";
@@ -13,6 +17,7 @@
 
   if (!$user_manager->isSignedIn()) {
     header('Location: index.php');
+    exit();
   }
 ?>
 <!doctype html>
