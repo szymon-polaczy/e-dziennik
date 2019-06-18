@@ -1,6 +1,6 @@
 <?php
   
-  class UserManager {
+  class AdministrationManager {
 
     ########################################################
     # signs user in 

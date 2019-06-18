@@ -8,19 +8,19 @@
 
   require_once "../php-tasks/files-needed/connect.php";
   require_once "../php-classes/PdoManager.php";
-  require_once "../php-classes/UserManager.php";
+  require_once "../php-classes/AdministrationManager.php";
   require_once "../php-classes/ClassManager.php";
   require_once "../php-classes/RoomManager.php";
 
   $pdo_manager = new PdoManager($db_user, $db_password, $db_name, $host);
-  $user_manager = new UserManager();
+  $administration_manager = new AdministrationManager();
   $class_manager = new ClassManager($pdo_manager);
   $room_manager = new RoomManager($pdo_manager);
 
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  if (!$user_manager->isSignedIn()) {
+  if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
   }
 ?>

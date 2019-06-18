@@ -1,11 +1,11 @@
 <?php
   session_start();
   
-  require_once "../php-classes/UserManager.php";
+  require_once "../php-classes/AdministrationManager.php";
 
-  $user_manager = new UserManager();
+  $administration_manager = new AdministrationManager();
 
-  if (!$user_manager->isSignedIn()) {
+  if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
   }
 ?>
