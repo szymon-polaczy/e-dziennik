@@ -15,7 +15,7 @@
   <?php include("templates/after_login_navigation_header.php"); ?>
   
   <main>
-    You are signed in
+    <h1>You are signed in</h1>
   </main>
   
   <?php include("templates/main_footer.php"); ?>

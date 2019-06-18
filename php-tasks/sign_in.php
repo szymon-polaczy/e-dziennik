@@ -2,7 +2,7 @@
   session_start();
 
   require_once "files-needed/connect.php";
-  require_once "../php-classes/UserManager.php";
+  require_once "../php-classes/AdministrationManager.php";
   require_once "../php-classes/PdoManager.php";
 
   if (!isset($_POST['email']) || !isset($_POST['password'])) {
@@ -11,12 +11,12 @@
   }
 
   $pdo_manager = new PdoManager($db_user, $db_password, $db_name, $host);
-  $user_manager = new UserManager();
+  $administration_manager = new AdministrationManager();
   
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $_SESSION['sign_in_message'] = $user_manager->signIn($pdo_manager, $email, $password);
+  $_SESSION['sign_in_message'] = $administration_manager->signIn($pdo_manager, $email, $password);
 
   if ($_SESSION['sign_in_message'] === "Good.") {
     unset($_SESSION['sign_in_message']);
