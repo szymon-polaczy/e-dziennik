@@ -43,27 +43,15 @@
       $sql = "SELECT permissions FROM user WHERE id='$id'";
       $permissions = $this->pdo->sqlValue($sql);
 
-      if ($permissions == 'a') {
-        $sql = "DELETE FROM administrator WHERE id_user='$id'";
-        $response = $this->pdo->sqlQuery($sql);
+      $who = array("a" => array('administrator', 'Administrator'), 
+                   "t" => array('teacher', 'Teacher'),
+                   "s" => array('student', 'Student'));
 
-        if ($response == 0)
-          return "Administrator failed to be deleted.";
-        
-      } else if ($permissions == 't') {
-        $sql = "DELETE FROM teacher WHERE id_user='$id'";
-        $response = $this->pdo->sqlQuery($sql);
+      $sql = "DELETE FROM ".$who[$permissions][0]." WHERE id_user='$id'";
+      $response = $this->pdo->sqlQuery($sql);
 
-        if ($response == 0)
-          return "Teacher failed to be deleted.";
-
-      } else if ($permissions == 's') {
-        $sql = "DELETE FROM student WHERE id_user='$id'";
-        $response = $this->pdo->sqlQuery($sql);
-
-        if ($response == 0)
-          return "Student failed to be deleted.";
-      }
+      if ($response == 0)
+        return $who[$permissions][1]." failed to be deleted.";
 
       $sql = "DELETE FROM user WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
