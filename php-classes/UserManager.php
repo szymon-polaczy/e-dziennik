@@ -26,9 +26,58 @@
     #   $student['birthdate'] -> new student's birthdate [date]
     ########################################################
     public function add($user, $teacher = NULL, $student = NULL){
+      //Sprawdzam czy któraś zmienna w tablicy użytkownika nie jest pusta
+      if (empty($user))
+        return "User values array is empty.";
 
-      //czy któraś zmienna nie jest pusta
-      //czy któraś zmienna jest złego typu
+      if (empty($user['name']))
+        return "User name is empty.";
+
+      if (empty($user['surname']))
+        return "User surname is empty.";
+
+      if (empty($user['email']))
+        return "User email is empty.";
+
+      if (empty($user['password']))
+        return "User password is empty.";
+
+      if (empty($user['permissions']))
+        return "User permissions is empty.";
+
+      //Sprawdzam czy któraś zmienna w tablicy użytkownika nie jest złego typu
+      if (!is_string($user['name']))
+        return "User name is not a valid text.";
+
+      if (!is_string($user['surname']))
+        return "User surname is not a valid text.";
+
+      if (!is_string($user['email']))
+        return "User email is not a valid text.";
+
+      if (!is_string($user['password']))
+        return "User password is not a valid text.";
+
+      if (!is_string($user['permissions']))
+        return "User permissions is not a valid text.";
+
+      //Sprawdzanie poprawności danych 
+      if (!filter_var($user['email'], FILTER_VALIDATE_EMAIL))
+        return "Email format invalid.";
+
+      //Sprawdzanie czy istnieją użytkownicy o takich wartościach
+      $sql = "SELECT id FROM user WHERE email=".$user['email'];
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "There already is a user with that email.";
+
+      //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest pusta
+      //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest złego typu
+
+      //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
+      //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest złego typu
+
       //dodawanie użytkownika
         //dodawanie admina
           //tylko id_user
