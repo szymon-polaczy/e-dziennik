@@ -11,10 +11,22 @@
       $this->pdo = $pdo;
     }
 
-    //name | surname | email | password | permissions
-    //dla nauczyciela - id_room
-    //dla ucznia - id_class | birthdate
-    public function add(){
+    ########################################################
+    # adds new user to the database
+    # $user -> array of values that are needed for the user (and admin) [array]
+    #   $user['name'] -> new user's name [string]
+    #   $user['surname'] -> new user's surname [string]
+    #   $user['email'] -> new user's email [string]
+    #   $user['password'] -> new user's password [string]
+    #   $user['permissions'] -> new user's permissions [string]
+    # $teacher -> additional array of values that are needed only for the teacher [array]
+    #   $teacher['id_room'] -> new teacher's id_room - id of teacher classroom [number]
+    # $student -> additional array of values that are needed only for the student [array]
+    #   $student['id_class'] -> new student's id_class - id of student class [number]
+    #   $student['birthdate'] -> new student's birthdate [date]
+    ########################################################
+    public function add($user, $teacher = NULL, $student = NULL){
+
       //czy któraś zmienna nie jest pusta
       //czy któraś zmienna jest złego typu
       //dodawanie użytkownika
@@ -38,7 +50,13 @@
         return "Id is required but it's empty.";
 
       if (!is_numeric($id))
-        return "Id is not a valid number.";
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM user WHERE id='$id'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) == 0)
+        return "There is no user with that id.";
 
       $sql = "SELECT permissions FROM user WHERE id='$id'";
       $permissions = $this->pdo->sqlValue($sql);
