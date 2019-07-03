@@ -87,21 +87,34 @@
       
       if ($user['permissions'] == 's') {
         //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
+        if (empty($student))
+          return "Student values array is empty.";
+
+        if (empty($student['id_class']))
+          return "Id of student's class is not a valid number.";
+
+        if (empty($student['birthdate']))
+          return "Student birthdate is empty.";
+
         //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest złego typu
+        if (!is_numeric($student['id_class']))
+          return "Id of student's class is not a valid number.";
+
+        list($y, $m, $d) = explode("-", $student['birthdate']);
+        if (!checkdate($m, $d, $y))
+          return "Student birthdate date is invalid.";
       }
 
-      
-
-      //dodawanie użytkownika
-        //dodawanie admina
-          //tylko id_user
-        //dodawanie nauczyciela
+      //Dodawanie użytkownika
+        //Dodawanie admina
+          //id_user
+        //Dodawanie nauczyciela
           //id_user
           //id_room
-        //dodawanie ucznia
+        //Dodawanie ucznia
           //id_user
           //id_class
-          //birthdate
+          //birthday
     }
 
     #########################################################
