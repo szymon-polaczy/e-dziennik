@@ -22,9 +22,6 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  $delete = $user_manager->delete(5);
-  echo $delete;
-
   if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
   }

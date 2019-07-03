@@ -72,11 +72,25 @@
       if (count($response) > 0)
         return "There already is a user with that email.";
 
-      //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest pusta
-      //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest złego typu
+      if ($user['permissions' == 't']) {
+        //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest pusta
+        if (empty($teacher))
+          return "Teacher values array is empty.";
 
-      //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
-      //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest złego typu
+        if (empty($teacher['id_room']))
+          return "Id of teacher's classroom is empty.";
+
+        //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest złego typu
+        if (!is_numeric($teacher['id_room']))
+          return "Id of teacher's classroom is not a valid number.";
+      }
+      
+      if ($user['permissions'] == 's') {
+        //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
+        //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest złego typu
+      }
+
+      
 
       //dodawanie użytkownika
         //dodawanie admina
