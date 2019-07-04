@@ -66,7 +66,7 @@
         return "Email format invalid.";
 
       //Sprawdzanie czy istnieją użytkownicy o takich wartościach
-      $sql = "SELECT id FROM user WHERE email=".$user['email'];
+      $sql = "SELECT id FROM user WHERE email='".$user['email']."'";
       $response = $this->pdo->sqlTable($sql);
 
       if (count($response) > 0)
@@ -74,7 +74,7 @@
 
       if ($user['permissions' == 't']) {
         //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest pusta
-        if (empty($teacher))
+        if (empty($teacher) || $teacher == NULL)
           return "Teacher values array is empty.";
 
         if (empty($teacher['id_room']))
@@ -87,7 +87,7 @@
       
       if ($user['permissions'] == 's') {
         //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
-        if (empty($student))
+        if (empty($student) || $student == NULL)
           return "Student values array is empty.";
 
         if (empty($student['id_class']))
@@ -106,15 +106,43 @@
       }
 
       //Dodawanie użytkownika
-        //Dodawanie admina
-          //id_user
-        //Dodawanie nauczyciela
-          //id_user
-          //id_room
-        //Dodawanie ucznia
-          //id_user
-          //id_class
-          //birthday
+      $sql = "INSERT INTO user VALUES(NULL, '".$user['name']."', '".$user['surname']."', '".$user['email']."', '".$user['password']."', '".$user['permissions']."')";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response == 0)
+        return "User failed to be deleted.";
+
+      $sql = "SELECT id FROM user WHERE email='".$user['email']."'";
+      $id_user = $this->pdo->sqlValue($sql);
+
+      if ($id_user == NULL)
+        return "User was added but his is was failed to be selected.";
+
+      if ($user['permissions'] == 'a') {
+        $sql = "INSERT INTO administrator VALUES('$id_user')";
+        $response = $this->pdo->sqlQuery($sql);
+
+        if ($response > 0)
+          return "Good.";
+        else
+          return "User was added but administrator was failed to be added.";
+      } else if ($user['permissions'] == 't') {
+        $sql = "INSERT INTO teacher VALUES('$id_user', ".$teacher['id_room'].")";
+        $response = $this->pdo->sqlQuery($sql);
+
+        if ($response > 0)
+          return "Good.";
+        else
+          return "User was added but teacher was failed to be added.";
+      } else if ($user['permissions'] == 's') {
+        $sql = "INSERT INTO student VALUES('$id_user', '".$student['id_class']."', '".$student['birthdate']."')";
+        $response = $this->pdo->sqlQuery($sql);
+
+        if ($response > 0)
+          return "Good.";
+        else
+          return "User was added but student was failed to be added.";
+      }
     }
 
     #########################################################
