@@ -200,7 +200,7 @@
     }
 
     ########################################################
-    # gets one user from the database
+    # gets one user from the database by their id
     # $id -> id of the user that you want to get [number]
     ########################################################
     public function getById($id) {
@@ -237,10 +237,50 @@
       return $response;
     }
 
-    //get by email
+    ########################################################
+    # gets one user from the database by their email
+    # $email -> email of the user that you want to get [string]
+    ########################################################
+    public function getByEmail($email) {
+      $email = htmlentities($email, ENT_QUOTES, 'utf-8');
 
-    //get by permissions
+      if (empty($email))
+        return "Email is required but it's empty.";
 
-    //klasami - uczniowie
-    //pokoje - nauczycielowie
+      if (!is_string($email))
+        return "Email is not a valid text.";
+
+      //Sprawdzanie poprawności danych 
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        return "Email format invalid.";
+
+      $sql = "SELECT * FROM user WHERE email='$email'";
+      $response = $this->pdo->sqlRecord($sql);
+
+      if ($response == NULL || empty($response))
+        return "There is no user with that email.";
+
+      //ustawiam id
+      $id = $response['id'];
+
+      if ($response['permissions'] == 't') {
+        $sql = "SELECT room.name AS room_name FROM teacher, room 
+                WHERE room.id=teacher.id_room AND teacher.id_user='$id'";
+        $response['room_name'] = $this->pdo->sqlValue($sql);
+
+        if ($response['room_name'] == NULL || empty($response['room_name']))
+          return "Teacher's classroom name failed to be selected.";
+
+      } else if ($response['permissions'] == 's') {
+        $sql = "SELECT class.name AS class_name, class.description AS class_description, student.birthdate
+                FROM student, class WHERE class.id=student.id_class AND student.id_user='$id'";
+
+        $student = $this->pdo->sqlRecord($sql);
+        $response['class_name'] = $student['class_name'];
+        $response['class_description'] = $student['class_description'];
+        $response['birthdate'] = $student['birthdate'];
+      }
+
+      return $response;
+    }
   }

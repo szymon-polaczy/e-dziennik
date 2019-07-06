@@ -22,7 +22,7 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  $user = $user_manager->getById(8);
+  $user = $user_manager->getByEmail("uczen@email.com");
 
   echo '<pre>';
   var_dump($user);

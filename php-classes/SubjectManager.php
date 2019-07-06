@@ -129,7 +129,7 @@
 
     ########################################################
     # gets one subject from the database 
-    # $name -> name of the subject that you want to get
+    # $name -> name of the subject that you want to get [string]
     ########################################################
     public function getByName($name) {
       $name = htmlentities($name, ENT_QUOTES, 'utf-8');
