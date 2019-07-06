@@ -22,6 +22,12 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
+  $user = $user_manager->getById(8);
+
+  echo '<pre>';
+  var_dump($user);
+  echo '</pre>';
+
   if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
   }

@@ -187,4 +187,60 @@
         return "User failed to be deleted.";
       }
     }
+
+    ########################################################
+    # gets all users from the database and
+    # returns them in an array of users
+    ########################################################
+    public function getAll() {
+      $sql = "SELECT * FROM user";
+      $response = $this->pdo->sqlTable($sql);
+
+      return $response;
+    }
+
+    ########################################################
+    # gets one user from the database
+    # $id -> id of the user that you want to get [number]
+    ########################################################
+    public function getById($id) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if(!is_numeric($id)) 
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT * FROM user WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+
+      if ($response == NULL || empty($response))
+        return "There is no user with that id.";
+
+      if ($response['permissions'] == 't') {
+        $sql = "SELECT room.name AS room_name FROM teacher, room 
+                WHERE room.id=teacher.id_room AND teacher.id_user='$id'";
+        $response['room_name'] = $this->pdo->sqlValue($sql);
+
+        if ($response['room_name'] == NULL || empty($response['room_name']))
+          return "Teacher's classroom name failed to be selected.";
+
+      } else if ($response['permissions'] == 's') {
+        $sql = "SELECT class.name AS class_name, class.description AS class_description, student.birthdate
+                FROM student, class WHERE class.id=student.id_class AND student.id_user='$id'";
+
+        $student = $this->pdo->sqlRecord($sql);
+        $response['class_name'] = $student['class_name'];
+        $response['class_description'] = $student['class_description'];
+        $response['birthdate'] = $student['birthdate'];
+      }
+
+      return $response;
+    }
+
+    //get by email
+
+    //get by permissions
+
+    //klasami - uczniowie
+    //pokoje - nauczycielowie
   }
