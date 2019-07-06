@@ -105,6 +105,9 @@
           return "Student birthdate date is invalid.";
       }
 
+      //Hashowanie hasła
+      $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+
       //Dodawanie użytkownika
       $sql = "INSERT INTO user VALUES(NULL, '".$user['name']."', '".$user['surname']."', '".$user['email']."', '".$user['password']."', '".$user['permissions']."')";
       $response = $this->pdo->sqlQuery($sql);
