@@ -196,6 +196,9 @@
       $sql = "SELECT * FROM user";
       $response = $this->pdo->sqlTable($sql);
 
+      if (empty($response) || $response == NULL)
+        return "There are no users.";
+
       return $response;
     }
 

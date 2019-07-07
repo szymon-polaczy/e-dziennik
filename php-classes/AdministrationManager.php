@@ -104,6 +104,9 @@
 
       $sql = "SELECT password FROM user WHERE id='$id'";
       $response = $pdo->sqlValue($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is no user with that id.";
       
       return (password_verify($password, $response));
     }

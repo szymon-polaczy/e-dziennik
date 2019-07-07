@@ -89,6 +89,12 @@
       if (!is_string($name))
         return "Name is not a valid text.";
 
+      $sql = "SELECT id FROM class WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+  
+      if (empty($response) || $response == NULL)
+        return "There is no class with that id.";
+
       $sql = "SELECT id FROM class WHERE name='$name'";
       $valid_name_response = $this->pdo->sqlTable($sql);
   
@@ -125,6 +131,12 @@
       if (!is_string($description))
         return "Description is not a valid text.";
 
+      $sql = "SELECT id FROM class WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is no class with that id.";
+
       $sql = "UPDATE class SET description='$description' WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 
@@ -143,6 +155,9 @@
       $sql = "SELECT * FROM class";
       $response = $this->pdo->sqlTable($sql);
 
+      if (empty($response) || $response == NULL)
+        return "There are no classes.";
+
       return $response;
     }
 
@@ -159,6 +174,9 @@
 
       $sql = "SELECT * FROM class WHERE id='$id'";
       $response = $this->pdo->sqlRecord($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is not a class with that id.";
   
       return $response;
     }
@@ -178,6 +196,9 @@
 
       $sql = "SELECT * FROM class WHERE name='$name'";
       $response = $this->pdo->sqlRecord($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is no class with that name.";
 
       return $response;
     }
