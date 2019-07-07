@@ -283,4 +283,37 @@
 
       return $response;
     }
+
+    ########################################################
+    # gets users from the database by their permissions
+    # $permissions -> permissions of the users that you want to get [string]
+    ########################################################
+    public function getByPermissions($permissions) {
+      if (empty($permissions)) 
+        return "Permissions are needed but are empty.";
+
+      if (!is_string($permissions))
+        return "Permissions is not a valid text.";
+
+      if ($permissions == 'a') {
+        $sql = "SELECT user.* FROM user WHERE user.permissions='$permissions'";
+
+      } else if ($permissions == 't') {
+        $sql = "SELECT user.*, room.name AS room_name FROM user, teacher, room 
+                WHERE room.id=teacher.id_room AND teacher.id_user=user.id AND user.permissions='$permissions'";
+
+      } else if ($permissions == 's') {
+        $sql = "SELECT user.*, class.name AS class_name, class.description AS class_description, student.birthdate
+                FROM user, student, class WHERE class.id=student.id_class AND student.id_user=user.id AND user.permissions='$permissions'";
+
+      } else
+        return "Permissions are out of options.";
+
+      $response = $this->pdo->sqlTable($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There are no users with that permissions.";
+
+      return $response;
+    }
   }
