@@ -53,6 +53,12 @@
       if (!is_numeric($id))
         return "Id is not a valid number.";
 
+      $sql = "SELECT id FROM subject WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+      
+      if (empty($response) || $response == NULL)
+        return "There is no subject with that id.";
+
       $sql = "DELETE FROM subject WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 
@@ -83,6 +89,12 @@
       if (!is_string($name))
         return "Name is not a valid text.";
 
+      $sql = "SELECT id FROM subject WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+    
+      if (empty($response) || $response == NULL)
+        return "There is no subject with that id.";
+
       $sql = "SELECT id FROM subject WHERE name='$name'";
       $valid_name_response = $this->pdo->sqlTable($sql);
   
@@ -107,6 +119,9 @@
       $sql = "SELECT * FROM subject";
       $response = $this->pdo->sqlTable($sql);
 
+      if (empty($response) || $response == NULL)
+        return "There are no subjects";
+
       return $response;
     }
 
@@ -123,6 +138,9 @@
 
       $sql = "SELECT * FROM subject WHERE id='$id'";
       $response = $this->pdo->sqlRecord($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is no subject with that id.";
   
       return $response;
     }
@@ -142,6 +160,9 @@
 
       $sql = "SELECT * FROM subject WHERE name='$name'";
       $response = $this->pdo->sqlRecord($sql);
+
+      if (empty($response) || $response == NULL)
+        return "There is no subject with that name.";
 
       return $response;
     }

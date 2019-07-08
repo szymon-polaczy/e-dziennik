@@ -59,6 +59,12 @@
       if (!is_numeric($id))
         return "Id is not a valid number.";
 
+      $sql = "SELECT id FROM class WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+    
+      if (empty($response) || $response == NULL)
+        return "There is no class with that id.";
+
       $sql = "DELETE FROM class WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 
