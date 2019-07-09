@@ -26,7 +26,7 @@
     #   $student['birthdate'] -> new student's birthdate [date]
     ########################################################
     public function add($user, $teacher = NULL, $student = NULL){
-      //Sprawdzam czy któraś zmienna w tablicy użytkownika nie jest pusta
+      //Checking if user variables aren't empty
       if (empty($user))
         return "User values array is empty.";
 
@@ -45,7 +45,7 @@
       if (empty($user['permissions']))
         return "User permissions is empty.";
 
-      //Sprawdzam czy któraś zmienna w tablicy użytkownika nie jest złego typu
+      //Checking if user variables have good type
       if (!is_string($user['name']))
         return "User name is not a valid text.";
 
@@ -61,11 +61,11 @@
       if (!is_string($user['permissions']))
         return "User permissions is not a valid text.";
 
-      //Sprawdzanie poprawności danych 
+      //I check if user email has correct format
       if (!filter_var($user['email'], FILTER_VALIDATE_EMAIL))
         return "Email format invalid.";
 
-      //Sprawdzanie czy istnieją użytkownicy o takich wartościach
+      //Checking if there even is user with that email
       $sql = "SELECT id FROM user WHERE email='".$user['email']."'";
       $response = $this->pdo->sqlTable($sql);
 
@@ -73,20 +73,20 @@
         return "There already is a user with that email.";
 
       if ($user['permissions' == 't']) {
-        //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest pusta
+        //Checking if teacher variables aren't empty
         if (empty($teacher) || $teacher == NULL)
           return "Teacher values array is empty.";
 
         if (empty($teacher['id_room']))
           return "Id of teacher's classroom is empty.";
 
-        //Sprawdzam czy któraś zmienna w tablicy nauczyciela nie jest złego typu
+        //Checking if teacher variables have good type
         if (!is_numeric($teacher['id_room']))
           return "Id of teacher's classroom is not a valid number.";
       }
       
       if ($user['permissions'] == 's') {
-        //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest pusta
+        //Checking if student variables aren't empty
         if (empty($student) || $student == NULL)
           return "Student values array is empty.";
 
@@ -96,7 +96,7 @@
         if (empty($student['birthdate']))
           return "Student birthdate is empty.";
 
-        //Sprawdzam czy któraś zmienna w tablicy ucznia nie jest złego typu
+        //Checking if student variables have good type
         if (!is_numeric($student['id_class']))
           return "Id of student's class is not a valid number.";
 
@@ -105,10 +105,10 @@
           return "Student birthdate date is invalid.";
       }
 
-      //Hashowanie hasła
+      //Password hashing
       $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
 
-      //Dodawanie użytkownika
+      //Actuall user sql insert
       $sql = "INSERT INTO user VALUES(NULL, '".$user['name']."', '".$user['surname']."', '".$user['email']."', '".$user['password']."', '".$user['permissions']."')";
       $response = $this->pdo->sqlQuery($sql);
 
@@ -121,6 +121,7 @@
       if ($id_user == NULL)
         return "User was added but his is was failed to be selected.";
 
+      //Adding all necessary dependencies
       if ($user['permissions'] == 'a') {
         $sql = "INSERT INTO administrator VALUES('$id_user')";
         $response = $this->pdo->sqlQuery($sql);
