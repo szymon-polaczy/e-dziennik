@@ -196,7 +196,7 @@
       $sql = "SELECT * FROM user";
       $response = $this->pdo->sqlTable($sql);
 
-      if (empty($response) || $response == NULL)
+      if (empty($response) || $response == NULL || count($response) == 0)
         return "There are no users.";
 
       return $response;
@@ -314,7 +314,7 @@
 
       $response = $this->pdo->sqlTable($sql);
 
-      if (empty($response) || $response == NULL)
+      if (empty($response) || $response == NULL || count($response) == 0)
         return "There are no users with that permissions.";
 
       return $response;

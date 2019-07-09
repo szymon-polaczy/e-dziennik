@@ -161,7 +161,7 @@
       $sql = "SELECT * FROM class";
       $response = $this->pdo->sqlTable($sql);
 
-      if (empty($response) || $response == NULL)
+      if (empty($response) || $response == NULL || count($response) == 0)
         return "There are no classes.";
 
       return $response;
