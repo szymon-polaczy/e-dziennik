@@ -190,6 +190,78 @@
     }
 
     ########################################################
+    # edits name of the user in the database
+    # $id -> id of the user that you want to edit [number]
+    # $name -> new name of the user [string]
+    ########################################################
+    public function editName($id, $name) {
+      $name = htmlentities($name, ENT_QUOTES, 'utf-8');
+
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number.";
+
+      if (empty($name))
+        return "Name is required but it's empty.";
+
+      if (!is_string($name))
+        return "Name is not a valid text.";
+
+      $sql = "SELECT id FROM user WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+    
+      if (empty($response) || $response == NULL)
+        return "There is no user with that id.";
+
+      $sql = "UPDATE user SET name='$name' WHERE id='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "User name failed to be changed.";
+      }
+    }
+
+    ########################################################
+    # edits name of the user in the database
+    # $id -> id of the user that you want to edit [number]
+    # $name -> new name of the user [string]
+    ########################################################
+    public function editSurname($id, $surname) {
+      $surname = htmlentities($surname, ENT_QUOTES, 'utf-8');
+
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number.";
+
+      if (empty($surname))
+        return "Surname is required but it's empty.";
+
+      if (!is_string($surname))
+        return "Surname is not a valid text.";
+
+      $sql = "SELECT id FROM user WHERE id='$id'";
+      $response = $this->pdo->sqlRecord($sql);
+    
+      if (empty($response) || $response == NULL)
+        return "There is no user with that id.";
+
+      $sql = "UPDATE user SET surname='$surname' WHERE id='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "User surname failed to be changed.";
+      }
+    }
+
+    ########################################################
     # gets all users from the database and
     # returns them in an array of users
     ########################################################

@@ -22,6 +22,9 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
+  $edit = $user_manager->editSurname(11, "Wolniak");
+  echo $edit.'<br>';
+
   $user = $user_manager->getByPermissions("s");
 
   echo '<pre>';
