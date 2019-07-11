@@ -12,6 +12,9 @@
       $email = htmlentities($email, ENT_QUOTES, 'utf-8');
       $password = htmlentities($password, ENT_QUOTES, 'utf-8');
 
+      if ($pdo == NULL || empty($pdo))
+        return "PDO is required but it's empty.";
+
       if (empty($email))
         return "Email is required but it's empty.";
 
@@ -90,6 +93,9 @@
     # $password -> password user gives when he tries to change or add something [string]
     ########################################################
     public function checkPassword($pdo, $id, $password) {
+      if ($pdo == NULL || empty($pdo))
+        return "PDO is required but it's empty.";
+
       if (empty($id))
         return "Id is required but it's empty.";
 
