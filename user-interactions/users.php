@@ -22,10 +22,10 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  $edit = $user_manager->editSurname(11, "Wolniak");
+  $edit = $user_manager->editTeacherRoom(11, 1);
   echo $edit.'<br>';
 
-  $user = $user_manager->getByPermissions("s");
+  $user = $user_manager->getByPermissions("t");
 
   echo '<pre>';
   var_dump($user);

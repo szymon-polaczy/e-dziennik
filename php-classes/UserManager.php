@@ -55,11 +55,32 @@
       if (!is_string($user['email']))
         return "User email is not a valid text.";
 
+      if (!is_string($user['permissions']))
+        return "User permissions is not a valid text.";
+
       if (!is_string($user['password']))
         return "User password is not a valid text.";
 
-      if (!is_string($user['permissions']))
-        return "User permissions is not a valid text.";
+      // Validate password strength
+      $uppercase = preg_match('@[A-Z]@', $user['password']);
+      $lowercase = preg_match('@[a-z]@', $user['password']);
+      $number = preg_match('@[0-9]@', $user['password']);
+      $specialCharacters = preg_match('@[^\w]@', $user['password']);
+
+      if (!$uppercase)
+        return "Password has to include at least one upper case letter.";
+
+      if (!$lowercase)
+        return "Password has to include at least one lower case letter.";
+
+      if (!$number)
+        return "Password has to include at least one number.";
+
+      if (!$specialCharacters)
+        return "Password has to include at least one special character.";
+
+      if (strlen($user['password']) < 8)
+        return "Password have to be at least 8 characters in length.";        
 
       //I check if user email has correct format
       if (!filter_var($user['email'], FILTER_VALIDATE_EMAIL))
@@ -70,7 +91,7 @@
       $response = $this->pdo->sqlTable($sql);
 
       if (count($response) > 0)
-        return "There already is a user with that email.";
+        return "There already is a ususer['password']er with that email.";
 
       if ($user['permissions' == 't']) {
         //Checking if teacher variables aren't empty
@@ -258,6 +279,209 @@
         return "Good.";
       } else {
         return "User surname failed to be changed.";
+      }
+    }
+
+    ########################################################
+    # edits email of the user in the database
+    # $id -> id of the user that you want to edit [number]
+    # $email -> new email of the user [string]
+    ########################################################
+    public function editEmail($id, $email) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number."; 
+
+      if (empty($email))
+        return "Email is required but it's empty.";
+
+      if (!is_string($email))
+        return "Email is not a valid text.";
+
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        return "Email format invalid.";
+
+      $sql = "SELECT id FROM user WHERE email='$email'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "There already is a user with that email.";
+
+      $sql = "UPDATE user SET email='$email' WHERE id='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "User email failed to be changed.";
+      }
+    }
+
+    ########################################################
+    # edits password of the user in the database
+    # $id -> id of the user that you want to edit [number]
+    # $password -> new password of the user [string]
+    ########################################################
+    public function editPassword($id, $password) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number."; 
+
+      if (empty($password))
+        return "Password is required but it's empty.";
+
+      if (!is_string($password))
+        return "Password is not a valid text.";
+
+      // Validate password strength
+      $uppercase = preg_match('@[A-Z]@', $password);
+      $lowercase = preg_match('@[a-z]@', $password);
+      $number = preg_match('@[0-9]@', $password);
+      $specialCharacters = preg_match('@[^\w]@', $password);
+
+      if (!$uppercase)
+        return "Password has to include at least one upper case letter.";
+
+      if (!$lowercase)
+        return "Password has to include at least one lower case letter.";
+
+      if (!$number)
+        return "Password has to include at least one number.";
+
+      if (!$specialCharacters)
+        return "Password has to include at least one special character.";
+
+      if (strlen($password) < 8)
+        return "Password have to be at least 8 characters in length.";  
+
+      //Updating
+      $password_hash = password_hash($password, PASSWORD_DEFAULT);
+      $sql = "UPDATE user SET password='$password_hash' WHERE id='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "User password failed to be changed.";
+      }
+    }
+
+    ########################################################
+    # edits birthdate of the user in the database
+    # $id -> id of the user that you want to edit [number]
+    # $birthdate -> new birthdate of the user [date - yyyy-mm-dd]
+    ########################################################
+    public function editStudentBirthdate($id, $birthdate) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=s";
+      $response = $this->pdo->sqlTable($sql);
+  
+      if (count($response) == 0)
+        return "There is no student with that id.";
+
+      if (empty($birthdate))
+        return "Student birthdate is empty.";
+
+      list($y, $m, $d) = explode("-", $birthdate);
+      if (!checkdate($m, $d, $y))
+        return "Student birthdate date is invalid.";
+
+      $sql = "UPDATE student SET birthdate='$birthdate' WHERE id_user='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "Student birthdate failed to be changed.";
+      }
+    }
+
+    ########################################################
+    # edits student's class in the database
+    # $id -> id of the student that you want to edit [number]
+    # $id_class -> new student class id [number]
+    ########################################################
+    public function editStudentClass($id, $id_class) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=s";
+      $response = $this->pdo->sqlTable($sql);
+    
+      if (count($response) == 0)
+        return "There is no student with that id.";
+
+      if (empty($id_class))
+       return "Id is required but it's empty.";
+
+      if (!is_numeric($id_class))
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM class WHERE id='$id_class'";
+      $response = $this->pdo->sqlTable($sql);
+    
+      if (count($response) == 0)
+        return "There is no class with that id.";
+
+      $sql = "UPDATE student SET id_class='$id_class' WHERE id_user='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "Student class failed to be changed.";
+      }
+    } 
+
+    ########################################################
+    # edits teacher's room in the database
+    # $id -> id of the teacher that you want to edit [number]
+    # $id_room -> new teacher room id [number]
+    ########################################################
+    public function editTeacherRoom($id, $id_room) {
+      if (empty($id))
+        return "Id is required but it's empty.";
+
+      if (!is_numeric($id))
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=t";
+      $response = $this->pdo->sqlTable($sql);
+    
+      if (count($response) == 0)
+        return "There is no teacher with that id.";
+
+      if (empty($id_room))
+      return "Id is required but it's empty.";
+
+      if (!is_numeric($id_room))
+        return "Id is not a valid number."; 
+
+      $sql = "SELECT id FROM room WHERE id='$id_room'";
+      $response = $this->pdo->sqlTable($sql);
+    
+      if (count($response) == 0)
+        return "There is no room with that id.";
+
+      $sql = "UPDATE teacher SET id_room='$id_room' WHERE id_user='$id'";
+      $response = $this->pdo->sqlQuery($sql);
+
+      if ($response > 0) {
+        return "Good.";
+      } else {
+        return "Teacher room failed to be changed.";
       }
     }
 
