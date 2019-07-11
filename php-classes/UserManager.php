@@ -385,7 +385,7 @@
       if (!is_numeric($id))
         return "Id is not a valid number."; 
 
-      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=s";
+      $sql = "SELECT id_user FROM student WHERE id_user='$id'";
       $response = $this->pdo->sqlTable($sql);
   
       if (count($response) == 0)
@@ -420,7 +420,7 @@
       if (!is_numeric($id))
         return "Id is not a valid number."; 
 
-      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=s";
+      $sql = "SELECT id_user FROM student WHERE id_user='$id'";
       $response = $this->pdo->sqlTable($sql);
     
       if (count($response) == 0)
@@ -460,7 +460,7 @@
       if (!is_numeric($id))
         return "Id is not a valid number."; 
 
-      $sql = "SELECT id FROM user WHERE id='$id' AND permissions=t";
+      $sql = "SELECT id_user FROM teacher WHERE id_user='$id'";
       $response = $this->pdo->sqlTable($sql);
     
       if (count($response) == 0)
