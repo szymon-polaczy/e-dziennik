@@ -11,7 +11,7 @@
   require_once "../php-classes/AdministrationManager.php";
   require_once "../php-classes/ClassManager.php";
 
-  $pdo_manager = new PdoManager($db_user, $db_password, $db_name, $host);
+  $pdo_manager = new PdoManager(DB_USER, DB_PASSWORD, DB_NAME, HOST);
   $administration_manager = new AdministrationManager();
   $class_manager = new ClassManager($pdo_manager);
 
