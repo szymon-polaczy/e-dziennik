@@ -1,11 +1,9 @@
 <?php
 
-  class PdoManager
-  {
+  class PdoManager {
     private $user, $database, $host, $pdo;
 
-    public function __construct($usr, $pwd, $db, $host = 'localhost')
-    {
+    public function __construct($usr, $pwd, $db, $host = 'localhost') {
       $this->user = $usr;
       $this->database = $db;
       $this->host = $host;
@@ -17,14 +15,12 @@
       }
     }
 
-    public function sqlQuery($sql)
-    {
+    public function sqlQuery($sql) {
       $affected_rows = $this->pdo->exec($sql);
       return $affected_rows;
     }
 
-    public function sqlValue($sql, $field = null)
-    {
+    public function sqlValue($sql, $field = null) {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
       $row = $statement->fetch();
@@ -32,8 +28,7 @@
       return (isset($row[$field]) ? $row[$field] : null);
     }
 
-    public function sqlField($sql, $field = null)
-    {
+    public function sqlField($sql, $field = null) {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
       $result = array();
@@ -44,16 +39,14 @@
       return $result;
     }
 
-    public function sqlRecord($sql)
-    {
+    public function sqlRecord($sql) {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
       $result = $statement->fetch(PDO::FETCH_ASSOC);
       return $result;
     }
 
-    public function sqlTable($sql)
-    {
+    public function sqlTable($sql) {
       $statement = $this->pdo->query($sql);
       if ($statement === false) return null;
       $statement->setFetchMode(PDO::FETCH_ASSOC);
