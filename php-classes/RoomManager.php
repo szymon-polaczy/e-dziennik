@@ -60,6 +60,13 @@
       if (empty($response) || $response == NULL)
         return "There is no room with that id.";
 
+      //Dependecies - teachers
+      $sql = "SELECT id_user FROM teacher WHERE id_room='$id'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "You can't delete this room. There are teachers assign to it.";
+
       $sql = "DELETE FROM room WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 

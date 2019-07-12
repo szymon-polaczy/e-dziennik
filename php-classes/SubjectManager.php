@@ -62,6 +62,13 @@
       if (empty($response) || $response == NULL)
         return "There is no subject with that id.";
 
+      //Dependecies - assignments
+      $sql = "SELECT id FROM assignment WHERE id_subject='$id'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "You can't delete this subject. There are assignments assign to it.";
+
       $sql = "DELETE FROM subject WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 

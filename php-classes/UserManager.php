@@ -68,7 +68,7 @@
       $uppercase = preg_match('@[A-Z]@', $user['password']);
       $lowercase = preg_match('@[a-z]@', $user['password']);
       $number = preg_match('@[0-9]@', $user['password']);
-      $specialCharacters = preg_match('@[^\w]@', $user['password']);
+      $special_characters = preg_match('@[^\w]@', $user['password']);
 
       if (!$uppercase)
         return "Password has to include at least one upper case letter.";
@@ -79,7 +79,7 @@
       if (!$number)
         return "Password has to include at least one number.";
 
-      if (!$specialCharacters)
+      if (!$special_characters)
         return "Password has to include at least one special character.";
 
       if (strlen($user['password']) < 8)
@@ -192,6 +192,20 @@
 
       $sql = "SELECT permissions FROM user WHERE id='$id'";
       $permissions = $this->pdo->sqlValue($sql);
+
+      if ($permissions == 't') {//Dependecies of teachers - assignments
+        $sql = "SELECT id FROM assignment WHERE id_teacher='$id'";
+        $response = $this->pdo->sqlTable($sql);
+
+        if (count($response) > 0)
+          return "You can't delete this teacher. There are assignments assign to it.";
+      } else if ($permissions == 's') {//Dependecies of students - grades
+        $sql = "SELECT id FROM grade WHERE id_student='$id'";
+        $response = $this->pdo->sqlTable($sql);
+
+        if (count($response) > 0)
+          return "You can't delete this student. There are grades assign to it.";
+      }
 
       $who = array("a" => array('administrator', 'Administrator'), 
                    "t" => array('teacher', 'Teacher'),
@@ -344,7 +358,7 @@
       $uppercase = preg_match('@[A-Z]@', $password);
       $lowercase = preg_match('@[a-z]@', $password);
       $number = preg_match('@[0-9]@', $password);
-      $specialCharacters = preg_match('@[^\w]@', $password);
+      $special_characters = preg_match('@[^\w]@', $password);
 
       if (!$uppercase)
         return "Password has to include at least one upper case letter.";
@@ -355,7 +369,7 @@
       if (!$number)
         return "Password has to include at least one number.";
 
-      if (!$specialCharacters)
+      if (!$special_characters)
         return "Password has to include at least one special character.";
 
       if (strlen($password) < 8)

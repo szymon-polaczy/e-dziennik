@@ -68,6 +68,20 @@
       if (empty($response) || $response == NULL)
         return "There is no class with that id.";
 
+      //Dependecies - students
+      $sql = "SELECT id_user FROM student WHERE id_class='$id'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "You can't delete this class. There are students assign to it.";
+
+      //Dependecies - assignments
+      $sql = "SELECT id FROM assignment WHERE id_class='$id'";
+      $response = $this->pdo->sqlTable($sql);
+
+      if (count($response) > 0)
+        return "You can't delete this class. There are assignments assign to it.";
+
       $sql = "DELETE FROM class WHERE id='$id'";
       $response = $this->pdo->sqlQuery($sql);
 

@@ -22,9 +22,6 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  $edit = $user_manager->editTeacherRoom(8, 2);
-  echo $edit.'<br>';
-
   $user = $user_manager->getByPermissions("t");
 
   echo '<pre>';
