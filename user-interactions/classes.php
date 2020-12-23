@@ -74,7 +74,5 @@
   </main>
   
   <?php include("templates/main_footer.php"); ?>
-
-  <script src="scripts/show_form.js"></script>
 </body>
 </html>

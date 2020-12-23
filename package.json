@@ -1,0 +1,23 @@
+{
+  "name": "gulp-setup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Szymon Polaczy",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^9.0.0",
+    "gulp": "^4.0.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "uglify-save-license": "^0.4.1"
+  },
+  "browserslist": [
+    "> 5%",
+    "Safari >= 8",
+    "Explorer >= 10"
+  ]
+}

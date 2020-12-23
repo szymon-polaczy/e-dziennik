@@ -22,12 +22,6 @@
   $classes = $class_manager->getAll();
   $rooms = $room_manager->getAll();
 
-  $user = $user_manager->getByPermissions("t");
-
-  echo '<pre>';
-  var_dump($user);
-  echo '</pre>';
-
   if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
   }
@@ -100,8 +94,5 @@
   </main>
   
   <?php include("templates/main_footer.php"); ?>
-
-  <script src="scripts/show_form.js"></script>
-  <script src="scripts/show_permission_boxes.js"></script>
 </body>
 </html>
