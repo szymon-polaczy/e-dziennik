@@ -11,11 +11,11 @@ const
     file_size = 'compressed',
     paths = {
         styles: {
-            src: "./user-interactions/styles/sass/*.sass",
+            src: "./user-interactions/styles/sass/**/*.sass",
             dest: "./user-interactions/styles/css/"
         },
         scripts: {
-            src: "./user-interactions/scripts/src/*.js",
+            src: "./user-interactions/scripts/src/**/*.js",
             dest: "./user-interactions/scripts/build/",
         }
     };
@@ -46,18 +46,10 @@ function scripts() {
     )
 }
 
-function watchScripts() {
-    gulp.watch(paths.watch_js, scripts)
-}
-
-gulp.task('compile:styles', function () {
-    return styles()
-});
+gulp.task('compile:styles', () => styles());
 gulp.task('compile:scripts', () => scripts());
 gulp.task('compile:all', gulp.parallel('compile:styles', "compile:scripts"));
 
-gulp.task('watch:styles', function () {
-    gulp.watch();
-});
-gulp.task('watch:scripts', () => watchScripts());
+gulp.task('watch:styles', () => gulp.watch(paths.styles.src, styles));
+gulp.task('watch:scripts', () => gulp.watch(paths.scripts.src, scripts));
 gulp.task('watch:all', gulp.parallel('watch:styles', "watch:scripts"));
