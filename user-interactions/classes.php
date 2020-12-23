@@ -18,6 +18,8 @@
   if (!$administration_manager->isSignedIn()) {
     header('Location: index.php');
     exit();
+  } else if (isset($_POST['name']) && isset($_POST['description'])) {
+    $result = $class_manager->add($_POST['name'], $_POST['description']);
   }
 ?>
 <!doctype html>
@@ -27,6 +29,32 @@
   
   <main>
     <h1>Classes</h1>
+    <?php 
+      if(isset($result)) {
+        echo '<p>'.$result.'</p>';
+      }
+    ?>
+    <?php 
+      $classes = $class_manager->getAll();
+      if (is_array($classes)) {
+        echo '<table style="margin-top: 10px;">';
+          echo '<thead style="border-bottom: 1px solid #666;">';
+            echo '<th>Name</th>';
+            echo '<th>Description</th>';
+          echo '</thead>';
+          echo '<tbody>';
+            foreach($classes as $class) {
+              echo '<tr>';
+                echo '<td style="padding: 10px 5px;">'.$class['name'].'</td>';
+                echo '<td style="padding: 10px 5px;">'.$class['description'].'</td>';
+              echo '</tr>';
+            }
+          echo '</tbody>';
+        echo '</table>';
+      } else {
+        echo $classes;
+      }
+    ?>
     <section>
       <form class="add-form" id="add-form" action="" method="post">
         <div class="form-top">
